@@ -10,184 +10,182 @@
 // may support multiple platforms with different
 // dependencies.
 #if defined(LINUX) || defined(MINGW)
-    #include <SDL2/SDL.h>
-#else // This works for Mac
-    #include <SDL.h>
-#endif
+#include <SDL2/SDL.h>
 
-// The glad library helps setup OpenGL extensions.
-#include <glad/glad.h>
+#else // This works for Mac
+#include <SDL.h>
+
+#endif
 
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <fstream>
 #include <vector>
+#include "constants.hpp"
+#include "Vec.hpp"
+#include "Ball.hpp"
+#include "Paddle.hpp"
 // Purpose:
 // This class sets up a full graphics program using SDL
 //
 //
 //
-class SDLGraphicsProgram{
+class SDLGraphicsProgram
+{
 public:
-
     // Constructor
     SDLGraphicsProgram(int w, int h);
     // Destructor
     ~SDLGraphicsProgram();
     // Setup OpenGL
     bool initGL();
-    // Per frame update
-    void update();
-    // Renders shapes to the screen
-    void render();
+    // Clears the screen
+    void clear();
+    // Flips to new buffer
+    void flip();
+    // Delay rendering
+
+    void delay(int milliseconds);
+
     // loop that runs forever
     void loop();
+
+    void drawRect(Ball b, Paddle p1, Paddle p2);
     // Get Pointer to Window
-    SDL_Window* getSDLWindow();
-    // Helper Function to Query OpenGL information.
-    void getOpenGLVersionInfo();
+    SDL_Window *getSDLWindow();
+    // Draw a simple rectangle
+    void DrawRectangle(int x, int y, int w, int h);
+    void DrawPoint(int x, int y);
+
+    std::string getKeyAction();
 
 private:
     // Screen dimension constants
     int screenHeight;
     int screenWidth;
     // The window we'll be rendering to
-    SDL_Window* gWindow ;
-    // OpenGL context
-    SDL_GLContext gContext;
+    SDL_Window *gWindow;
+    // Our renderer
+    SDL_Renderer *gRenderer;
 };
-
 
 // Initialization function
 // Returns a true or false value based on successful completion of setup.
 // Takes in dimensions of window.
-SDLGraphicsProgram::SDLGraphicsProgram(int w, int h):screenWidth(w),screenHeight(h){
-	// Initialization flag
-	bool success = true;
-	// String to hold any errors that occur.
-	std::stringstream errorStream;
-	// The window we'll be rendering to
-	gWindow = NULL;
-	// Render flag
+SDLGraphicsProgram::SDLGraphicsProgram(int w, int h) : screenWidth(w), screenHeight(h)
+{
+    // Initialization flag
+    bool success = true;
+    // String to hold any errors that occur.
+    std::stringstream errorStream;
+    // The window we'll be rendering to
+    gWindow = NULL;
+    // Render flag
 
-	// Initialize SDL
-	if(SDL_Init(SDL_INIT_VIDEO)< 0){
-		errorStream << "SDL could not initialize! SDL Error: " << SDL_GetError() << "\n";
-		success = false;
-	}
-	else{
-		//Use OpenGL 3.3 core
-		SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
-		SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 3 );
-		SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
-		// We want to request a double buffer for smooth updating.
-		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+    // Initialize SDL
+    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    {
+        errorStream << "SDL could not initialize! SDL Error: " << SDL_GetError() << "\n";
+        success = false;
+    }
+    else
+    {
+        // Create window
+        gWindow = SDL_CreateWindow("Lab", 100, 100, screenWidth, screenHeight, SDL_WINDOW_SHOWN);
 
-		//Create window
-		gWindow = SDL_CreateWindow( "Lab",
-                                SDL_WINDOWPOS_UNDEFINED,
-                                SDL_WINDOWPOS_UNDEFINED,
-                                screenWidth,
-                                screenHeight,
-                                SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
+        // Check if Window did not create.
+        if (gWindow == NULL)
+        {
+            errorStream << "Window could not be created! SDL Error: " << SDL_GetError() << "\n";
+            success = false;
+        }
 
-		// Check if Window did not create.
-		if( gWindow == NULL ){
-			errorStream << "Window could not be created! SDL Error: " << SDL_GetError() << "\n";
-			success = false;
-		}
-
-		//Create an OpenGL Graphics Context
-		gContext = SDL_GL_CreateContext( gWindow );
-		if( gContext == NULL){
-			errorStream << "OpenGL context could not be created! SDL Error: " << SDL_GetError() << "\n";
-			success = false;
-		}
-
-		// Initialize GLAD Library
-		if(!gladLoadGLLoader(SDL_GL_GetProcAddress)){
-			errorStream << "Failed to iniitalize GLAD\n";
-			success = false;
-		}
-
-		//Initialize OpenGL
-		if(!initGL()){
-			errorStream << "Unable to initialize OpenGL!\n";
-			success = false;
-		}
-  	}
-
-    // If initialization did not work, then print out a list of errors in the constructor.
-    if(!success){
-        errorStream << "SDLGraphicsProgram::SDLGraphicsProgram - Failed to initialize!\n";
-        std::string errors=errorStream.str();
-        SDL_Log("%s\n",errors.c_str());
-    }else{
-        SDL_Log("SDLGraphicsProgram::SDLGraphicsProgram - No SDL, GLAD, or OpenGL, errors detected during initialization\n\n");
+        // Create a Renderer to draw on
+        gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+        // Check if Renderer did not create.
+        if (gRenderer == NULL)
+        {
+            errorStream << "Renderer could not be created! SDL Error: " << SDL_GetError() << "\n";
+            success = false;
+        }
     }
 
-	// SDL_LogSetAllPriority(SDL_LOG_PRIORITY_WARN); // Uncomment to enable extra debug support!
-	getOpenGLVersionInfo();
-
+    // If initialization did not work, then print out a list of errors in the constructor.
+    if (!success)
+    {
+        errorStream << "SDLGraphicsProgram::SDLGraphicsProgram - Failed to initialize!\n";
+        std::string errors = errorStream.str();
+        SDL_Log("%s\n", errors.c_str());
+    }
+    else
+    {
+        SDL_Log("SDLGraphicsProgram::SDLGraphicsProgram - No SDL, GLAD, or OpenGL, errors detected during initialization\n\n");
+    }
 }
-
 
 // Proper shutdown of SDL and destroy initialized objects
-SDLGraphicsProgram::~SDLGraphicsProgram(){
-    //Destroy window
-	SDL_DestroyWindow( gWindow );
-	// Point gWindow to NULL to ensure it points to nothing.
-	gWindow = NULL;
-	//Quit SDL subsystems
-	SDL_Quit();
+SDLGraphicsProgram::~SDLGraphicsProgram()
+{
+    // Destroy window
+    SDL_DestroyWindow(gWindow);
+    // Point gWindow to NULL to ensure it points to nothing.
+    gWindow = NULL;
+    // Quit SDL subsystems
+    SDL_Quit();
 }
 
+void SDLGraphicsProgram::DrawPoint(int x, int y)
+{
+    SDL_RenderDrawPoint(gRenderer, x, y);
+}
+
+void SDLGraphicsProgram::drawRect(Ball b, Paddle p1, Paddle p2)
+{
+    SDL_Rect bRect = b.getRect();
+    SDL_Rect p1Rect = p1.getRect();
+    SDL_Rect p2Rect = p2.getRect();
+    SDL_RenderFillRect(gRenderer, &bRect);
+    SDL_RenderFillRect(gRenderer, &p1Rect);
+    SDL_RenderFillRect(gRenderer, &p2Rect);
+}
 
 // Initialize OpenGL
 // Setup any of our shaders here.
-bool SDLGraphicsProgram::initGL(){
-	//Success flag
-	bool success = true;
+bool SDLGraphicsProgram::initGL()
+{
+    // Success flag
+    bool success = true;
 
-	return success;
+    return success;
 }
 
-
-// Update OpenGL
-void SDLGraphicsProgram::update(){
-
+// clear
+// Clears the screen
+void SDLGraphicsProgram::clear()
+{
+    // Nothing yet!
+    SDL_SetRenderDrawColor(gRenderer, 0x0, 0x0, 0x0, 0xFF);
+    SDL_RenderClear(gRenderer);
+    SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+}
+// Flip
+// The flip function gets called once per loop
+// It swaps out the previvous frame in a double-buffering system
+void SDLGraphicsProgram::flip()
+{
+    // Nothing yet!
+    SDL_RenderPresent(gRenderer);
 }
 
-// Render
-// The render function gets called once per loop
-void SDLGraphicsProgram::render(){
-    // Initialize clear color
-    // Setup our OpenGL State machine
-    // TODO: Read this
-    // The below command is new!
-    // What we are doing, is telling opengl to create a depth(or Z-buffer) 
-    // for us that is stored every frame.
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_TEXTURE_2D); 
-    // This is the background of the screen.
-    glViewport(0, 0, screenWidth, screenHeight);
-    glClearColor( 0.2f, 0.2f, 0.2f, 1.f );
-    // TODO: Read this
-    // Clear color buffer and Depth Buffer
-    // Remember that the 'depth buffer' is our
-    // z-buffer that figures out how far away items are every frame
-    // and we have to do this every frame!
-  	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-
-    // Delay to slow things down just a bit!
-    SDL_Delay(50); 
+void SDLGraphicsProgram::delay(int milliseconds)
+{
+    SDL_Delay(milliseconds);
 }
 
-
-//Loops forever!
-void SDLGraphicsProgram::loop(){
+// Loops forever!
+void SDLGraphicsProgram::loop()
+{
     // Main loop flag
     // If this is quit = 'true' then the program terminates.
     bool quit = false;
@@ -197,79 +195,192 @@ void SDLGraphicsProgram::loop(){
     // Enable text input
     SDL_StartTextInput();
     // While application is running
-    while(!quit){
-     	 //Handle events on queue
-		while(SDL_PollEvent( &e ) != 0){
-        	// User posts an event to quit
-	        // An example is hitting the "x" in the corner of the window.
-    	    if(e.type == SDL_QUIT){
-        		quit = true;
-	        }
-      	} // End SDL_PollEvent loop.
+    while (!quit)
+    {
+        // Handle events on queue
+        while (SDL_PollEvent(&e) != 0)
+        {
+            // User posts an event to quit
+            // An example is hitting the "x" in the corner of the window.
+            if (e.type == SDL_QUIT)
+            {
+                quit = true;
+            }
+        } // End SDL_PollEvent loop.
 
-		// Update our scene
-		update();
-		// Render using OpenGL
-	    render(); 	// TODO: potentially move this depending on your logic
-					// for how you handle drawing a triangle or rectangle.
-      	//Update screen of our specified window
-      	SDL_GL_SwapWindow(getSDLWindow());
+        // Update screen of our specified window
+        SDL_GL_SwapWindow(getSDLWindow());
     }
 
-    //Disable text input
+    // Disable text input
     SDL_StopTextInput();
 }
 
-
 // Get Pointer to Window
-SDL_Window* SDLGraphicsProgram::getSDLWindow(){
-  return gWindow;
+SDL_Window *SDLGraphicsProgram::getSDLWindow()
+{
+    return gWindow;
 }
 
-// Helper Function to get OpenGL Version Information
-void SDLGraphicsProgram::getOpenGLVersionInfo(){
-	SDL_Log("(Note: If you have two GPU's, make sure the correct one is selected)");
-	SDL_Log("Vendor: %s",(const char*)glGetString(GL_VENDOR));
-	SDL_Log("Renderer: %s",(const char*)glGetString(GL_RENDERER));
-	SDL_Log("Version: %s",(const char*)glGetString(GL_VERSION));
-	SDL_Log("Shading language: %s",(const char*)glGetString(GL_SHADING_LANGUAGE_VERSION));
+// Okay, render our rectangles!
+void SDLGraphicsProgram::DrawRectangle(int x, int y, int w, int h)
+{
+    SDL_Rect fillRect = {x, y, w, h};
+    SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
+    SDL_RenderDrawRect(gRenderer, &fillRect);
 }
 
+std::string SDLGraphicsProgram::getKeyAction()
+{
 
+    SDL_Event event;
 
-// Include the pybindings
-#include <pybind11/pybind11.h>
-
-namespace py = pybind11;
-
-
-// Creates a macro function that will be called
-// whenever the module is imported into python
-// 'mymodule' is what we 'import' into python.
-// 'm' is the interface (creates a py::module object)
-//      for which the bindings are created.
-//  The magic here is in 'template metaprogramming'
-PYBIND11_MODULE(mymodule, m){
-    m.doc() = "our game engine as a library"; // Optional docstring
-
-    py::class_<SDLGraphicsProgram>(m, "SDLGraphicsProgram")
-            .def(py::init<int,int>(), py::arg("w"), py::arg("h"))   // our constructor
-            .def("initGL", &SDLGraphicsProgram::initGL)      // Expose member methods
-            .def("update", &SDLGraphicsProgram::update)
-            .def("render", &SDLGraphicsProgram::render) 
-            .def("loop", &SDLGraphicsProgram::loop) 
-            .def("getSDLWindow", &SDLGraphicsProgram::getSDLWindow, py::return_value_policy::reference) 
-            .def("getOpenGLVersionInfo", &SDLGraphicsProgram::getOpenGLVersionInfo); 
+    while (SDL_PollEvent(&event))
+    {
+        if (event.type == SDL_QUIT)
+        {
+            return "exit";
+        }
+        else if (event.type == SDL_KEYDOWN)
+        {
+            if (event.key.keysym.sym == SDLK_ESCAPE)
+            {
+                return "exit";
+            }
+            else if (event.key.keysym.sym == SDLK_w)
+            {
+                return "1,up,0";
+            }
+            else if (event.key.keysym.sym == SDLK_s)
+            {
+                return "1,down,0";
+            }
+            else if (event.key.keysym.sym == SDLK_UP)
+            {
+                return "2,up,0";
+            }
+            else if (event.key.keysym.sym == SDLK_DOWN)
+            {
+                return "2,down,0";
+            }
+        }
+        else if (event.type == SDL_KEYUP)
+        {
+            if (event.key.keysym.sym == SDLK_w)
+            {
+                return "1,up,1";
+            }
+            else if (event.key.keysym.sym == SDLK_s)
+            {
+                return "1,down,1";
+            }
+            else if (event.key.keysym.sym == SDLK_UP)
+            {
+                return "2,up,1";
+            }
+            else if (event.key.keysym.sym == SDLK_DOWN)
+            {
+                return "2,down,1";
+            }
+        }
+    }
+    SDL_GL_SwapWindow(getSDLWindow());
+    return "empty";
 }
 
+Contact CheckPaddleCollision(Ball const &ball, Paddle const &paddle)
+{
+    float ballLeft = ball.position.x;
+    float ballRight = ball.position.x + BALL_WIDTH;
+    float ballTop = ball.position.y;
+    float ballBottom = ball.position.y + BALL_HEIGHT;
 
+    float paddleLeft = paddle.position.x;
+    float paddleRight = paddle.position.x + PADDLE_WIDTH;
+    float paddleTop = paddle.position.y;
+    float paddleBottom = paddle.position.y + PADDLE_HEIGHT;
 
+    Contact contact{};
 
+    if (ballLeft >= paddleRight)
+    {
+        return contact;
+    }
 
+    if (ballRight <= paddleLeft)
+    {
+        return contact;
+    }
 
+    if (ballTop >= paddleBottom)
+    {
+        return contact;
+    }
 
+    if (ballBottom <= paddleTop)
+    {
+        return contact;
+    }
 
+    float paddleRangeUpper = paddleBottom - (2.0f * PADDLE_HEIGHT / 3.0f);
+    float paddleRangeMiddle = paddleBottom - (PADDLE_HEIGHT / 3.0f);
 
+    if (ball.velocity.x < 0)
+    {
 
+        contact.penetration = paddleRight - ballLeft;
+    }
+    else if (ball.velocity.x > 0)
+    {
+
+        contact.penetration = paddleLeft - ballRight;
+    }
+
+    if ((ballBottom > paddleTop) && (ballBottom < paddleRangeUpper))
+    {
+        contact.type = 1;
+    }
+    else if ((ballBottom > paddleRangeUpper) && (ballBottom < paddleRangeMiddle))
+    {
+        contact.type = 2;
+    }
+    else
+    {
+        contact.type = 3;
+    }
+
+    return contact;
+}
+
+Contact CheckWallCollision(Ball const &ball)
+{
+    float ballLeft = ball.position.x;
+    float ballRight = ball.position.x + BALL_WIDTH;
+    float ballTop = ball.position.y;
+    float ballBottom = ball.position.y + BALL_HEIGHT;
+
+    Contact contact{};
+
+    if (ballLeft < 0.0f)
+    {
+        contact.type = 4;
+    }
+    else if (ballRight > WINDOW_WIDTH)
+    {
+        contact.type = 5;
+    }
+    else if (ballTop < 0.0f)
+    {
+        contact.type = 1;
+        contact.penetration = -ballTop;
+    }
+    else if (ballBottom > WINDOW_HEIGHT)
+    {
+        contact.type = 3;
+        contact.penetration = WINDOW_HEIGHT - ballBottom;
+    }
+
+    return contact;
+}
 
 #endif
