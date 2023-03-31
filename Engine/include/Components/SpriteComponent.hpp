@@ -4,8 +4,8 @@
 #include <string>
 
 #include "IGraphicsEngineRenderer.hpp"
-#include "TinyMath.hpp"
 #include "Component.hpp"
+#include "Vec.hpp"
 
 /**
  * A small class to demonstrate loading sprites.
@@ -34,7 +34,7 @@ public:
     /**
      * Render the sprite 
      */
-    void Render(SDL_Renderer* ren);
+    void Render();
     /**
      * Load a sprite
      */
@@ -44,7 +44,7 @@ public:
 
 
 private:
-    Vec2D           mPosition;
+    Vec2           mPosition;
 	unsigned int    mCurrentFrame{0};
 	unsigned int    mLastFrame{7};
     // An SDL Surface contains pixel data to draw an image

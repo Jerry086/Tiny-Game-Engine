@@ -95,34 +95,34 @@ int TileMapComponent::GetTileType(int x, int y){
 }
 
 // render TileMap
-void TileMapComponent::Render(SDL_Renderer* ren){
-    if(nullptr==ren){
-        SDL_Log("No valid renderer found");
-    }
+void TileMapComponent::Render(){
+    // if(nullptr==ren){
+    //     SDL_Log("No valid renderer found");
+    // }
 
 
-    SDL_Rect Src, Dest;
-    for(int y= 0; y < m_MapY; y++){
-        for(int x= 0; x < m_MapX; x++){
-            // Select our Tile
-            int currentTile = GetTileType(x,y);
-            if(currentTile > -1 ){
-                // Reverse lookup, given the tile type
-                // and then figuring out how to select it
-                // from the texture atlas.
-                Src.x = (currentTile % m_Cols) * m_TileWidth;
-                Src.y = (currentTile / m_Rows) * m_TileHeight;
-                Src.w = m_TileWidth; 
-                Src.h = m_TileHeight; 
-                // Render our Tile at this location
-                Dest.x = x*m_TileWidth;
-                Dest.y = y*m_TileHeight;
-                Dest.w = m_TileWidth;
-                Dest.h = m_TileHeight;
-                SDL_RenderCopy(ren, m_Texture, &Src, &Dest);
-            }
-        }
-    }
+    // SDL_Rect Src, Dest;
+    // for(int y= 0; y < m_MapY; y++){
+    //     for(int x= 0; x < m_MapX; x++){
+    //         // Select our Tile
+    //         int currentTile = GetTileType(x,y);
+    //         if(currentTile > -1 ){
+    //             // Reverse lookup, given the tile type
+    //             // and then figuring out how to select it
+    //             // from the texture atlas.
+    //             Src.x = (currentTile % m_Cols) * m_TileWidth;
+    //             Src.y = (currentTile / m_Rows) * m_TileHeight;
+    //             Src.w = m_TileWidth; 
+    //             Src.h = m_TileHeight; 
+    //             // Render our Tile at this location
+    //             Dest.x = x*m_TileWidth;
+    //             Dest.y = y*m_TileHeight;
+    //             Dest.w = m_TileWidth;
+    //             Dest.h = m_TileHeight;
+    //             SDL_RenderCopy(ren, m_Texture, &Src, &Dest);
+    //         }
+    //     }
+    // }
 }
 
 

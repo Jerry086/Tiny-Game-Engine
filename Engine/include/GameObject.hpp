@@ -1,13 +1,12 @@
 #ifndef GAMEOBJECT_HPP
 #define GAMEOBJECT_HPP
 
-#include <vector>
 #include <string>
 #include <map>
 
-#include "Component.hpp"
-#include "SpriteComponent.hpp"
-#include "TileMapComponent.hpp"
+#include "./Components/Component.hpp"
+#include "./Components/SpriteComponent.hpp"
+#include "./Components/TileMapComponent.hpp"
 
 #if defined(LINUX) || defined(MINGW)
     #include <SDL2/SDL.h>
@@ -32,7 +31,7 @@ class GameObject{
 
     
     private:
-        std::map<std::string, std::shared_ptr<Component>> m_components;
+        std::map<std::string, Component> m_components;
         // std::vector<std::shared_ptr<Component>> m_components;
         std::string gameObject_id;
 };

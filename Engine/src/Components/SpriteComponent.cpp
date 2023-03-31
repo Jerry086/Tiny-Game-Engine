@@ -42,8 +42,8 @@ void SpriteComponent::Update(int x, int y, int frame){
     mDest.h = 128;
 }
 
-void SpriteComponent::Render(SDL_Renderer* ren){
-    SDL_RenderCopy(ren, mTexture, &mSrc, &mDest);
+void SpriteComponent::Render(){
+    // SDL_RenderCopy(ren, mTexture, &mSrc, &mDest);
 }
 
 

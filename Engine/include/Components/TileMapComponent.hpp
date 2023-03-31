@@ -40,7 +40,7 @@ public:
     /**
      * Draw all of the tiles in the tilemap
      */
-    void Render(SDL_Renderer* ren);
+    void Render();
 
     void Update(int x, int y, int frame);
 
