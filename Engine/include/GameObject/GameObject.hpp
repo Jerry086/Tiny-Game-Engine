@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <map>
 
 #include "Component.hpp"
 #include "SpriteComponent.hpp"
@@ -16,24 +17,24 @@
 
 class GameObject{
     public:
-        GameObject(std::string name);
+        GameObject(std::string id);
         ~GameObject();
 
-        void Update(int x, int y, int frame);
-        void Render(SDL_Renderer* ren);
-        // parameters
-        void AddTileMapComponent(std::string tileSheetFileName, int rows, int cols, 
-int _TileWidth, int _TileHeight, int _mapX, int _mapY,SDL_Renderer* ren);
-        void AddSpriteComponent2D(std::string filename,SDL_Renderer* ren);
+        void StartUp();
+        void ShutDown();
 
-        void SetPosition(float x, float y);
-        void MoveObject(float left, float right);
-    // Note: You may want to add member functions like 'Update' or 'Render'
-    // Note: You may want to add member functions like "AddComponent" or "RemoveComponent"
+        void Update();
+        void Render();
+
+        // void AddComponent(std::string componentName,std::shared_ptr<Component>component);
+        void AddComponent(std::string componentName, Component component);
+        void RemoveComponent(std::string componentName);
+
     
     private:
-        std::vector<std::shared_ptr<Component>> m_components;
-        std::string m_name;
+        std::map<std::string, std::shared_ptr<Component>> m_components;
+        // std::vector<std::shared_ptr<Component>> m_components;
+        std::string gameObject_id;
 };
 
 

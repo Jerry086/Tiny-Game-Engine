@@ -1,22 +1,26 @@
-// #ifndef TRANSFORMCOMPONENT_HPP
-// #define TRANSFORMCOMPONENT_HPP
+#ifndef TRANSFORMCOMPONENT_HPP
+#define TRANSFORMCOMPONENT_HPP
 
-// #include "Component.hpp"
-// #if defined(LINUX) || defined(MINGW)
-//     #include <SDL2/SDL.h>
-// #else // This works for Mac
-//     #include <SDL.h>
-// #endif
-// class TransformComponent : public Component{
-//     public:
-//         TransformComponent();
-//         ~TransformComponent();
-//         void Update();
-//         void Render(SDL_Renderer* ren){};
+#include "Vec.hpp"
+#include "Component.hpp"
+#include "ControllerComponent.hpp"
 
-//     private:
+class TransformComponent : public Component
+{
+public:
+    // Position of a game object
+    Vec2 m_position;
+    Vec2 m_direction;
+    // Constructor
+    TransformComponent(Vec2 direction, Vec2 new_position, ControllerComponent *controller);
+    // Destructor
+    ~TransformComponent();
+    // Update position of a game object
+    void Update() override;
 
-// };
+private:
+    // const float SPEED = 10.0f;
+    ControllerComponent *m_controller;
+};
 
-
-// #endif
+#endif

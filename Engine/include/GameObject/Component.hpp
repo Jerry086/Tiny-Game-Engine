@@ -13,10 +13,9 @@ class Component{
     public:
         Component();
         ~Component();
-        virtual void Update(int x, int y, int frame) = 0;
-        virtual void Render(SDL_Renderer* ren)=0;
-        virtual void SetPosition(float x, float y) = 0;
-        virtual void MoveObject(float left, float right) = 0;
+
+        virtual void Update() = 0;
+        virtual void Render()=0;
 
     private:
 
