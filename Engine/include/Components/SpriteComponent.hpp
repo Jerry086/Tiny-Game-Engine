@@ -3,9 +3,17 @@
 
 #include <string>
 
-#include "IGraphicsEngineRenderer.hpp"
-#include "./Components/Component.hpp"
-#include "Vec.hpp"
+#if defined(LINUX) || defined(MINGW)
+#include <SDL2/SDL.h>
+
+#else // This works for Mac
+#include <SDL.h>
+
+#endif
+
+#include "ResourceManager.hpp"
+#include "Component.hpp"
+#include "TransformComponent.hpp"
 
 /**
  * A small class to demonstrate loading sprites.
@@ -18,7 +26,7 @@ public:
     /**
      * Constructor
      */
-    SpriteComponent();
+    SpriteComponent(std::string filename, TransformComponent &transformComponent, int x, int y, int w, int h, int frames);
     /**
      * Constructor
      */
@@ -30,25 +38,20 @@ public:
     /**
      * Update the sprites position and frame
      */
-    void Update(){};
+    void Update() override;
     /**
      * Render the sprite
      */
-    void Render();
-    /**
-     * Load a sprite
-     */
-    void LoadImage(std::string filePath, SDL_Renderer *ren);
-
-    void MoveObject(float left, float right);
+    void Render() override;
 
 private:
-    Vec2 mPosition;
+    std::string m_filename;
+    TransformComponent m_transformComponent;
     unsigned int mCurrentFrame{0};
     unsigned int mLastFrame{7};
     // An SDL Surface contains pixel data to draw an image
-    SDL_Surface *mSpriteSheet = nullptr;
-    SDL_Texture *mTexture = nullptr;
+    SDL_Surface *m_spriteSheet = nullptr;
+    SDL_Texture *m_texture = nullptr;
 
     SDL_Rect mSrc;
     SDL_Rect mDest;

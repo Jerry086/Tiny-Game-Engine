@@ -2,8 +2,8 @@
 #define TRANSFORMCOMPONENT_HPP
 
 #include "Vec.hpp"
-#include "./Components/Component.hpp"
-#include "./Components/ControllerComponent.hpp"
+#include "Component.hpp"
+#include "ControllerComponent.hpp"
 
 class TransformComponent : public Component
 {
@@ -19,7 +19,6 @@ public:
     void Update() override;
 
 private:
-    // const float SPEED = 10.0f;
     ControllerComponent m_controller;
 };
 

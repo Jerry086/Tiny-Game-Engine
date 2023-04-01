@@ -16,5 +16,4 @@ void TransformComponent::Update()
 {
     m_position.x += m_controller.GetDirectionX() * m_direction.x;
     m_position.y += m_controller.GetDirectionY() * m_direction.y;
-    // m_position.x += SPEED * m_controller->GetDirection();
 }

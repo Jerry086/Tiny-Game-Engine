@@ -1,4 +1,4 @@
 .DS_Store
 Engine/.DS_Store
-mygameengine.so
-../.vscode/
+Engine/mygameengine.so
+.vscode/

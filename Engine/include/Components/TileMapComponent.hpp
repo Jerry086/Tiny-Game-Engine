@@ -1,10 +1,17 @@
-#ifndef TILECOMPONENT_H
-#define TILECOMPONENT_H
+#ifndef TILEMAPCOMPONENT_H
+#define TILEMAPCOMPONENT_H
 
 #include <string>
 
-#include "IGraphicsEngineRenderer.hpp"
-#include "./Components/Component.hpp"
+#if defined(LINUX) || defined(MINGW)
+#include <SDL2/SDL.h>
+
+#else // This works for Mac
+#include <SDL.h>
+
+#endif
+
+#include "Component.hpp"
 
 /**
  * This is a minimal implementation of a TileMap
