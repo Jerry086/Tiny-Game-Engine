@@ -33,7 +33,7 @@ void GameObject::Update()
     }
 }
 
-void GameObject::AddComponent(std::string componentName, Component component)
+void GameObject::AddComponent(std::string componentName, Component &component)
 {
     m_components.emplace(componentName, component);
 }

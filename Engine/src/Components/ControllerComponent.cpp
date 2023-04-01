@@ -1,4 +1,4 @@
-#include "ControllerComponent.hpp"
+#include "./Components/ControllerComponent.hpp"
 
 ControllerComponent::ControllerComponent(bool *quit) : m_quit(quit) {}
 

@@ -2,8 +2,8 @@
 #define TRANSFORMCOMPONENT_HPP
 
 #include "Vec.hpp"
-#include "Component.hpp"
-#include "ControllerComponent.hpp"
+#include "./Components/Component.hpp"
+#include "./Components/ControllerComponent.hpp"
 
 class TransformComponent : public Component
 {
@@ -12,7 +12,7 @@ public:
     Vec2 m_position;
     Vec2 m_direction;
     // Constructor
-    TransformComponent(Vec2 direction, Vec2 new_position, ControllerComponent *controller);
+    TransformComponent(Vec2 direction, Vec2 new_position, ControllerComponent &controller);
     // Destructor
     ~TransformComponent();
     // Update position of a game object
@@ -20,7 +20,7 @@ public:
 
 private:
     // const float SPEED = 10.0f;
-    ControllerComponent *m_controller;
+    ControllerComponent m_controller;
 };
 
 #endif

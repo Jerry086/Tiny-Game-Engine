@@ -1,24 +1,13 @@
 #ifndef CONTROLLERCOMPONENT_HPP
 #define CONTROLLERCOMPONENT_HPP
-// ==================== Libraries ==================
-// Depending on the operating system we use
-// The paths to SDL are actually different.
-// The #define statement should be passed in
-// when compiling using the -D argument.
-// This gives an example of how a programmer
-// may support multiple platforms with different
-// dependencies.
-//
-// Note that your path may be different depending on where you installed things
-//
-//
+
 #if defined(LINUX) || defined(MINGW)
 #include <SDL2/SDL.h>
 #else // This works for Mac
 #include <SDL.h>
 #endif
 
-#include "Component.hpp"
+#include "./Components/Component.hpp"
 #include "Vec.hpp"
 
 // Directions of movement

@@ -7,24 +7,23 @@
 #include <SDL.h>
 #endif
 
-#include "Component.hpp"
+#include "./Components/Component.hpp"
 #include "Vec.hpp"
-#include "TransformComponent.hpp"
+#include "./Components/TransformComponent.hpp"
 
-
-class ControllerComponent : public Component
+class CollisionComponent : public Component
 {
 public:
     CollisionComponent();
     ~CollisionComponent();
+    void Update(){};
 
     // Check collision then call transform component to update position
-    void CheckCollisionWithWidow();
-    void CheckCollisionWithTile();
+    // void CheckCollisionWithWidow();
+    // void CheckCollisionWithTile();
 
 private:
     TransformComponent *m_transformer;
-
 };
 
 #endif

@@ -5,36 +5,33 @@
 #include <map>
 
 #include "./Components/Component.hpp"
-#include "./Components/SpriteComponent.hpp"
-#include "./Components/TileMapComponent.hpp"
 
 #if defined(LINUX) || defined(MINGW)
-    #include <SDL2/SDL.h>
+#include <SDL2/SDL.h>
 #else // This works for Mac
-    #include <SDL.h>
+#include <SDL.h>
 #endif
 
-class GameObject{
-    public:
-        GameObject(std::string id);
-        ~GameObject();
+class GameObject
+{
+public:
+    GameObject(std::string id);
+    ~GameObject();
 
-        void StartUp();
-        void ShutDown();
+    void StartUp();
+    void ShutDown();
 
-        void Update();
-        void Render();
+    void Update();
+    void Render();
 
-        // void AddComponent(std::string componentName,std::shared_ptr<Component>component);
-        void AddComponent(std::string componentName, Component component);
-        void RemoveComponent(std::string componentName);
+    // void AddComponent(std::string componentName,std::shared_ptr<Component>component);
+    void AddComponent(std::string componentName, Component &component);
+    void RemoveComponent(std::string componentName);
 
-    
-    private:
-        std::map<std::string, Component> m_components;
-        // std::vector<std::shared_ptr<Component>> m_components;
-        std::string gameObject_id;
+private:
+    std::map<std::string, Component> m_components;
+    // std::vector<std::shared_ptr<Component>> m_components;
+    std::string gameObject_id;
 };
-
 
 #endif

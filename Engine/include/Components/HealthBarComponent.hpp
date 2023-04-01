@@ -7,19 +7,18 @@
 #include <SDL.h>
 #endif
 
-#include "Component.hpp"
+#include "./Components/Component.hpp"
 #include "Vec.hpp"
 
 // a new component or just use SpriteCOmponent?
 class HealthBarComponent : public Component
 {
 public:
-    HealthBarComponent();
-    ~HealthBarComponent();
-
+    HealthBarComponent(){};
+    ~HealthBarComponent(){};
+    void Update(){};
 
 private:
-
 };
 
 #endif
