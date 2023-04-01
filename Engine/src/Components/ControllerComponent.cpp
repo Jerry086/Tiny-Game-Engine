@@ -1,6 +1,6 @@
 #include "./Components/ControllerComponent.hpp"
 
-ControllerComponent::ControllerComponent(bool *quit) : m_quit(quit) {}
+ControllerComponent::ControllerComponent() {}
 
 ControllerComponent::~ControllerComponent() {}
 
@@ -14,7 +14,7 @@ void ControllerComponent::Update()
         // quit the program
         if (event.type == SDL_QUIT)
         {
-            *m_quit = true;
+            m_quit = true;
         }
         // Record key state (up/down)
         else if (event.type == SDL_KEYDOWN)
@@ -65,7 +65,12 @@ void ControllerComponent::Update()
     {
         m_direction_x = DIR_RIGHT;
     }
-    else if (m_buttons[2])
+    else
+    {
+        m_direction_x = DIR_STAND;
+    }
+
+    if (m_buttons[2])
     {
         m_direction_y = DIR_UP;
     }
@@ -75,7 +80,6 @@ void ControllerComponent::Update()
     }
     else
     {
-        m_direction_x = DIR_STAND;
         m_direction_y = DIR_STAND;
     }
 }
@@ -83,10 +87,15 @@ void ControllerComponent::Update()
 // Getter of current moving direction
 int8_t ControllerComponent::GetDirectionX()
 {
-    return m_direction.x;
+    return m_direction_x;
 }
 
 int8_t ControllerComponent::GetDirectionY()
 {
-    return m_direction.y;
+    return m_direction_y;
+}
+
+bool ControllerComponent::QuitProgram()
+{
+    return m_quit;
 }

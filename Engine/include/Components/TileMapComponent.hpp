@@ -40,9 +40,9 @@ public:
     /**
      * Draw all of the tiles in the tilemap
      */
-    void Render();
+    void Render() override;
 
-    void Update(){};
+    void Update() override;
 
     void SetPosition(float x, float y);
 

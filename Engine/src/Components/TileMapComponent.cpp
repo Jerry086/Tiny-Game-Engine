@@ -1,7 +1,7 @@
 #include <iostream>
 #include <iomanip>
 
-#include "TileMapComponent.hpp"
+#include "./Components/TileMapComponent.hpp"
 
 // Creates a new tile map.
 // rows and cols are how many different tiles there are in the sprite sheet
