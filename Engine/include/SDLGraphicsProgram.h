@@ -26,6 +26,7 @@
 #include "Vec.hpp"
 #include "Ball.hpp"
 #include "Paddle.hpp"
+#include "ResourceManager.hpp"
 // Purpose:
 // This class sets up a full graphics program using SDL
 //
@@ -122,11 +123,16 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h) : screenWidth(w), screenHei
     {
         SDL_Log("SDLGraphicsProgram::SDLGraphicsProgram - No SDL, GLAD, or OpenGL, errors detected during initialization\n\n");
     }
+
+    ResourceManager::instance().StartUp(gRenderer);
 }
 
 // Proper shutdown of SDL and destroy initialized objects
 SDLGraphicsProgram::~SDLGraphicsProgram()
 {
+    ResourceManager::instance().ShutDown();
+    // Destroy Renderer
+    SDL_DestroyRenderer(gRenderer);
     // Destroy window
     SDL_DestroyWindow(gWindow);
     // Point gWindow to NULL to ensure it points to nothing.
