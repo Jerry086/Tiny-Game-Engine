@@ -11,6 +11,7 @@ void GameObject::ShutDown() {}
 
 void GameObject::Render() {
     for (auto it = m_components.begin(); it != m_components.end(); it++) {
+        std::cout << "GameObject::Render() - " << it->first << std::endl;
         it->second->Render();
     }
 }

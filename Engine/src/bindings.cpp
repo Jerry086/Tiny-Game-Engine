@@ -36,6 +36,7 @@ PYBIND11_MODULE(mygameengine, m) {
     py::class_<GameObject>(m, "GameObject")
         .def(py::init<const std::string &>(), py::arg("id"))
         .def("Update", &GameObject::Update)
+        .def("Render", &GameObject::Render)
         .def("StartUp", &GameObject::StartUp)
         .def("ShutDown", &GameObject::ShutDown)
         .def("AddComponent", &GameObject::AddComponent);
@@ -63,7 +64,7 @@ PYBIND11_MODULE(mygameengine, m) {
                       int, int>(),
              py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
              py::arg("y"), py::arg("w"), py::arg("h"), py::arg("frames"))
-        .def("Update", &SpriteComponent::Update)
+        // .def("Update", &SpriteComponent::Update)
         .def("SetPosition", &SpriteComponent::SetPosition);
 
     py::class_<Contact>(m, "Contact")

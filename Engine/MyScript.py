@@ -30,8 +30,8 @@ score_two = 0
 
 go = mygameengine.GameObject('GO id')
 controller_component = mygameengine.ControllerComponent()
-transform_component = mygameengine.TransformComponent(mygameengine.Vec2(0,0), mygameengine.Vec2(0,0), controller_component)
-sprite_component = mygameengine.SpriteComponent('./sprites/sprite.bmp', transform_component, 0, 0, 100, 100, 24)
+transform_component = mygameengine.TransformComponent(mygameengine.Vec2(100,100), mygameengine.Vec2(0,0), controller_component)
+sprite_component = mygameengine.SpriteComponent('./sprites/sprite.bmp', transform_component, 100, 100, 500, 500, 24)
 go.AddComponent('python added transform component', transform_component)
 go.AddComponent('python added sprite component', sprite_component)
 
@@ -122,6 +122,7 @@ while True:
     ball.Draw()
     paddle_one.Draw()
     paddle_two.Draw()
+    go.Render()
  
     SDL.drawRect(ball, paddle_one,paddle_two  )
     SDL.flip()
