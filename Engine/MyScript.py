@@ -28,6 +28,11 @@ paddle_two = mygameengine.Paddle(
 score_one = 0
 score_two = 0
 
+go = mygameengine.GameObject('GO id')
+controller_component = mygameengine.ControllerComponent()
+transform_component = mygameengine.TransformComponent(mygameengine.Vec2(0,0), mygameengine.Vec2(0,0), controller_component)
+go.AddComponent('python added transform component', transform_component)
+
 
 buttons = [False,False,False,False]
 
@@ -85,6 +90,7 @@ while True:
     paddle_two.Update(dt)
 
     ball.Update(dt)
+    go.Update()
 
     contact1_pd = mygameengine.CheckPaddleCollision(ball, paddle_one)
     contact2_pd = mygameengine.CheckPaddleCollision(ball, paddle_two)
@@ -99,10 +105,10 @@ while True:
         ball.CollideWithWall(contact1_wall)
         if (contact1_wall.type == 4):
             score_two += 1
-            print(f"score for player 2: {score_two}")
+            # print(f"score for player 2: {score_two}")
         elif (contact1_wall.type == 5):
             score_one += 1
-            print(f"score for player 1: {score_one}")
+            # print(f"score for player 1: {score_one}")
 
     # SDL.clear()
     
