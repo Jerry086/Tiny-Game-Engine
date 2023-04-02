@@ -76,7 +76,7 @@ void ResourceManager::FreeSurface(std::string image_filename)
 
 // search if this texture has been loaded, and then
 // only call SDL_CreateTextureFromSurface if that resource does not previously exist.
-void ResourceManager::LoadTexture(std::string image_filename, SDL_Renderer *renderer)
+void ResourceManager::LoadTexture(std::string image_filename)
 {
     auto it = textureMap.find(image_filename);
     // check if resource is already loaded
@@ -88,7 +88,7 @@ void ResourceManager::LoadTexture(std::string image_filename, SDL_Renderer *rend
     else
     {
         // create new texture
-        SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, GetSurface(image_filename));
+        SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer, GetSurface(image_filename));
         if (texture == nullptr)
         {
             std::cerr << "Error creating texture\n";
@@ -133,6 +133,12 @@ void ResourceManager::DestroyTexture(std::string image_filename)
             std::cout << "SDL_Texture Resource " << it->first << " has been destroyed\n";
         }
     }
+}
+
+int ResourceManager::StartUp(SDL_Renderer *renderer)
+{
+    m_renderer = renderer;
+    return 0;
 }
 
 // Kill all resource in resource manager

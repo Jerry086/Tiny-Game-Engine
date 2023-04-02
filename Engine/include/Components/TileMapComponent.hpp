@@ -1,21 +1,28 @@
-#ifndef TILECOMPONENT_H
-#define TILECOMPONENT_H
+#ifndef TILEMAPCOMPONENT_H
+#define TILEMAPCOMPONENT_H
 
 #include <string>
 
-#include "IGraphicsEngineRenderer.hpp"
+#if defined(LINUX) || defined(MINGW)
+#include <SDL2/SDL.h>
+
+#else // This works for Mac
+#include <SDL.h>
+
+#endif
+
 #include "Component.hpp"
 
 /**
  * This is a minimal implementation of a TileMap
  */
-class TileMapComponent : public Component{
+class TileMapComponent : public Component
+{
 public:
-    
     /**
      * Constructor for a tilemap
      */
-    TileMapComponent(std::string tileSheetFileName, int rows, int cols, int _TileWidth, int _TileHeight, int _mapX, int _mapY, SDL_Renderer* ren);
+    TileMapComponent(std::string tileSheetFileName, int rows, int cols, int _TileWidth, int _TileHeight, int _mapX, int _mapY, SDL_Renderer *ren);
     /**
      * Destructor for a tilemap
      */
@@ -40,9 +47,9 @@ public:
     /**
      * Draw all of the tiles in the tilemap
      */
-    void Render(SDL_Renderer* ren);
+    void Render() override;
 
-    void Update(int x, int y, int frame);
+    void Update() override;
 
     void SetPosition(float x, float y);
 
@@ -52,19 +59,19 @@ private:
     // Dimensions of our TileMap and individual tiles.
     // Used for spiltting up the sprite sheet
     int m_Rows;
-    int m_Cols;      
+    int m_Cols;
     // How big each tile is.
     int m_TileWidth;
     int m_TileHeight;
     // size of our tilemap
     int m_MapX;
-    int m_MapY; 
+    int m_MapY;
     // Where our TileMap is rendered
     // An SDL Surface contains pixel data to draw our TileMap
     SDL_Surface *m_TileSpriteSheet;
     SDL_Texture *m_Texture;
     // Stores our tile types
-    int* m_Tiles;
+    int *m_Tiles;
 };
 
 #endif

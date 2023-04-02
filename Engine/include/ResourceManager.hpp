@@ -23,12 +23,13 @@ public:
     // Free a image on the CPU
     void FreeSurface(std::string image_filename);
     // Load a SDL_Texture from a SDL_Surface
-    void LoadTexture(std::string image_filename, SDL_Renderer *renderer);
+    void LoadTexture(std::string image_filename);
     // SDL_Texture Getter of previously loaded texture;
     SDL_Texture *GetTexture(std::string image_filename);
     // Destroy a SDL_Texture on the GPU
     void DestroyTexture(std::string image_filename);
     // Destroy resources in resource manager
+    int StartUp(SDL_Renderer *renderer);
     int ShutDown();
 
 private:
@@ -43,6 +44,7 @@ private:
     ResourceManager(const ResourceManager &) = delete;
     // avoid assignment operator
     ResourceManager &operator=(const ResourceManager &) = delete;
+    SDL_Renderer *m_renderer;
 };
 
 #endif
