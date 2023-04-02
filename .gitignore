@@ -1,4 +1,6 @@
 .DS_Store
 Engine/.DS_Store
-mygameengine.so
-compile_commands.json
+Engine/mygameengine.so
+.vscode/
+finalproject-vancouver-tinyengine.code-workspace
+.clang-format
