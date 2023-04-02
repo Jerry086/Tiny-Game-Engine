@@ -10,7 +10,6 @@ TransformComponent::TransformComponent(Vec2 direction, Vec2 new_position,
     m_position.y = new_position.y;
     m_direction.x = direction.x;
     m_direction.y = direction.y;
-    std::cout << "TransformComponent::TransformComponent()" << std::endl;
 }
 
 TransformComponent::~TransformComponent() {}
@@ -18,5 +17,4 @@ TransformComponent::~TransformComponent() {}
 void TransformComponent::Update() {
     m_position.x += m_controller.GetDirectionX() * m_direction.x;
     m_position.y += m_controller.GetDirectionY() * m_direction.y;
-    std::cout << "TransformComponent::Update()" << std::endl;
 }

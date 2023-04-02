@@ -17,7 +17,6 @@ void GameObject::Render() {
 
 void GameObject::Update() {
     for (auto it = m_components.begin(); it != m_components.end(); it++) {
-        std::cout << "GameObject::Update() " << it->first << std::endl;
         it->second->Update();
     }
 }
