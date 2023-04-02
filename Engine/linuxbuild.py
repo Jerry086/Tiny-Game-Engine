@@ -12,7 +12,7 @@ import os
 
 COMPILER="g++"
 
-SOURCE="./src/*.cpp"
+SOURCE="./src/*.cpp ./src/Components/*.cpp"
 
 # You can can add other arguments as you see fit.
 # What does the "-D LINUX" command do?
