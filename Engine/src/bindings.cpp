@@ -1,5 +1,6 @@
 #include "./Components/Component.hpp"
 #include "./Components/ControllerComponent.hpp"
+#include "./Components/SpriteComponent.hpp"
 #include "./Components/TransformComponent.hpp"
 #include "GameObject.hpp"
 #include "SDLGraphicsProgram.h"
@@ -42,8 +43,11 @@ PYBIND11_MODULE(mygameengine, m) {
     py::class_<Component, std::shared_ptr<Component>>(m, "Component")
         .def(py::init<>());
 
-    py::class_<ControllerComponent>(m, "ControllerComponent").def(py::init<>());
+    py::class_<ControllerComponent, std::shared_ptr<ControllerComponent>>(
+        m, "ControllerComponent")
+        .def(py::init<>());
 
+    // TODO constructor controller component use shared ptr
     py::class_<TransformComponent, Component,
                std::shared_ptr<TransformComponent>>(m, "TransformComponent")
         .def(py::init<Vec2 &, Vec2 &, ControllerComponent &>(),
@@ -51,6 +55,16 @@ PYBIND11_MODULE(mygameengine, m) {
              py::arg("controller"))
         .def_readwrite("m_position", &TransformComponent::m_position)
         .def_readwrite("m_direction", &TransformComponent::m_direction);
+
+    // TODO constructor controller component use shared ptr
+    py::class_<SpriteComponent, Component, std::shared_ptr<SpriteComponent>>(
+        m, "SpriteComponent")
+        .def(py::init<const std::string &, TransformComponent &, int, int, int,
+                      int, int>(),
+             py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
+             py::arg("y"), py::arg("w"), py::arg("h"), py::arg("frames"))
+        .def("Update", &SpriteComponent::Update)
+        .def("SetPosition", &SpriteComponent::SetPosition);
 
     py::class_<Contact>(m, "Contact")
         .def(py::init<>())

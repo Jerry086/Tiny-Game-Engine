@@ -31,7 +31,9 @@ score_two = 0
 go = mygameengine.GameObject('GO id')
 controller_component = mygameengine.ControllerComponent()
 transform_component = mygameengine.TransformComponent(mygameengine.Vec2(0,0), mygameengine.Vec2(0,0), controller_component)
+sprite_component = mygameengine.SpriteComponent('./sprites/sprite.bmp', transform_component, 0, 0, 100, 100, 24)
 go.AddComponent('python added transform component', transform_component)
+go.AddComponent('python added sprite component', sprite_component)
 
 
 buttons = [False,False,False,False]
