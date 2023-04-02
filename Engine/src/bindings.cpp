@@ -1,4 +1,5 @@
 #include "SDLGraphicsProgram.h"
+#include "GameObject.hpp"
 // Include the pybindings
 #include <pybind11/pybind11.h>
 
@@ -26,6 +27,11 @@ PYBIND11_MODULE(mygameengine, m)
 		.def("DrawRectangle", &SDLGraphicsProgram::DrawRectangle);
 	// We do not need to expose everything to our users!
 	//            .def("getSDLWindow", &SDLGraphicsProgram::getSDLWindow, py::return_value_policy::reference)
+
+	py::class_<GameObject>(m, "GameObject")
+		.def(py::init<const std::string&>(), py::arg("name"))
+		.def("Update", &GameObject::Update);
+
 
 	py::class_<Contact>(m, "Contact")
 		.def(py::init<>())

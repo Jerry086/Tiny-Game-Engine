@@ -40,6 +40,9 @@ while True:
     SDL.clear()
     action = SDL.getKeyAction()
     
+    if action == "exit":
+        break
+
     if (action != "exit" and  action != "empty"):
         acSplit = action.split(",")
         if (len(acSplit) != 3):
