@@ -39,11 +39,13 @@ PYBIND11_MODULE(mygameengine, m) {
         .def("ShutDown", &GameObject::ShutDown)
         .def("AddComponent", &GameObject::AddComponent);
 
-    py::class_<Component>(m, "Component").def(py::init<>());
+    py::class_<Component, std::shared_ptr<Component>>(m, "Component")
+        .def(py::init<>());
 
     py::class_<ControllerComponent>(m, "ControllerComponent").def(py::init<>());
 
-    py::class_<TransformComponent, Component>(m, "TransformComponent")
+    py::class_<TransformComponent, Component,
+               std::shared_ptr<TransformComponent>>(m, "TransformComponent")
         .def(py::init<Vec2 &, Vec2 &, ControllerComponent &>(),
              py::arg("direction"), py::arg("new_position"),
              py::arg("controller"))
