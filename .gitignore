@@ -2,3 +2,6 @@
 Engine/.DS_Store
 Engine/mygameengine.so
 .vscode/
+finalproject-vancouver-tinyengine.code-workspace
+.clang-format
+Engine/szeka_linuxbuild.py
