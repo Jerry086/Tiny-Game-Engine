@@ -3,17 +3,16 @@
 
 #if defined(LINUX) || defined(MINGW)
 #include <SDL2/SDL.h>
-#else // This works for Mac
+#else  // This works for Mac
 #include <SDL.h>
 #endif
 
 // I recommend a map for filling in the resource manager
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 
-class ResourceManager
-{
-public:
+class ResourceManager {
+   public:
     // get the only instance of Resource Manager
     static ResourceManager &instance();
     // Load a image on the CPU
@@ -32,8 +31,12 @@ public:
     int StartUp(SDL_Renderer *renderer);
     int ShutDown();
 
-private:
-    // unordered_map data structure to search if a resource has been previously loaded
+    // TODO ugly, make it private or make a getter or find a better way
+    SDL_Renderer *m_renderer;
+
+   private:
+    // unordered_map data structure to search if a resource has been previously
+    // loaded
     std::unordered_map<std::string, std::pair<SDL_Surface *, int>> surfaceMap;
     std::unordered_map<std::string, std::pair<SDL_Texture *, int>> textureMap;
     // private constructor
@@ -44,7 +47,6 @@ private:
     ResourceManager(const ResourceManager &) = delete;
     // avoid assignment operator
     ResourceManager &operator=(const ResourceManager &) = delete;
-    SDL_Renderer *m_renderer;
 };
 
 #endif

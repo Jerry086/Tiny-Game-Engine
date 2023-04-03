@@ -1,8 +1,11 @@
 #include "./Components/SpriteComponent.hpp"
 
-SpriteComponent::SpriteComponent(std::string filename, TransformComponent &transformer, int x, int y, int w, int h, int frames)
-    : m_filename(filename), m_transformComponent(transformer), mLastFrame(frames)
-{
+SpriteComponent::SpriteComponent(std::string filename,
+                                 TransformComponent& transformer, int x, int y,
+                                 int w, int h, int frames)
+    : m_filename(filename),
+      m_transformComponent(transformer),
+      mLastFrame(frames) {
     ResourceManager::instance().LoadSurface(filename);
     m_spriteSheet = ResourceManager::instance().GetSurface(filename);
     ResourceManager::instance().LoadTexture(filename);
@@ -13,26 +16,23 @@ SpriteComponent::SpriteComponent(std::string filename, TransformComponent &trans
     mSrc.h = h;
 }
 
-SpriteComponent::~SpriteComponent()
-{
-    ResourceManager::instance().FreeSurface(m_filename);
-    m_spriteSheet = nullptr;
-    ResourceManager::instance().DestroyTexture(m_filename);
-    m_texture = nullptr;
+// TODO: move texture unloading to shutdown method instead of destructor
+SpriteComponent::~SpriteComponent() {
+    // ResourceManager::instance().FreeSurface(m_filename);
+    // m_spriteSheet = nullptr;
+    // ResourceManager::instance().DestroyTexture(m_filename);
+    // m_texture = nullptr;
 }
 
 // Set the sprite position
-void SpriteComponent::SetPosition(float x, float y)
-{
+void SpriteComponent::SetPosition(float x, float y) {
     m_transformComponent.m_position.x = x;
     m_transformComponent.m_position.y = y;
 }
 
-void SpriteComponent::Update()
-{
+void SpriteComponent::Update() {
     // The part of the image that we want to render
-    if (mCurrentFrame >= mLastFrame)
-    {
+    if (mCurrentFrame >= mLastFrame) {
         mCurrentFrame = 0;
     }
 
@@ -51,8 +51,9 @@ void SpriteComponent::Update()
     mDest.h = 128;
 }
 
-void SpriteComponent::Render()
-{
+void SpriteComponent::Render() {
+    // TODO: ugly, find a better way
     // How to get the renderer???
-    // SDL_RenderCopy(ren, mTexture, &mSrc, &mDest);
+    SDL_Renderer* ren = ResourceManager::instance().m_renderer;
+    SDL_RenderCopy(ren, m_texture, &mSrc, &mDest);
 }
