@@ -15,13 +15,14 @@ namespace py = pybind11;
 // 'm' is the interface (creates a py::module object)
 //      for which the bindings are created.
 //  The magic here is in 'template metaprogramming'
-PYBIND11_MODULE(mygameengine, m) {
-    m.doc() = "our game engine as a library";  // Optional docstring
+PYBIND11_MODULE(mygameengine, m)
+{
+    m.doc() = "our game engine as a library"; // Optional docstring
 
     py::class_<SDLGraphicsProgram>(m, "SDLGraphicsProgram")
         .def(py::init<int, int>(), py::arg("w"),
-             py::arg("h"))                         // our constructor
-        .def("clear", &SDLGraphicsProgram::clear)  // Expose member methods
+             py::arg("h"))                        // our constructor
+        .def("clear", &SDLGraphicsProgram::clear) // Expose member methods
         .def("delay", &SDLGraphicsProgram::delay)
         .def("flip", &SDLGraphicsProgram::flip)
         .def("getKeyAction", &SDLGraphicsProgram::getKeyAction)
@@ -44,14 +45,14 @@ PYBIND11_MODULE(mygameengine, m) {
     py::class_<Component, std::shared_ptr<Component>>(m, "Component")
         .def(py::init<>());
 
-    py::class_<ControllerComponent, std::shared_ptr<ControllerComponent>>(
+    py::class_<ControllerComponent, Component, std::shared_ptr<ControllerComponent>>(
         m, "ControllerComponent")
         .def(py::init<>());
 
     // TODO constructor controller component use shared ptr
     py::class_<TransformComponent, Component,
                std::shared_ptr<TransformComponent>>(m, "TransformComponent")
-        .def(py::init<Vec2 &, Vec2 &, ControllerComponent &>(),
+        .def(py::init<Vec2 &, Vec2 &, std::shared_ptr<ControllerComponent> &>(),
              py::arg("direction"), py::arg("new_position"),
              py::arg("controller"))
         .def_readwrite("m_position", &TransformComponent::m_position)
@@ -60,7 +61,7 @@ PYBIND11_MODULE(mygameengine, m) {
     // TODO constructor controller component use shared ptr
     py::class_<SpriteComponent, Component, std::shared_ptr<SpriteComponent>>(
         m, "SpriteComponent")
-        .def(py::init<const std::string &, TransformComponent &, int, int, int,
+        .def(py::init<const std::string &, std::shared_ptr<TransformComponent> &, int, int, int,
                       int, int>(),
              py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
              py::arg("y"), py::arg("w"), py::arg("h"), py::arg("frames"))

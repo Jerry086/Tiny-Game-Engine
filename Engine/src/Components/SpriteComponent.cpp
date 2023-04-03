@@ -1,11 +1,12 @@
 #include "./Components/SpriteComponent.hpp"
 
 SpriteComponent::SpriteComponent(std::string filename,
-                                 TransformComponent& transformer, int x, int y,
+                                 std::shared_ptr<TransformComponent> transformer, int x, int y,
                                  int w, int h, int frames)
     : m_filename(filename),
       m_transformComponent(transformer),
-      mLastFrame(frames) {
+      mLastFrame(frames)
+{
     ResourceManager::instance().LoadSurface(filename);
     m_spriteSheet = ResourceManager::instance().GetSurface(filename);
     ResourceManager::instance().LoadTexture(filename);
@@ -17,7 +18,8 @@ SpriteComponent::SpriteComponent(std::string filename,
 }
 
 // TODO: move texture unloading to shutdown method instead of destructor
-SpriteComponent::~SpriteComponent() {
+SpriteComponent::~SpriteComponent()
+{
     // ResourceManager::instance().FreeSurface(m_filename);
     // m_spriteSheet = nullptr;
     // ResourceManager::instance().DestroyTexture(m_filename);
@@ -25,14 +27,17 @@ SpriteComponent::~SpriteComponent() {
 }
 
 // Set the sprite position
-void SpriteComponent::SetPosition(float x, float y) {
-    m_transformComponent.m_position.x = x;
-    m_transformComponent.m_position.y = y;
+void SpriteComponent::SetPosition(float x, float y)
+{
+    m_transformComponent->m_position.x = x;
+    m_transformComponent->m_position.y = y;
 }
 
-void SpriteComponent::Update() {
+void SpriteComponent::Update()
+{
     // The part of the image that we want to render
-    if (mCurrentFrame >= mLastFrame) {
+    if (mCurrentFrame >= mLastFrame)
+    {
         mCurrentFrame = 0;
     }
 
@@ -40,20 +45,23 @@ void SpriteComponent::Update() {
     // from our sprite sheet. Think of this as just
     // using a mouse to draw a rectangle around the
     // sprite that we want to draw.
+    // how to iterate through sprite sheet?
     mSrc.x = mCurrentFrame * mSrc.w;
 
     // Where we want the rectangle to be rendered at.
     // This is an actual 'quad' that will draw our
     // source image on top of.
-    mDest.x = m_transformComponent.m_position.x;
-    mDest.y = m_transformComponent.m_position.y;
+    std::cout << "x: " << m_transformComponent->m_position.x << std::endl;
+    mDest.x = m_transformComponent->m_position.x;
+    mDest.y = m_transformComponent->m_position.y;
     mDest.w = 128;
     mDest.h = 128;
 }
 
-void SpriteComponent::Render() {
+void SpriteComponent::Render()
+{
     // TODO: ugly, find a better way
     // How to get the renderer???
-    SDL_Renderer* ren = ResourceManager::instance().m_renderer;
+    SDL_Renderer *ren = ResourceManager::instance().m_renderer;
     SDL_RenderCopy(ren, m_texture, &mSrc, &mDest);
 }

@@ -26,7 +26,7 @@ public:
     /**
      * Constructor
      */
-    SpriteComponent(std::string filename, TransformComponent &transformComponent, int x, int y, int w, int h, int frames);
+    SpriteComponent(std::string filename, std::shared_ptr<TransformComponent> transformComponent, int x, int y, int w, int h, int frames);
     /**
      * Constructor
      */
@@ -46,7 +46,7 @@ public:
 
 private:
     std::string m_filename;
-    TransformComponent m_transformComponent;
+    std::shared_ptr<TransformComponent> m_transformComponent;
     unsigned int mCurrentFrame{0};
     unsigned int mLastFrame{7};
     // An SDL Surface contains pixel data to draw an image
