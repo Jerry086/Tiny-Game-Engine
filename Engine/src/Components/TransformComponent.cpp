@@ -17,7 +17,7 @@ TransformComponent::~TransformComponent() {}
 
 void TransformComponent::Update()
 {
-    std::cout << "x: " << m_position.x << " direction: " << m_controller->GetDirectionX() << " direction x: " << m_direction.x << std::endl;
+    // std::cout << "x: " << m_position.x << " direction: " << m_controller->GetDirectionX() << " direction x: " << m_direction.x << std::endl;
     m_position.x += m_controller->GetDirectionX() * m_direction.x;
     m_position.y += m_controller->GetDirectionY() * m_direction.y;
 }

@@ -2,6 +2,8 @@
 #include "./Components/ControllerComponent.hpp"
 #include "./Components/SpriteComponent.hpp"
 #include "./Components/TransformComponent.hpp"
+#include "./Components/TileMapComponent.hpp"
+#include "./Components/HealthBarComponent.hpp"
 #include "GameObject.hpp"
 #include "SDLGraphicsProgram.h"
 // Include the pybindings
@@ -68,27 +70,6 @@ PYBIND11_MODULE(mygameengine, m)
         // .def("Update", &SpriteComponent::Update)
         .def("SetPosition", &SpriteComponent::SetPosition);
 
-    py::class_<Contact>(m, "Contact")
-        .def(py::init<>())
-        .def_readwrite("type", &Contact::type)
-        .def_readwrite("penetration", &Contact::penetration);
-
-    py::class_<Ball>(m, "Ball")
-        .def(py::init<Vec2 &, Vec2 &>(), py::arg("position"),
-             py::arg("velocity"))
-        .def("Update", &Ball::Update)
-        .def("Draw", &Ball::Draw)
-        .def("getRect", &Ball::getRect)
-        .def("CollideWithPaddle", &Ball::CollideWithPaddle)
-        .def("CollideWithWall", &Ball::CollideWithWall);
-
-    py::class_<Paddle>(m, "Paddle")
-        .def(py::init<const Vec2 &, const Vec2 &>())
-        .def("Update", &Paddle::Update)
-        .def("getRect", &Paddle::getRect)
-        .def("Draw", &Paddle::Draw)
-        .def_readwrite("position", &Paddle::position)
-        .def_readwrite("velocity", &Paddle::velocity);
 
     py::class_<Vec2>(m, "Vec2")
         .def(py::init<float, float>())
@@ -98,6 +79,20 @@ PYBIND11_MODULE(mygameengine, m)
         .def("__iadd__", &Vec2::operator+=)
         .def("__mul__", &Vec2::operator*);
 
-    m.def("CheckPaddleCollision", &CheckPaddleCollision);
-    m.def("CheckWallCollision", &CheckWallCollision);
+    py::class_<TileMapComponent, Component,
+               std::shared_ptr<TileMapComponent>>(m, "TileMapComponent")
+        .def(py::init<std::string &, int, int, int, int, int, int>(),
+             py::arg("tileSheetFileName"), py::arg("rows"), py::arg("cols"),
+             py::arg("_TileWidth"), py::arg("_TileHeight"), 
+             py::arg("_mapX"), py::arg("_mapY"));
+
+    py::class_<HealthBarComponent, Component, std::shared_ptr<HealthBarComponent>>(
+        m, "HealthBarComponent")
+        .def(py::init<const std::string &, std::shared_ptr<TransformComponent> &, int, int, int,
+                      int>(),
+             py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
+             py::arg("y"), py::arg("w"), py::arg("h"))
+        // .def("Update", &SpriteComponent::Update)
+        .def("SetHealth", &HealthBarComponent::SetHealth);
+
 }

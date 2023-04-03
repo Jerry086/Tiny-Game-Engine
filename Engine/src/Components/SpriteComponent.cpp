@@ -51,7 +51,7 @@ void SpriteComponent::Update()
     // Where we want the rectangle to be rendered at.
     // This is an actual 'quad' that will draw our
     // source image on top of.
-    std::cout << "x: " << m_transformComponent->m_position.x << std::endl;
+    // std::cout << "x: " << m_transformComponent->m_position.x << std::endl;
     mDest.x = m_transformComponent->m_position.x;
     mDest.y = m_transformComponent->m_position.y;
     mDest.w = 128;
