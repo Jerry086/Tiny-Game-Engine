@@ -6,12 +6,9 @@
 #include <sstream>
 #include <fstream>
 #include <stdlib.h>
+#include <map>
 
-#include "IGraphicsEngineRenderer.hpp"
 #include "GameObject.hpp"
-
-const int SCREEN_FPS = 30;
-const float SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 /**
  * This class sets up the main game engine
@@ -19,50 +16,23 @@ const float SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 class GameObjectManager
 {
 public:
-    /**
-     * Constructor of Engine
-     */
-    Engine();
-    /**
-     * Destructor
-     */
-    ~Engine();
-    /**
-     * Per frame update
-     */
+    GameObjectManager();
+    ~GameObjectManager();
     void Update();
-    /**
-     * Per frame render. Renders everything
-     */
     void Render();
-    /**
-     * Main Game Loop that runs forever
-     */
-    void MainGameLoop();
-    /**
-     * Initialization and shutdown pattern
-     * Explicitly call 'Start' to launch the engine
-     */
-    void Start();
-    /**
-     * Initialization and shutdown pattern
-     * Explicitly call 'Shutdown' to terminate the engine
-     */
-    void Shutdown();
 
-    /**
-     * Request to startup the Graphics Subsystem
-     */
-    void InitializeGraphicsSubSystem();
+    void AddGameObject(std::string objectID, 
+    std::shared_ptr<GameObject> go);
+    void RemoveGameObject(std::string objectID);
+
+    // void Start();
+    // void Shutdown();
+
+    std::map<std::string, std::shared_ptr<GameObject>> collision_objects;
 
 private:
-    // Engine Subsystem
-    // Setup the Graphics Rendering Engine - render is unique
-    IGraphicsEngineRenderer *mRenderer = nullptr;
-    // Collection of game objects
-    std::vector<GameObject *> m_gameObjects;
-    // flag to quit a game
-    bool m_quit = false;
+    std::map<std::string, std::shared_ptr<GameObject>> m_gameobjects;
+    
 };
 
 #endif

@@ -1,7 +1,9 @@
 #include "GameObject.hpp"
 
 #include <iostream>
-GameObject::GameObject(std::string id) { gameObject_id = id; }
+GameObject::GameObject(std::string id) { 
+    //Add to constructor
+    gameObject_id = id; }
 
 GameObject::~GameObject() {}
 
