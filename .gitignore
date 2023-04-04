@@ -7,3 +7,4 @@ finalproject-vancouver-tinyengine.code-workspace
 Engine/szeka_linuxbuild.py
 Engine/macbuild.py
 Engine/__pycache__
+*.so
