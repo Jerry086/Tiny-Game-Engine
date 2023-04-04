@@ -10,20 +10,29 @@
 #include "./Components/Component.hpp"
 #include "Vec.hpp"
 #include "./Components/TransformComponent.hpp"
+#include "GameObjectManager.hpp"
 
 class CollisionComponent : public Component
 {
 public:
-    CollisionComponent();
+    CollisionComponent(bool isStatic, int w, int h);
     ~CollisionComponent();
-    void Update(){};
+
+    Vec2 CheckCollision(std::shared_ptr<CollisionComponent> other);
+    void Update();
+
+
 
     // Check collision then call transform component to update position
     // void CheckCollisionWithWidow();
     // void CheckCollisionWithTile();
 
+TransformComponent *m_transformer;
 private:
-    TransformComponent *m_transformer;
+    
+    bool isStatic;
+    int height = 0;
+    int width = 0;
 };
 
 #endif
