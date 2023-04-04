@@ -2,10 +2,12 @@
 
 SpriteComponent::SpriteComponent(
     std::string filename, std::shared_ptr<TransformComponent> transformer,
-    int x, int y, int w, int h, int frames)
+    int x, int y, int w, int h, int frames, int numRows, int numCols)
     : m_filename(filename),
       m_transformComponent(transformer),
-      mLastFrame(frames) {
+      mLastFrame(frames),
+      mNumRows(numRows),
+      mNumCols(numCols) {
     ResourceManager::instance().LoadSurface(filename);
     m_spriteSheet = ResourceManager::instance().GetSurface(filename);
     ResourceManager::instance().LoadTexture(filename);
@@ -43,8 +45,8 @@ void SpriteComponent::Update() {
     // sprite that we want to draw.
     // how to iterate through sprite sheet?
     // TODO: fix magic number
-    mSrc.x = (mCurrentFrame % 7) * mSrc.w;
-    mSrc.y = (mCurrentFrame % 4) * mSrc.h;
+    mSrc.x = (mCurrentFrame % mNumRows) * mSrc.w;
+    mSrc.y = (mCurrentFrame % mNumCols) * mSrc.h;
 
     // Where we want the rectangle to be rendered at.
     // This is an actual 'quad' that will draw our

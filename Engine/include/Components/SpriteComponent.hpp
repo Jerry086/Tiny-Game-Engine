@@ -27,7 +27,8 @@ class SpriteComponent : public Component {
      */
     SpriteComponent(std::string filename,
                     std::shared_ptr<TransformComponent> transformComponent,
-                    int x, int y, int w, int h, int frames);
+                    int x, int y, int w, int h, int frames, int numRows,
+                    int numCols);
     /**
      * Constructor
      */

@@ -12,7 +12,7 @@ transform_component = mygameengine.TransformComponent(
     mygameengine.Vec2(10, 10), mygameengine.Vec2(100, 100), controller_component)
 
 sprite_component = mygameengine.SpriteComponent(
-    './sprites/sprite.bmp', transform_component, 100, 100, 75, 87, 27)
+    './sprites/sprite.bmp', transform_component, 100, 100, 75, 87, 27, 7, 4)
 tilemap_component = mygameengine.TileMapComponent(
     './sprites/Tiles1.bmp',8,8,64,64,20,11)
 

@@ -1,9 +1,9 @@
 #include "./Components/Component.hpp"
 #include "./Components/ControllerComponent.hpp"
-#include "./Components/SpriteComponent.hpp"
-#include "./Components/TransformComponent.hpp"
-#include "./Components/TileMapComponent.hpp"
 #include "./Components/HealthBarComponent.hpp"
+#include "./Components/SpriteComponent.hpp"
+#include "./Components/TileMapComponent.hpp"
+#include "./Components/TransformComponent.hpp"
 #include "GameObject.hpp"
 #include "SDLGraphicsProgram.h"
 // Include the pybindings
@@ -17,14 +17,13 @@ namespace py = pybind11;
 // 'm' is the interface (creates a py::module object)
 //      for which the bindings are created.
 //  The magic here is in 'template metaprogramming'
-PYBIND11_MODULE(mygameengine, m)
-{
-    m.doc() = "our game engine as a library"; // Optional docstring
+PYBIND11_MODULE(mygameengine, m) {
+    m.doc() = "our game engine as a library";  // Optional docstring
 
     py::class_<SDLGraphicsProgram>(m, "SDLGraphicsProgram")
         .def(py::init<int, int>(), py::arg("w"),
-             py::arg("h"))                        // our constructor
-        .def("clear", &SDLGraphicsProgram::clear) // Expose member methods
+             py::arg("h"))                         // our constructor
+        .def("clear", &SDLGraphicsProgram::clear)  // Expose member methods
         .def("delay", &SDLGraphicsProgram::delay)
         .def("flip", &SDLGraphicsProgram::flip)
         .def("getKeyAction", &SDLGraphicsProgram::getKeyAction)
@@ -47,8 +46,8 @@ PYBIND11_MODULE(mygameengine, m)
     py::class_<Component, std::shared_ptr<Component>>(m, "Component")
         .def(py::init<>());
 
-    py::class_<ControllerComponent, Component, std::shared_ptr<ControllerComponent>>(
-        m, "ControllerComponent")
+    py::class_<ControllerComponent, Component,
+               std::shared_ptr<ControllerComponent>>(m, "ControllerComponent")
         .def(py::init<>());
 
     // TODO constructor controller component use shared ptr
@@ -63,13 +62,14 @@ PYBIND11_MODULE(mygameengine, m)
     // TODO constructor controller component use shared ptr
     py::class_<SpriteComponent, Component, std::shared_ptr<SpriteComponent>>(
         m, "SpriteComponent")
-        .def(py::init<const std::string &, std::shared_ptr<TransformComponent> &, int, int, int,
-                      int, int>(),
-             py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
-             py::arg("y"), py::arg("w"), py::arg("h"), py::arg("frames"))
+        .def(
+            py::init<const std::string &, std::shared_ptr<TransformComponent> &,
+                     int, int, int, int, int, int, int>(),
+            py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
+            py::arg("y"), py::arg("w"), py::arg("h"), py::arg("frames"),
+            py::arg("numRows"), py::arg("numCols"))
         // .def("Update", &SpriteComponent::Update)
         .def("SetPosition", &SpriteComponent::SetPosition);
-
 
     py::class_<Vec2>(m, "Vec2")
         .def(py::init<float, float>())
@@ -79,20 +79,20 @@ PYBIND11_MODULE(mygameengine, m)
         .def("__iadd__", &Vec2::operator+=)
         .def("__mul__", &Vec2::operator*);
 
-    py::class_<TileMapComponent, Component,
-               std::shared_ptr<TileMapComponent>>(m, "TileMapComponent")
+    py::class_<TileMapComponent, Component, std::shared_ptr<TileMapComponent>>(
+        m, "TileMapComponent")
         .def(py::init<std::string &, int, int, int, int, int, int>(),
              py::arg("tileSheetFileName"), py::arg("rows"), py::arg("cols"),
-             py::arg("_TileWidth"), py::arg("_TileHeight"), 
-             py::arg("_mapX"), py::arg("_mapY"));
+             py::arg("_TileWidth"), py::arg("_TileHeight"), py::arg("_mapX"),
+             py::arg("_mapY"));
 
-    py::class_<HealthBarComponent, Component, std::shared_ptr<HealthBarComponent>>(
-        m, "HealthBarComponent")
-        .def(py::init<const std::string &, std::shared_ptr<TransformComponent> &, int, int, int,
-                      int>(),
-             py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
-             py::arg("y"), py::arg("w"), py::arg("h"))
+    py::class_<HealthBarComponent, Component,
+               std::shared_ptr<HealthBarComponent>>(m, "HealthBarComponent")
+        .def(
+            py::init<const std::string &, std::shared_ptr<TransformComponent> &,
+                     int, int, int, int>(),
+            py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
+            py::arg("y"), py::arg("w"), py::arg("h"))
         // .def("Update", &SpriteComponent::Update)
         .def("SetHealth", &HealthBarComponent::SetHealth);
-
 }
