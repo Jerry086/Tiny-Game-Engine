@@ -82,15 +82,16 @@ void ControllerComponent::Update()
     {
         m_direction_y = DIR_STAND;
     }
+    // std::cout << "x: " << m_direction_x << " y: " << m_direction_y << std::endl;
 }
 
 // Getter of current moving direction
-int8_t ControllerComponent::GetDirectionX()
+int ControllerComponent::GetDirectionX()
 {
     return m_direction_x;
 }
 
-int8_t ControllerComponent::GetDirectionY()
+int ControllerComponent::GetDirectionY()
 {
     return m_direction_y;
 }

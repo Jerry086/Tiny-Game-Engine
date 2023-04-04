@@ -12,6 +12,7 @@
 #endif
 
 #include "Component.hpp"
+#include "ResourceManager.hpp"
 
 /**
  * This is a minimal implementation of a TileMap
@@ -22,7 +23,7 @@ public:
     /**
      * Constructor for a tilemap
      */
-    TileMapComponent(std::string tileSheetFileName, int rows, int cols, int _TileWidth, int _TileHeight, int _mapX, int _mapY, SDL_Renderer *ren);
+    TileMapComponent(std::string tileSheetFileName, int rows, int cols, int _TileWidth, int _TileHeight, int _mapX, int _mapY);
     /**
      * Destructor for a tilemap
      */
