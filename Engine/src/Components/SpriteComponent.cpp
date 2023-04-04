@@ -45,8 +45,6 @@ void SpriteComponent::Update() {
     // TODO: fix magic number
     mSrc.x = (mCurrentFrame % 7) * mSrc.w;
     mSrc.y = (mCurrentFrame % 4) * mSrc.h;
-    std::cout << "mSrc.x: " << mSrc.x << std::endl;
-    std::cout << "mSrc.y: " << mSrc.y << std::endl;
 
     // Where we want the rectangle to be rendered at.
     // This is an actual 'quad' that will draw our
