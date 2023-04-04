@@ -4,5 +4,6 @@ Just some general TODOs that I don't know which file to put
 
 - [ ] Use Init and Shutdown methods instead of constructors/destructors for all components and probably game objects
 - [ ] GO manager
-- [ ] Python read json and create go and components
+- [x] Python read json and create go and components
 - [ ] refactor sdl renderer get method and resource manager so that it doesn't get passed around ugly
+- [ ] Tile map data driven

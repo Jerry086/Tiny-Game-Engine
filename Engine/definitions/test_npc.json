@@ -26,18 +26,6 @@
                 {"arg_type":"int", "value":7},
                 {"arg_type":"int", "value":4}
             ]
-        },
-        {
-            "component_type":"TileMapComponent",
-            "args":[
-                {"arg_type":"string", "value":"./sprites/Tiles1.bmp"},
-                {"arg_type":"int", "value":8},
-                {"arg_type":"int", "value":8},
-                {"arg_type":"int", "value":64},
-                {"arg_type":"int", "value":64},
-                {"arg_type":"int", "value":20},
-                {"arg_type":"int", "value":11}
-            ]
         }
     ]
 }

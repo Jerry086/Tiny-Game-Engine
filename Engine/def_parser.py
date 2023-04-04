@@ -67,3 +67,15 @@ def create_go(id, json_path):
         # NOTE: component id using index for now is the correct way, even though hacky
         go.AddComponent(str(i), components[i])
     return go
+
+def create_scene(json_path):
+    with open(json_path) as json_data_file:
+        scene_def_json_object = json.load(json_data_file)
+    
+    game_objects = []
+    game_object_defs = scene_def_json_object["game_objects"]
+    for game_object_def in game_object_defs:
+        go = create_go(game_object_def["name"], game_object_def["definition_file"])
+        game_objects.append(go)
+    return game_objects
+        
