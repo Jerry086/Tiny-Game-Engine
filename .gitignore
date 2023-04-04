@@ -6,3 +6,4 @@ finalproject-vancouver-tinyengine.code-workspace
 .clang-format
 Engine/szeka_linuxbuild.py
 Engine/macbuild.py
+*.so
