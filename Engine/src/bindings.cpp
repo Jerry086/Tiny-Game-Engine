@@ -5,6 +5,7 @@
 #include "./Components/TileMapComponent.hpp"
 #include "./Components/TransformComponent.hpp"
 #include "./Components/CollisionComponent.hpp"
+#include "./Components/BehaviorComponent.hpp"
 #include "GameObject.hpp"
 #include "GameObjectManager.hpp"
 #include "SDLGraphicsProgram.h"
@@ -61,8 +62,11 @@ PYBIND11_MODULE(mygameengine, m)
         .def(py::init<Vec2 &, Vec2 &, std::shared_ptr<ControllerComponent> &>(),
              py::arg("direction"), py::arg("new_position"),
              py::arg("controller"))
+        .def(py::init<Vec2 &, Vec2 &, std::shared_ptr<BehaviorComponent> &>(),
+             py::arg("direction"), py::arg("new_position"),
+             py::arg("controller"))
         .def_readwrite("m_position", &TransformComponent::m_position)
-        .def_readwrite("m_direction", &TransformComponent::m_direction);
+        .def_readwrite("m_speed", &TransformComponent::m_speed);
 
     // TODO constructor controller component use shared ptr
     py::class_<SpriteComponent, Component, std::shared_ptr<SpriteComponent>>(
@@ -115,4 +119,10 @@ PYBIND11_MODULE(mygameengine, m)
         .def("Render", &GameObjectManager::Render)
         .def("AddGameObject", &GameObjectManager::AddGameObject)
         .def("RemoveGameObject", &GameObjectManager::RemoveGameObject);
+
+    py::class_<BehaviorComponent, Component,
+               std::shared_ptr<BehaviorComponent>>(m, "BehaviorComponent")
+        .def(
+            py::init<>())
+        .def("Update", &BehaviorComponent::Update);
 }

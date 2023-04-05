@@ -30,13 +30,15 @@ go.AddComponent('5', tilemap_component)
 
 
 wall = mygameengine.GameObject('wall id')
+behavior_component = mygameengine.BehaviorComponent()
 transform_component2 = mygameengine.TransformComponent(
-    mygameengine.Vec2(1000, 100))
+    mygameengine.Vec2(5,5), mygameengine.Vec2(1000, 100), behavior_component)
 collision_component2 = mygameengine.CollisionComponent(
     "wall", transform_component2, 64, 64)
 sprite_component2 = mygameengine.SpriteComponent(
     './sprites/Tiles1.bmp', transform_component2, 100, 100, 64, 64, 1, 8, 8)
 
+wall.AddComponent('0',behavior_component)
 wall.AddComponent('1', transform_component2)
 wall.AddComponent('3CollisionComponent', collision_component2)
 wall.AddComponent('4', sprite_component2)

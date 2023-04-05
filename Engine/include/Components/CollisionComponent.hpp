@@ -9,6 +9,7 @@
 
 #include "./Components/Component.hpp"
 #include "Vec.hpp"
+#include "./Components/ControllerComponent.hpp"
 #include "./Components/TransformComponent.hpp"
 #include "GameObjectManager.hpp"
 
@@ -40,6 +41,7 @@ private:
     int m_height = 0;
     int m_width = 0;
     ObjectType GetType(std::string inString);
+    std::shared_ptr<ControllerComponent> m_controller = nullptr;
 };
 
 #endif
