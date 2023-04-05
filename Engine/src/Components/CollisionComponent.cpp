@@ -1,37 +1,47 @@
 #include "./Components/CollisionComponent.hpp"
 
-CollisionComponent::CollisionComponent(std::string objectType, int width, int height)
+CollisionComponent::CollisionComponent(std::string objectType, std::shared_ptr<TransformComponent> transformer, int width, int height)
 {
-    objectType = objectType;
-    height = height;
-    width = width;
+    m_objectType = objectType;
+    m_transformer = transformer;
+    m_height = height;
+    m_width = width;
 }
 
 CollisionComponent::~CollisionComponent()
 {
 }
 
-
-ObjectType CollisionComponent::GetType (std::string inString) {
-    if (inString == "player") return player;
-    if (inString == "wall") return wall;
-    if (inString == "enemy") return enemy;
-    if (inString == "interactable") return interactable;
+ObjectType CollisionComponent::GetType(std::string inString)
+{
+    if (inString == "player")
+        return player;
+    if (inString == "wall")
+        return wall;
+    if (inString == "enemy")
+        return enemy;
+    if (inString == "interactable")
+        return interactable;
     return player;
 }
 
 void CollisionComponent::Update()
 {
+    if (m_objectType == "wall" || m_objectType == "interactable")
+    {
+        return;
+    }
     // string -> objectID
     // player: dynamic, enemy: dynamic, wall: static, pac:static
     std::map<std::string, std::shared_ptr<GameObject>> list =
-        GameObjectManager::instance().collision_objects;
-    //Get collision
+        GameObjectManager::instance().m_gameobjects;
+    // Get collision
 
     std::map<std::string, std::shared_ptr<CollisionComponent>> collision_components_list;
-    for (auto it = list.begin(); it != list.end(); it++){
+    for (auto it = list.begin(); it != list.end(); it++)
+    {
         collision_components_list.emplace(it->first,
-        std::dynamic_pointer_cast<CollisionComponent>(it->second->m_components["CollisionComponent"]));
+                                          std::dynamic_pointer_cast<CollisionComponent>(it->second->m_components["3CollisionComponent"]));
     }
 
     for (auto it = collision_components_list.begin(); it != collision_components_list.end(); it++)
@@ -40,20 +50,22 @@ void CollisionComponent::Update()
         Vec2 penetration;
         // ('std::shared_ptr<CollisionComponent>' and 'CollisionComponent *')
         // static:
-        if (objectType == it->second->objectType || objectType == "wall" || objectType == "interactable")
+        if (m_objectType == it->second->m_objectType)
         {
             continue;
         }
         // dynamic
         else
         {
-            if (objectType == "player")
+            if (m_objectType == "player")
             {
-                switch (GetType(it->second->objectType))
+                switch (GetType(it->second->m_objectType))
                 {
                 case wall:
                 {
+                    std::cout << "player with wall" << std::endl;
                     Vec2 penetration = CheckCollision(it->second);
+                    std::cout << "penetration: " << penetration.x << " " << penetration.y << std::endl;
                     m_transformer->m_position += penetration;
                     break;
                 }
@@ -78,7 +90,7 @@ void CollisionComponent::Update()
             else
             {
                 // enemy + player / enemy + enemy/ enemy + wall
-                switch (GetType(it->second->objectType))
+                switch (GetType(it->second->m_objectType))
                 {
                 case wall:
                 {
@@ -105,41 +117,46 @@ void CollisionComponent::Update()
 Vec2 CollisionComponent::CheckCollision(std::shared_ptr<CollisionComponent> other)
 {
     Vec2 penetration(0, 0);
-    float projection_x = other->m_transformer->m_position.x + other->width;
-    if (m_transformer->m_position.x + width < other->m_transformer->m_position.x || m_transformer->m_position.x > projection_x)
+
+    float other_left = other->m_transformer->m_position.x;
+    float other_right = other->m_transformer->m_position.x + other->m_width;
+    float other_top = other->m_transformer->m_position.y;
+    float other_bottom = other->m_transformer->m_position.y + other->m_height;
+
+    float this_left = m_transformer->m_position.x;
+    float this_right = m_transformer->m_position.x + m_width;
+    float this_top = m_transformer->m_position.y;
+    float this_bottom = m_transformer->m_position.y + m_height;
+
+    if (this_right <= other_left || this_left >= other_right || this_bottom <= other_top || this_top >= other_bottom)
     {
-        penetration.x = 0;
+        return penetration;
     }
     else
     {
-        if (m_transformer->m_position.x + width > other->m_transformer->m_position.x)
+
+        if (this_right > other_left)
         {
             // this object is colliding others from left to right
-            penetration.x = other->m_transformer->m_position.x - m_transformer->m_position.x - width;
+            penetration.x = other_left - this_right;
         }
-        else
+        else if (this_left < other_right)
         {
-            penetration.x = other->m_transformer->m_position.x + other->width - m_transformer->m_position.x;
+            penetration.x = other_right - this_left;
         }
         // penetration.x = other->m_transformer->m_position.x - m_transformer->m_position.x;
+
+        if (this_bottom > other_top)
+        {
+            // this object is colliding others from top to bottom
+            // penetration should be negative
+            penetration.y = other_top - this_bottom;
+        }
+        else if (this_top < other_bottom)
+        {
+            penetration.y = other_bottom - this_top;
+        }
     }
 
-    float projection_y = other->m_transformer->m_position.y + other->height;
-    if (m_transformer->m_position.y + height < other->m_transformer->m_position.y || m_transformer->m_position.y > projection_y)
-    {
-        penetration.y = 0;
-    }
-    else
-    {
-        if (m_transformer->m_position.y + height > other->m_transformer->m_position.y)
-        {
-            // this object is colliding others from left to right
-            penetration.y = other->m_transformer->m_position.y - m_transformer->m_position.y - height;
-        }
-        else
-        {
-            penetration.y = other->m_transformer->m_position.y + other->height - m_transformer->m_position.y;
-        }
-    }
     return penetration;
 }

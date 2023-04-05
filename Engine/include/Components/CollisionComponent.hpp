@@ -12,29 +12,33 @@
 #include "./Components/TransformComponent.hpp"
 #include "GameObjectManager.hpp"
 
-enum ObjectType { player, wall, enemy, interactable };
+enum ObjectType
+{
+    player,
+    wall,
+    enemy,
+    interactable
+};
 
 class CollisionComponent : public Component
 {
 public:
-    CollisionComponent(std::string objectType, int w, int h);
+    CollisionComponent(std::string objectType, std::shared_ptr<TransformComponent> transformer, int w, int h);
     ~CollisionComponent();
 
     Vec2 CheckCollision(std::shared_ptr<CollisionComponent> other);
     void Update();
 
-
-
     // Check collision then call transform component to update position
     // void CheckCollisionWithWidow();
     // void CheckCollisionWithTile();
 
-TransformComponent *m_transformer;
-std::string objectType;
+    std::shared_ptr<TransformComponent> m_transformer;
+    std::string m_objectType;
 
 private:
-    int height = 0;
-    int width = 0;
+    int m_height = 0;
+    int m_width = 0;
     ObjectType GetType(std::string inString);
 };
 
