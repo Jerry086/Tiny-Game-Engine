@@ -19,10 +19,10 @@ SOURCE = "./src/*.cpp ./src/Components/*.cpp"
 ARGUMENTS = "-D MAC -std=c++14 -shared -undefined dynamic_lookup -rpath /Library/Frameworks/"
 
 # Which directories do we want to include.
-INCLUDE_DIR = "-I ./include/ -I./pybind11/include/ -I/Library/Frameworks/SDL2.framework/Headers `python3.11 -m pybind11 --includes`"
+INCLUDE_DIR = "-I ./include/ -I./pybind11/include/ -I/Library/Frameworks/SDL2.framework/Headers `python3.9 -m pybind11 --includes`"
 
 # What libraries do we want to include
-LIBRARIES = "-F/Library/Frameworks -framework SDL2 `python3.11-config --ldflags`"
+LIBRARIES = "-F/Library/Frameworks -framework SDL2 `python3.9-config --ldflags`"
 
 # The name of our executable
 EXECUTABLE = "mygameengine.so"

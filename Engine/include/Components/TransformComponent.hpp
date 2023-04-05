@@ -7,12 +7,14 @@
 #include "ControllerComponent.hpp"
 #include "Vec.hpp"
 
-class TransformComponent : public Component {
-   public:
+class TransformComponent : public Component
+{
+public:
     // Position of a game object
     Vec2 m_position;
     Vec2 m_direction;
     // Constructor
+    TransformComponent(Vec2 new_position);
     TransformComponent(Vec2 direction, Vec2 new_position,
                        std::shared_ptr<ControllerComponent> controller);
     // Destructor
@@ -20,8 +22,8 @@ class TransformComponent : public Component {
     // Update position of a game object
     void Update() override;
 
-   private:
-    std::shared_ptr<ControllerComponent> m_controller;
+private:
+    std::shared_ptr<ControllerComponent> m_controller = nullptr;
 };
 
 #endif

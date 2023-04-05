@@ -23,18 +23,17 @@ public:
     void Update();
     void Render();
 
-    void AddGameObject(std::string objectID, 
-    std::shared_ptr<GameObject> go);
+    void AddGameObject(std::string objectID, std::shared_ptr<GameObject> go);
     void RemoveGameObject(std::string objectID);
 
     // void Start();
     // void Shutdown();
 
-    std::map<std::string, std::shared_ptr<GameObject>> collision_objects;
+    // std::map<std::string, std::shared_ptr<GameObject>> collision_objects;
+    std::map<std::string, std::shared_ptr<GameObject>> m_gameobjects;
 
 private:
-    std::map<std::string, std::shared_ptr<GameObject>> m_gameobjects;
-    
+    // std::map<std::string, std::shared_ptr<GameObject>> m_gameobjects;
 };
 
 #endif

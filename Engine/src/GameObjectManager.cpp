@@ -13,8 +13,8 @@ GameObjectManager::GameObjectManager() {}
 // Proper shutdown and destroy initialized objects
 GameObjectManager::~GameObjectManager() {}
 
-
-GameObjectManager &GameObjectManager::instance() {
+GameObjectManager &GameObjectManager::instance()
+{
     static GameObjectManager instance;
     return instance;
 }
@@ -28,7 +28,6 @@ void GameObjectManager::Update()
     }
 }
 
-
 void GameObjectManager::Render()
 {
     for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++)
@@ -37,12 +36,13 @@ void GameObjectManager::Render()
     }
 }
 
-
-void GameObjectManager::AddGameObject(std::string objectID, 
-    std::shared_ptr<GameObject> go){
-        m_gameobjects.emplace(objectID, go);
+void GameObjectManager::AddGameObject(std::string objectID,
+                                      std::shared_ptr<GameObject> go)
+{
+    m_gameobjects.emplace(objectID, go);
 }
 
-void GameObjectManager::RemoveGameObject(std::string objectID){
+void GameObjectManager::RemoveGameObject(std::string objectID)
+{
     m_gameobjects.erase(objectID);
 }
