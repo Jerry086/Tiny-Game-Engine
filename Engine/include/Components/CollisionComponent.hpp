@@ -17,7 +17,7 @@ enum ObjectType { player, wall, enemy, interactable };
 class CollisionComponent : public Component
 {
 public:
-    CollisionComponent(ObjectType objectType, int w, int h);
+    CollisionComponent(std::string objectType, int w, int h);
     ~CollisionComponent();
 
     Vec2 CheckCollision(std::shared_ptr<CollisionComponent> other);
@@ -30,11 +30,12 @@ public:
     // void CheckCollisionWithTile();
 
 TransformComponent *m_transformer;
-ObjectType objectType;
+std::string objectType;
 
 private:
     int height = 0;
     int width = 0;
+    ObjectType GetType(std::string inString);
 };
 
 #endif

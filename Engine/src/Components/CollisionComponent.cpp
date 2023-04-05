@@ -1,6 +1,6 @@
 #include "./Components/CollisionComponent.hpp"
 
-CollisionComponent::CollisionComponent(ObjectType objectType, int width, int height)
+CollisionComponent::CollisionComponent(std::string objectType, int width, int height)
 {
     objectType = objectType;
     height = height;
@@ -9,6 +9,15 @@ CollisionComponent::CollisionComponent(ObjectType objectType, int width, int hei
 
 CollisionComponent::~CollisionComponent()
 {
+}
+
+
+ObjectType CollisionComponent::GetType (std::string inString) {
+    if (inString == "player") return player;
+    if (inString == "wall") return wall;
+    if (inString == "enemy") return enemy;
+    if (inString == "interactable") return interactable;
+    return player;
 }
 
 void CollisionComponent::Update()
@@ -31,16 +40,16 @@ void CollisionComponent::Update()
         Vec2 penetration;
         // ('std::shared_ptr<CollisionComponent>' and 'CollisionComponent *')
         // static:
-        if (objectType == it->second->objectType || objectType == wall || objectType == interactable)
+        if (objectType == it->second->objectType || objectType == "wall" || objectType == "interactable")
         {
             continue;
         }
         // dynamic
         else
         {
-            if (objectType == player)
+            if (objectType == "player")
             {
-                switch (it->second->objectType)
+                switch (GetType(it->second->objectType))
                 {
                 case wall:
                 {
@@ -69,7 +78,7 @@ void CollisionComponent::Update()
             else
             {
                 // enemy + player / enemy + enemy/ enemy + wall
-                switch (it->second->objectType)
+                switch (GetType(it->second->objectType))
                 {
                 case wall:
                 {
