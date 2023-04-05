@@ -12,10 +12,12 @@
 #include "./Components/TransformComponent.hpp"
 #include "GameObjectManager.hpp"
 
+enum ObjectType { player, wall, enemy, interactable };
+
 class CollisionComponent : public Component
 {
 public:
-    CollisionComponent(bool isStatic, int w, int h);
+    CollisionComponent(ObjectType objectType, int w, int h);
     ~CollisionComponent();
 
     Vec2 CheckCollision(std::shared_ptr<CollisionComponent> other);
@@ -28,9 +30,9 @@ public:
     // void CheckCollisionWithTile();
 
 TransformComponent *m_transformer;
+ObjectType objectType;
+
 private:
-    
-    bool isStatic;
     int height = 0;
     int width = 0;
 };

@@ -95,4 +95,15 @@ PYBIND11_MODULE(mygameengine, m) {
             py::arg("y"), py::arg("w"), py::arg("h"))
         // .def("Update", &SpriteComponent::Update)
         .def("SetHealth", &HealthBarComponent::SetHealth);
+
+
+    // py::class_<CollisionComponent, Component,
+    //            std::shared_ptr<CollisionComponent>>(m, "CollisionComponent")
+    //     .def(
+    //         py::init<const std::string &, std::shared_ptr<TransformComponent> &,
+    //                  int, int, int, int>(),
+    //         py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
+    //         py::arg("y"), py::arg("w"), py::arg("h"))
+    //     // .def("Update", &SpriteComponent::Update)
+    //     .def("SetHealth", &HealthBarComponent::SetHealth);
 }
