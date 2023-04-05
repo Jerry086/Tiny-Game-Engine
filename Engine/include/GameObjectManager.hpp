@@ -9,6 +9,7 @@
 #include <map>
 
 #include "GameObject.hpp"
+// #include "./Components/CollisionComponent.hpp"
 
 /**
  * This class sets up the main game engine
@@ -16,6 +17,7 @@
 class GameObjectManager
 {
 public:
+    static GameObjectManager &instance();
     GameObjectManager();
     ~GameObjectManager();
     void Update();

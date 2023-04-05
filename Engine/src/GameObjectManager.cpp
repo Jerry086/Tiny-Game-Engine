@@ -13,6 +13,12 @@ GameObjectManager::GameObjectManager() {}
 // Proper shutdown and destroy initialized objects
 GameObjectManager::~GameObjectManager() {}
 
+
+GameObjectManager &GameObjectManager::instance() {
+    static GameObjectManager instance;
+    return instance;
+}
+
 // Update SDL
 void GameObjectManager::Update()
 {
