@@ -1,0 +1,13 @@
+{
+    "game_objects":[
+        {
+            "name": "test_npc",
+            "definition_file": "./definitions/test_npc.json"
+        },
+        {
+            "name": "test_tile_map",
+            "definition_file": "./definitions/test_tilemap.json"
+        }
+    ]
+
+}

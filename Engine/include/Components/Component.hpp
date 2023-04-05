@@ -14,8 +14,10 @@ class Component {
     Component();
     virtual ~Component();
 
+    virtual void Init(){};
     virtual void Update(){};
     virtual void Render(){};
+    virtual void Shutdown(){};
 
    private:
 };

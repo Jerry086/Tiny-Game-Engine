@@ -54,6 +54,7 @@ void SpriteComponent::Update() {
     // std::cout << "x: " << m_transformComponent->m_position.x << std::endl;
     mDest.x = m_transformComponent->m_position.x;
     mDest.y = m_transformComponent->m_position.y;
+    // TODO: no magic numbers
     mDest.w = 128;
     mDest.h = 128;
 }
