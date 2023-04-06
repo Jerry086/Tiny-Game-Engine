@@ -64,9 +64,9 @@ void CollisionComponent::Update()
                 {
                 case wall:
                 {
-                    std::cout << "player with wall" << std::endl;
+                    // std::cout << "player with wall" << std::endl;
                     Vec2 penetration = CheckCollision(it->second);
-                    std::cout << "penetration: " << penetration.x << " " << penetration.y << std::endl;
+                    // std::cout << "penetration: " << penetration.x << " " << penetration.y << std::endl;
                     m_transformer->m_position += penetration;
                     break;
                 }
@@ -79,7 +79,7 @@ void CollisionComponent::Update()
                 case enemy:
                 {
                     // TODO: Game over!
-                    // GameObjectManager::instance().removeObject(this);
+
                     break;
                 }
 
@@ -119,13 +119,13 @@ Vec2 CollisionComponent::CheckCollision(std::shared_ptr<CollisionComponent> othe
 {
     Vec2 penetration(0, 0);
 
-    //other object
+    // other object
     float other_left = other->m_transformer->m_position.x;
     float other_right = other->m_transformer->m_position.x + other->m_width;
     float other_top = other->m_transformer->m_position.y;
     float other_bottom = other->m_transformer->m_position.y + other->m_height;
 
-    //current object -> player or enemy
+    // current object -> player or enemy
     float this_left = m_transformer->m_position.x;
     float this_right = m_transformer->m_position.x + m_width;
     float this_top = m_transformer->m_position.y;
@@ -141,16 +141,16 @@ Vec2 CollisionComponent::CheckCollision(std::shared_ptr<CollisionComponent> othe
     }
     else
     {
-        //have collision
+        // have collision
         if (m_controller->GetDirectionX() > 0)
         {
             // this object is colliding others from left to right
-            std::cout<<"collide from left to right" <<std::endl;
+            // std::cout << "collide from left to right" << std::endl;
             penetration.x = other_left - this_right;
         }
         else if (m_controller->GetDirectionX() < 0)
         {
-            std::cout<<"collide from left to right" <<std::endl;
+            // std::cout << "collide from left to right" << std::endl;
             penetration.x = other_right - this_left;
         }
         // penetration.x = other->m_transformer->m_position.x - m_transformer->m_position.x;

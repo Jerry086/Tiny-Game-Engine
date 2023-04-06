@@ -11,10 +11,10 @@ BehaviorComponent::~BehaviorComponent() {}
 
 void BehaviorComponent::Update()
 {
-    std::cout << "counter " << counter <<std::endl;
     counter++;
-    if(counter > 150){
-            std::cout << "m_direction_x " << m_direction_x <<std::endl;
+    if (counter > 150)
+    {
+        std::cout << "m_direction_x " << m_direction_x << std::endl;
         m_direction_x = -m_direction_x;
         counter = 0;
     }
