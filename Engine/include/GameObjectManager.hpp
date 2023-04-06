@@ -3,13 +3,10 @@
 
 #include <iostream>
 #include <string>
-#include <sstream>
-#include <fstream>
-#include <stdlib.h>
 #include <map>
+#include <memory>
 
 #include "GameObject.hpp"
-// #include "./Components/CollisionComponent.hpp"
 
 /**
  * This class sets up the main game engine
@@ -18,8 +15,6 @@ class GameObjectManager
 {
 public:
     static GameObjectManager &instance();
-    GameObjectManager();
-    ~GameObjectManager();
     void Update();
     void Render();
 
@@ -34,6 +29,11 @@ public:
 
 private:
     // std::map<std::string, std::shared_ptr<GameObject>> m_gameobjects;
+
+    GameObjectManager();
+    ~GameObjectManager();
+    GameObjectManager(const GameObjectManager &) = delete;
+    GameObjectManager &operator=(const GameObjectManager &) = delete;
 };
 
 #endif

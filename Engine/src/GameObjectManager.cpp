@@ -1,16 +1,9 @@
 #include "GameObjectManager.hpp"
 
-#include <map>
-#include <string>
-#include <memory>
 #include <iterator>
 
-// Initialization function
-// Returns a true or false value based on successful completion of setup.
-// Takes in dimensions of window.
 GameObjectManager::GameObjectManager() {}
 
-// Proper shutdown and destroy initialized objects
 GameObjectManager::~GameObjectManager() {}
 
 GameObjectManager &GameObjectManager::instance()
