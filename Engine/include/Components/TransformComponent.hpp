@@ -15,20 +15,20 @@ public:
     Vec2 m_position;
     Vec2 m_speed;
     // Constructor
-    TransformComponent(Vec2 new_position);
-    TransformComponent(Vec2 direction, Vec2 new_position,
+    TransformComponent(Vec2 position);
+    TransformComponent(Vec2 direction, Vec2 position,
                        std::shared_ptr<ControllerComponent> controller);
-    TransformComponent(Vec2 direction, Vec2 new_position,
-                        std::shared_ptr<BehaviorComponent> controller);
+    TransformComponent(Vec2 direction, Vec2 position,
+                       std::shared_ptr<BehaviorComponent> behavior);
     // Destructor
     ~TransformComponent();
     // Update position of a game object
     void Update() override;
+
     std::shared_ptr<ControllerComponent> m_controller = nullptr;
-    std::shared_ptr<BehaviorComponent> behavior_controller = nullptr;
+    std::shared_ptr<BehaviorComponent> m_behavior = nullptr;
 
 private:
-
 };
 
 #endif
