@@ -34,9 +34,6 @@ PYBIND11_MODULE(mygameengine, m)
         .def("loop", &SDLGraphicsProgram::loop)
         .def("DrawPoint", &SDLGraphicsProgram::DrawPoint)
         .def("DrawRectangle", &SDLGraphicsProgram::DrawRectangle);
-    // We do not need to expose everything to our users!
-    //            .def("getSDLWindow", &SDLGraphicsProgram::getSDLWindow,
-    //            py::return_value_policy::reference)
 
     py::class_<GameObject, std::shared_ptr<GameObject>>(m, "GameObject")
         .def(py::init<const std::string &>(), py::arg("id"))
@@ -54,7 +51,6 @@ PYBIND11_MODULE(mygameengine, m)
         .def(py::init<>())
         .def("QuitProgram", &ControllerComponent::QuitProgram);
 
-    // TODO constructor controller component use shared ptr
     py::class_<TransformComponent, Component,
                std::shared_ptr<TransformComponent>>(m, "TransformComponent")
         .def(py::init<Vec2 &>(),
@@ -68,16 +64,14 @@ PYBIND11_MODULE(mygameengine, m)
         .def_readwrite("m_position", &TransformComponent::m_position)
         .def_readwrite("m_speed", &TransformComponent::m_speed);
 
-    // TODO constructor controller component use shared ptr
-    py::class_<SpriteComponent, Component, std::shared_ptr<SpriteComponent>>(
-        m, "SpriteComponent")
+    py::class_<SpriteComponent, Component,
+               std::shared_ptr<SpriteComponent>>(m, "SpriteComponent")
         .def(
             py::init<const std::string &, std::shared_ptr<TransformComponent> &,
                      int, int, int, int, int, int, int>(),
             py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
             py::arg("y"), py::arg("w"), py::arg("h"), py::arg("frames"),
             py::arg("numRows"), py::arg("numCols"))
-        // .def("Update", &SpriteComponent::Update)
         .def("SetPosition", &SpriteComponent::SetPosition);
 
     py::class_<Vec2>(m, "Vec2")
@@ -102,15 +96,13 @@ PYBIND11_MODULE(mygameengine, m)
                      int, int, int, int>(),
             py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
             py::arg("y"), py::arg("w"), py::arg("h"))
-        // .def("Update", &SpriteComponent::Update)
         .def("SetHealth", &HealthBarComponent::SetHealth);
 
     py::class_<CollisionComponent, Component,
                std::shared_ptr<CollisionComponent>>(m, "CollisionComponent")
         .def(
             py::init<const std::string &, std::shared_ptr<TransformComponent> &, int, int>(),
-            py::arg("objectType"), py::arg("transformComponent"), py::arg("w"), py::arg("h"))
-        .def("Update", &CollisionComponent::Update);
+            py::arg("objectType"), py::arg("transformComponent"), py::arg("w"), py::arg("h"));
 
     py::class_<GameObjectManager, std::unique_ptr<GameObjectManager, py::nodelete>>(m, "GameObjectManager")
         .def(py::init([]()
@@ -122,7 +114,5 @@ PYBIND11_MODULE(mygameengine, m)
 
     py::class_<BehaviorComponent, Component,
                std::shared_ptr<BehaviorComponent>>(m, "BehaviorComponent")
-        .def(
-            py::init<>())
-        .def("Update", &BehaviorComponent::Update);
+        .def(py::init<>());
 }

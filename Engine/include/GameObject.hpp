@@ -7,12 +7,6 @@
 
 #include "./Components/Component.hpp"
 
-#if defined(LINUX) || defined(MINGW)
-#include <SDL2/SDL.h>
-#else // This works for Mac
-#include <SDL.h>
-#endif
-
 class GameObject
 {
 public:
@@ -25,17 +19,15 @@ public:
     void Update();
     void Render();
 
-    // void AddComponent(std::string
-    // componentName,std::shared_ptr<Component>component);
     void AddComponent(std::string componentName,
                       std::shared_ptr<Component> component);
     void RemoveComponent(std::string componentName);
+
     std::map<std::string, std::shared_ptr<Component>> m_components;
-    std::string gameObject_id;
 
 private:
     // std::map<std::string, Component> m_components;
-
+    std::string gameObject_id;
 };
 
 #endif
