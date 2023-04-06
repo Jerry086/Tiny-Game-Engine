@@ -11,11 +11,11 @@
 #include "Component.hpp"
 
 // Directions of movement
-const int DIR_LEFT = -1;
-const int DIR_RIGHT = 1;
-const int DIR_UP = -1;
-const int DIR_DOWN = 1;
-const int DIR_STAND = 0;
+const int8_t DIR_LEFT = -1;
+const int8_t DIR_RIGHT = 1;
+const int8_t DIR_UP = -1;
+const int8_t DIR_DOWN = 1;
+const int8_t DIR_STAND = 0;
 
 class ControllerComponent : public Component
 {
@@ -27,13 +27,13 @@ public:
     // Analyze input from player, update the direction
     void Update() override;
     // Getter of movement direction
-    int GetDirectionX();
-    int GetDirectionY();
+    int8_t GetDirectionX();
+    int8_t GetDirectionY();
     bool QuitProgram();
 
 private:
-    int m_direction_x = 0;
-    int m_direction_y = 0;
+    int8_t m_direction_x = 0;
+    int8_t m_direction_y = 0;
     // record key state, 0 -> Key 'a' or 'left', 1 -> Key 'd' or 'right'
     bool m_buttons[4] = {};
     bool m_quit = false;

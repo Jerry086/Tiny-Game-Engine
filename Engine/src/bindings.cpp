@@ -32,7 +32,6 @@ PYBIND11_MODULE(mygameengine, m)
         .def("flip", &SDLGraphicsProgram::flip)
         .def("getKeyAction", &SDLGraphicsProgram::getKeyAction)
         .def("loop", &SDLGraphicsProgram::loop)
-        .def("drawRect", &SDLGraphicsProgram::drawRect)
         .def("DrawPoint", &SDLGraphicsProgram::DrawPoint)
         .def("DrawRectangle", &SDLGraphicsProgram::DrawRectangle);
     // We do not need to expose everything to our users!
@@ -52,7 +51,8 @@ PYBIND11_MODULE(mygameengine, m)
 
     py::class_<ControllerComponent, Component,
                std::shared_ptr<ControllerComponent>>(m, "ControllerComponent")
-        .def(py::init<>());
+        .def(py::init<>())
+        .def("QuitProgram", &ControllerComponent::QuitProgram);
 
     // TODO constructor controller component use shared ptr
     py::class_<TransformComponent, Component,
