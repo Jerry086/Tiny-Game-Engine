@@ -7,23 +7,20 @@
 #include <SDL.h>
 #endif
 
-#include "./Components/Component.hpp"
-#include "./ResourceManager.hpp"
+#include "Component.hpp"
 
 // a new component or just use SpriteCOmponent?
 class CameraComponent : public Component
 {
 public:
-    CameraComponent( );
+    CameraComponent();
     ~CameraComponent();
 
     void Update() override;
-    void Render() override;
 
-    void SetCamera();
+    // void SetCamera();
 
 private:
-
 };
 
 #endif

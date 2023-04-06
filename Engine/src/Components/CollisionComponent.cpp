@@ -23,39 +23,38 @@ ObjectType CollisionComponent::GetType(std::string inString)
         return enemy;
     if (inString == "interactable")
         return interactable;
-    return player;
+    return interactable;
 }
 
 void CollisionComponent::Update()
 {
+    // ignore static objects
     if (m_objectType == "wall" || m_objectType == "interactable")
     {
         return;
     }
-    // string -> objectID
+    // string -> game object id
     // player: dynamic, enemy: dynamic, wall: static, pac:static
     std::map<std::string, std::shared_ptr<GameObject>> list =
         GameObjectManager::instance().m_gameobjects;
-    // Get collision
 
+    // Get collision components
     std::map<std::string, std::shared_ptr<CollisionComponent>> collision_components_list;
     for (auto it = list.begin(); it != list.end(); it++)
     {
+        // must match component id in JSON file!!!
         collision_components_list.emplace(it->first,
                                           std::dynamic_pointer_cast<CollisionComponent>(it->second->m_components["3CollisionComponent"]));
     }
 
+    // detect collisions, O(N^2)
     for (auto it = collision_components_list.begin(); it != collision_components_list.end(); it++)
     {
-        // check if equal itself
-        Vec2 penetration;
-        // ('std::shared_ptr<CollisionComponent>' and 'CollisionComponent *')
-        // static:
+        // check if equal itself, player + player / enemy + enemy
         if (m_objectType == it->second->m_objectType)
         {
             continue;
         }
-        // dynamic
         else
         {
             if (m_objectType == "player")
@@ -64,12 +63,11 @@ void CollisionComponent::Update()
                 {
                 case wall:
                 {
-                    // std::cout << "player with wall" << std::endl;
                     Vec2 penetration = CheckCollision(it->second);
-                    // std::cout << "penetration: " << penetration.x << " " << penetration.y << std::endl;
                     m_transformer->m_position += penetration;
                     break;
                 }
+
                 case interactable:
                 {
                     GameObjectManager::instance().RemoveGameObject(it->first);
@@ -79,7 +77,6 @@ void CollisionComponent::Update()
                 case enemy:
                 {
                     // TODO: Game over!
-
                     break;
                 }
 
@@ -90,7 +87,7 @@ void CollisionComponent::Update()
             }
             else
             {
-                // enemy + player / enemy + enemy/ enemy + wall
+                // enemy + player / enemy + wall
                 switch (GetType(it->second->m_objectType))
                 {
                 case wall:
@@ -117,7 +114,7 @@ void CollisionComponent::Update()
 
 Vec2 CollisionComponent::CheckCollision(std::shared_ptr<CollisionComponent> other)
 {
-    Vec2 penetration(0, 0);
+    Vec2 penetration;
 
     // other object
     float other_left = other->m_transformer->m_position.x;
@@ -131,29 +128,24 @@ Vec2 CollisionComponent::CheckCollision(std::shared_ptr<CollisionComponent> othe
     float this_top = m_transformer->m_position.y;
     float this_bottom = m_transformer->m_position.y + m_height;
 
-    // std::cout<<"this_right " << this_right << std::endl;
-    // std::cout<<"other_left " << other_left << std::endl;
-    // std::cout<<"this_top " << this_top << std::endl;
-    // std::cout<<"other_bottom " << other_bottom << std::endl;
+    // no collision
     if (this_right <= other_left || this_left >= other_right || this_bottom <= other_top || this_top >= other_bottom)
     {
         return penetration;
     }
     else
     {
-        // have collision
+        // have collision, bounce back in x-axis in priority
         if (m_controller->GetDirectionX() > 0)
         {
             // this object is colliding others from left to right
-            // std::cout << "collide from left to right" << std::endl;
             penetration.x = other_left - this_right;
         }
         else if (m_controller->GetDirectionX() < 0)
         {
-            // std::cout << "collide from left to right" << std::endl;
+            // this object is colliding others from right to left
             penetration.x = other_right - this_left;
         }
-        // penetration.x = other->m_transformer->m_position.x - m_transformer->m_position.x;
 
         else if (m_controller->GetDirectionY() > 0)
         {
