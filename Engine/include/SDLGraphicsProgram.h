@@ -24,8 +24,6 @@
 #include <vector>
 #include "constants.hpp"
 #include "Vec.hpp"
-#include "Ball.hpp"
-#include "Paddle.hpp"
 #include "ResourceManager.hpp"
 // Purpose:
 // This class sets up a full graphics program using SDL
@@ -52,7 +50,6 @@ public:
     // loop that runs forever
     void loop();
 
-    void drawRect(Ball b, Paddle p1, Paddle p2);
     // Get Pointer to Window
     SDL_Window *getSDLWindow();
     // Draw a simple rectangle
@@ -144,16 +141,6 @@ SDLGraphicsProgram::~SDLGraphicsProgram()
 void SDLGraphicsProgram::DrawPoint(int x, int y)
 {
     SDL_RenderDrawPoint(gRenderer, x, y);
-}
-
-void SDLGraphicsProgram::drawRect(Ball b, Paddle p1, Paddle p2)
-{
-    SDL_Rect bRect = b.getRect();
-    SDL_Rect p1Rect = p1.getRect();
-    SDL_Rect p2Rect = p2.getRect();
-    SDL_RenderFillRect(gRenderer, &bRect);
-    SDL_RenderFillRect(gRenderer, &p1Rect);
-    SDL_RenderFillRect(gRenderer, &p2Rect);
 }
 
 // Initialize OpenGL
@@ -294,99 +281,99 @@ std::string SDLGraphicsProgram::getKeyAction()
     return "empty";
 }
 
-Contact CheckPaddleCollision(Ball const &ball, Paddle const &paddle)
-{
-    float ballLeft = ball.position.x;
-    float ballRight = ball.position.x + BALL_WIDTH;
-    float ballTop = ball.position.y;
-    float ballBottom = ball.position.y + BALL_HEIGHT;
+// Contact CheckPaddleCollision(Ball const &ball, Paddle const &paddle)
+// {
+//     float ballLeft = ball.position.x;
+//     float ballRight = ball.position.x + BALL_WIDTH;
+//     float ballTop = ball.position.y;
+//     float ballBottom = ball.position.y + BALL_HEIGHT;
 
-    float paddleLeft = paddle.position.x;
-    float paddleRight = paddle.position.x + PADDLE_WIDTH;
-    float paddleTop = paddle.position.y;
-    float paddleBottom = paddle.position.y + PADDLE_HEIGHT;
+//     float paddleLeft = paddle.position.x;
+//     float paddleRight = paddle.position.x + PADDLE_WIDTH;
+//     float paddleTop = paddle.position.y;
+//     float paddleBottom = paddle.position.y + PADDLE_HEIGHT;
 
-    Contact contact{};
+//     Contact contact{};
 
-    if (ballLeft >= paddleRight)
-    {
-        return contact;
-    }
+//     if (ballLeft >= paddleRight)
+//     {
+//         return contact;
+//     }
 
-    if (ballRight <= paddleLeft)
-    {
-        return contact;
-    }
+//     if (ballRight <= paddleLeft)
+//     {
+//         return contact;
+//     }
 
-    if (ballTop >= paddleBottom)
-    {
-        return contact;
-    }
+//     if (ballTop >= paddleBottom)
+//     {
+//         return contact;
+//     }
 
-    if (ballBottom <= paddleTop)
-    {
-        return contact;
-    }
+//     if (ballBottom <= paddleTop)
+//     {
+//         return contact;
+//     }
 
-    float paddleRangeUpper = paddleBottom - (2.0f * PADDLE_HEIGHT / 3.0f);
-    float paddleRangeMiddle = paddleBottom - (PADDLE_HEIGHT / 3.0f);
+//     float paddleRangeUpper = paddleBottom - (2.0f * PADDLE_HEIGHT / 3.0f);
+//     float paddleRangeMiddle = paddleBottom - (PADDLE_HEIGHT / 3.0f);
 
-    if (ball.velocity.x < 0)
-    {
+//     if (ball.velocity.x < 0)
+//     {
 
-        contact.penetration = paddleRight - ballLeft;
-    }
-    else if (ball.velocity.x > 0)
-    {
+//         contact.penetration = paddleRight - ballLeft;
+//     }
+//     else if (ball.velocity.x > 0)
+//     {
 
-        contact.penetration = paddleLeft - ballRight;
-    }
+//         contact.penetration = paddleLeft - ballRight;
+//     }
 
-    if ((ballBottom > paddleTop) && (ballBottom < paddleRangeUpper))
-    {
-        contact.type = 1;
-    }
-    else if ((ballBottom > paddleRangeUpper) && (ballBottom < paddleRangeMiddle))
-    {
-        contact.type = 2;
-    }
-    else
-    {
-        contact.type = 3;
-    }
+//     if ((ballBottom > paddleTop) && (ballBottom < paddleRangeUpper))
+//     {
+//         contact.type = 1;
+//     }
+//     else if ((ballBottom > paddleRangeUpper) && (ballBottom < paddleRangeMiddle))
+//     {
+//         contact.type = 2;
+//     }
+//     else
+//     {
+//         contact.type = 3;
+//     }
 
-    return contact;
-}
+//     return contact;
+// }
 
-Contact CheckWallCollision(Ball const &ball)
-{
-    float ballLeft = ball.position.x;
-    float ballRight = ball.position.x + BALL_WIDTH;
-    float ballTop = ball.position.y;
-    float ballBottom = ball.position.y + BALL_HEIGHT;
+// Contact CheckWallCollision(Ball const &ball)
+// {
+//     float ballLeft = ball.position.x;
+//     float ballRight = ball.position.x + BALL_WIDTH;
+//     float ballTop = ball.position.y;
+//     float ballBottom = ball.position.y + BALL_HEIGHT;
 
-    Contact contact{};
+//     Contact contact{};
 
-    if (ballLeft < 0.0f)
-    {
-        contact.type = 4;
-    }
-    else if (ballRight > WINDOW_WIDTH)
-    {
-        contact.type = 5;
-    }
-    else if (ballTop < 0.0f)
-    {
-        contact.type = 1;
-        contact.penetration = -ballTop;
-    }
-    else if (ballBottom > WINDOW_HEIGHT)
-    {
-        contact.type = 3;
-        contact.penetration = WINDOW_HEIGHT - ballBottom;
-    }
+//     if (ballLeft < 0.0f)
+//     {
+//         contact.type = 4;
+//     }
+//     else if (ballRight > WINDOW_WIDTH)
+//     {
+//         contact.type = 5;
+//     }
+//     else if (ballTop < 0.0f)
+//     {
+//         contact.type = 1;
+//         contact.penetration = -ballTop;
+//     }
+//     else if (ballBottom > WINDOW_HEIGHT)
+//     {
+//         contact.type = 3;
+//         contact.penetration = WINDOW_HEIGHT - ballBottom;
+//     }
 
-    return contact;
-}
+//     return contact;
+// }
 
 #endif
