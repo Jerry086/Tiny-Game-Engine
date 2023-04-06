@@ -7,10 +7,9 @@
 #include <SDL.h>
 #endif
 
-#include "./Components/Component.hpp"
-#include "Vec.hpp"
-#include "./Components/ControllerComponent.hpp"
-#include "./Components/TransformComponent.hpp"
+#include "Component.hpp"
+#include "ControllerComponent.hpp"
+#include "TransformComponent.hpp"
 #include "GameObjectManager.hpp"
 
 enum ObjectType
@@ -29,10 +28,6 @@ public:
 
     Vec2 CheckCollision(std::shared_ptr<CollisionComponent> other);
     void Update();
-
-    // Check collision then call transform component to update position
-    // void CheckCollisionWithWidow();
-    // void CheckCollisionWithTile();
 
     std::shared_ptr<TransformComponent> m_transformer;
     std::string m_objectType;

@@ -1,7 +1,5 @@
 #include "./Components/BehaviorComponent.hpp"
 
-#include "Vec.hpp"
-
 // Construct a transform component with an initial position (x, y)
 BehaviorComponent::BehaviorComponent()
 {
