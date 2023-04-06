@@ -6,7 +6,6 @@
 #include "Component.hpp"
 #include "Vec.hpp"
 
-
 // Directions of movement
 class BehaviorComponent : public Component
 {
@@ -23,8 +22,9 @@ public:
 
 private:
     int m_direction_x = -1;
-    int m_direction_y = 0;
-    int counter = 0;
+    int m_direction_y = 1;
+    int counter_x = 0;
+    int counter_y = 0;
 };
 
 #endif
