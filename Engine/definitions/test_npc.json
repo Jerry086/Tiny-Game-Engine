@@ -1,0 +1,31 @@
+{
+    "type_name": "test_npc",
+    "components": [
+        {
+            "component_type":"ControllerComponent",
+            "args":[]
+        },
+        {
+            "component_type":"TransformComponent",
+            "args":[
+                {"arg_type":"Vec2", "x":10, "y":10},
+                {"arg_type":"Vec2", "x":100, "y":100},
+                {"arg_type":"ControllerComponent"}
+            ]
+        },
+        {
+            "component_type":"SpriteComponent",
+            "args":[
+                {"arg_type":"string", "value":"./sprites/sprite.bmp"},
+                {"arg_type":"TransformComponent"},
+                {"arg_type":"int", "value":100},
+                {"arg_type":"int", "value":100},
+                {"arg_type":"int", "value":75},
+                {"arg_type":"int", "value":87},
+                {"arg_type":"int", "value":27},
+                {"arg_type":"int", "value":7},
+                {"arg_type":"int", "value":4}
+            ]
+        }
+    ]
+}

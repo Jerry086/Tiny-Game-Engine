@@ -14,8 +14,9 @@
 // number of tiles in the game that the player sees, not how many tiles
 // are in the actual sprite sheet file loaded.
 TileMapComponent::TileMapComponent(std::string tileSheetFileName, int rows, int cols,
-                                   int _TileWidth, int _TileHeight, int _mapX, int _mapY, SDL_Renderer *ren)
+                                   int _TileWidth, int _TileHeight, int _mapX, int _mapY)
 {
+    SDL_Renderer *ren = ResourceManager::instance().m_renderer;
     if (nullptr == ren)
     {
         SDL_Log("No valid renderer found");
@@ -31,7 +32,11 @@ TileMapComponent::TileMapComponent(std::string tileSheetFileName, int rows, int 
     // Load the TileMap Image
     // This is the image that will get
     // sliced into smaller subsections of individual tiles.
-    m_TileSpriteSheet = SDL_LoadBMP(tileSheetFileName.c_str());
+    ResourceManager::instance().LoadSurface(tileSheetFileName);
+    m_TileSpriteSheet = ResourceManager::instance().GetSurface(tileSheetFileName);
+    ResourceManager::instance().LoadTexture(tileSheetFileName);
+    m_Texture = ResourceManager::instance().GetTexture(tileSheetFileName);
+    // m_TileSpriteSheet = SDL_LoadBMP(tileSheetFileName.c_str());
 
     if (nullptr == m_TileSpriteSheet)
     {
@@ -60,9 +65,9 @@ TileMapComponent::TileMapComponent(std::string tileSheetFileName, int rows, int 
 // Destructor
 TileMapComponent::~TileMapComponent()
 {
-    SDL_DestroyTexture(m_Texture);
-    // Remove our TileMap
-    delete[] m_Tiles;
+    // SDL_DestroyTexture(m_Texture);
+    // // Remove our TileMap
+    // delete[] m_Tiles;
 }
 
 // Helper function to gegenerate a simlpe map
@@ -113,32 +118,33 @@ int TileMapComponent::GetTileType(int x, int y)
 // render TileMap
 void TileMapComponent::Render()
 {
-    // if(nullptr==ren){
-    //     SDL_Log("No valid renderer found");
-    // }
+    SDL_Renderer *ren = ResourceManager::instance().m_renderer;
+    if(nullptr==ren){
+        SDL_Log("No valid renderer found");
+    }
 
-    // SDL_Rect Src, Dest;
-    // for(int y= 0; y < m_MapY; y++){
-    //     for(int x= 0; x < m_MapX; x++){
-    //         // Select our Tile
-    //         int currentTile = GetTileType(x,y);
-    //         if(currentTile > -1 ){
-    //             // Reverse lookup, given the tile type
-    //             // and then figuring out how to select it
-    //             // from the texture atlas.
-    //             Src.x = (currentTile % m_Cols) * m_TileWidth;
-    //             Src.y = (currentTile / m_Rows) * m_TileHeight;
-    //             Src.w = m_TileWidth;
-    //             Src.h = m_TileHeight;
-    //             // Render our Tile at this location
-    //             Dest.x = x*m_TileWidth;
-    //             Dest.y = y*m_TileHeight;
-    //             Dest.w = m_TileWidth;
-    //             Dest.h = m_TileHeight;
-    //             SDL_RenderCopy(ren, m_Texture, &Src, &Dest);
-    //         }
-    //     }
-    // }
+    SDL_Rect Src, Dest;
+    for(int y= 0; y < m_MapY; y++){
+        for(int x= 0; x < m_MapX; x++){
+            // Select our Tile
+            int currentTile = GetTileType(x,y);
+            if(currentTile > -1 ){
+                // Reverse lookup, given the tile type
+                // and then figuring out how to select it
+                // from the texture atlas.
+                Src.x = (currentTile % m_Cols) * m_TileWidth;
+                Src.y = (currentTile / m_Rows) * m_TileHeight;
+                Src.w = m_TileWidth;
+                Src.h = m_TileHeight;
+                // Render our Tile at this location
+                Dest.x = x*m_TileWidth;
+                Dest.y = y*m_TileHeight;
+                Dest.w = m_TileWidth;
+                Dest.h = m_TileHeight;
+                SDL_RenderCopy(ren, m_Texture, &Src, &Dest);
+            }
+        }
+    }
 }
 
 void TileMapComponent::Update()

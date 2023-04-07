@@ -9,12 +9,13 @@
 
 #if defined(LINUX) || defined(MINGW)
 #include <SDL2/SDL.h>
-#else  // This works for Mac
+#else // This works for Mac
 #include <SDL.h>
 #endif
 
-class GameObject {
-   public:
+class GameObject
+{
+public:
     GameObject(std::string id);
     ~GameObject();
 
@@ -30,7 +31,7 @@ class GameObject {
                       std::shared_ptr<Component> component);
     void RemoveComponent(std::string componentName);
 
-   private:
+private:
     // std::map<std::string, Component> m_components;
     std::map<std::string, std::shared_ptr<Component>> m_components;
     std::string gameObject_id;
