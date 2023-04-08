@@ -7,7 +7,8 @@ SpriteComponent::SpriteComponent(
       m_transformComponent(transformer),
       mLastFrame(frames),
       mNumRows(numRows),
-      mNumCols(numCols) {
+      mNumCols(numCols)
+{
     ResourceManager::instance().LoadSurface(filename);
     m_spriteSheet = ResourceManager::instance().GetSurface(filename);
     ResourceManager::instance().LoadTexture(filename);
@@ -19,7 +20,8 @@ SpriteComponent::SpriteComponent(
 }
 
 // TODO: move texture unloading to shutdown method instead of destructor
-SpriteComponent::~SpriteComponent() {
+SpriteComponent::~SpriteComponent()
+{
     // ResourceManager::instance().FreeSurface(m_filename);
     // m_spriteSheet = nullptr;
     // ResourceManager::instance().DestroyTexture(m_filename);
@@ -27,12 +29,14 @@ SpriteComponent::~SpriteComponent() {
 }
 
 // Set the sprite position
-void SpriteComponent::SetPosition(float x, float y) {
+void SpriteComponent::SetPosition(float x, float y)
+{
     m_transformComponent->m_position.x = x;
     m_transformComponent->m_position.y = y;
 }
 
-void SpriteComponent::Update() {
+void SpriteComponent::Update()
+{
     // The part of the image that we want to render
     mCurrentFrame = (mCurrentFrame + 1) % mLastFrame;
     // if (mCurrentFrame >= mLastFrame) {
@@ -54,12 +58,12 @@ void SpriteComponent::Update() {
     // std::cout << "x: " << m_transformComponent->m_position.x << std::endl;
     mDest.x = m_transformComponent->m_position.x;
     mDest.y = m_transformComponent->m_position.y;
-    // TODO: no magic numbers
-    mDest.w = 128;
-    mDest.h = 128;
+    mDest.w = 64;
+    mDest.h = 64;
 }
 
-void SpriteComponent::Render() {
+void SpriteComponent::Render()
+{
     // TODO: ugly, find a better way
     // How to get the renderer???
     SDL_Renderer *ren = ResourceManager::instance().m_renderer;
