@@ -31,7 +31,7 @@ go.AddComponent('4', sprite_component)
 go.AddComponent('5', tilemap_component)
 # go.AddComponent('5', healthbar_component)
 
-game_objects = create_scene('./definitions/test_scene_def.json')
+# game_objects = create_scene('./definitions/test_scene_def.json')
 
 wall = mygameengine.GameObject('wall id')
 behavior_component = mygameengine.BehaviorComponent()
@@ -60,11 +60,11 @@ while not controller_component.QuitProgram():
     # go.Render()
     # tilemap.Render()
 
-    for go in game_objects:
-        go.Update()
+    # for go in game_objects:
+    #     go.Update()
     
-    for go in game_objects:
-        go.Render()
+    # for go in game_objects:
+    #     go.Render()
         
     game_object_manager.Update()
     game_object_manager.Render()

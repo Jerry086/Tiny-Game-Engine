@@ -13,12 +13,7 @@ public:
    virtual void Update(){};
    virtual void Render(){};
 
-    virtual void Init(){};
-    virtual void Update(){};
-    virtual void Render(){};
-    virtual void Shutdown(){};
-
-   private:
+private:
 };
 
 #endif
