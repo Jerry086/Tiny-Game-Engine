@@ -94,8 +94,8 @@ class CanvasMap(tk.Canvas):
             # easy reference to the current selected image
             img = self.parent.parent.ibox.currentImage
             path = self.parent.parent.ibox.currentImagePath
-            if len(img) == 0:
-                return messagebox.showwarning(title="Error",message="Please select image first")
+            # if len(img) == 0:
+            #     return messagebox.showwarning(title="Error",message="Please select image first")
             # if a tile is already in the position we clicked
             if tm.canvasarray[self.tilepos[1]][self.tilepos[0]] != " ":
                 # ...delete it
