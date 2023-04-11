@@ -96,7 +96,7 @@ void SpriteComponent::Update()
     mCurrentFrame++;
     mCurrentFrame = mCurrentFrame % mLastFrame;
 
-    if (m_behavior != nullptr || m_controller == !nullptr)
+    if (m_behavior != nullptr || m_controller != nullptr)
     {
         mSrc.x = mCurrentFrame * mSrc.w;
         mSrc.y = mCurrentRow * mSrc.h;
@@ -104,7 +104,7 @@ void SpriteComponent::Update()
     else
     {
         mSrc.x = (mCurrentFrame % mNumCols) * mSrc.w;
-        mSrc.y = (mCurrentFrame % mNumRows) * mSrc.h;
+        mSrc.y = (mCurrentFrame / mNumCols) * mSrc.h;
     }
     // if (mCurrentFrame >= mLastFrame) {
     //     mCurrentFrame = 0;
