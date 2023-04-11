@@ -1,39 +1,53 @@
 {
-    "game_objects":[
+  "game_objects": [
+    {
+      "name": "player",
+      "definition_file": "./definitions/test_player.json",
+      "transform_override": [
         {
-            "name": "player",
-            "definition_file": "./definitions/test_player.json",
-            "transform_override": [{
-                "param": "direction",
-                "x": 10,
-                "y": 10
-            },
-            {
-                "param": "position",
-                "x": 100,
-                "y": 100
-            },
-            {
-                "param": "controller"
-            }]
+          "param": "direction",
+          "x": 10,
+          "y": 10
         },
         {
-            "name": "wall",
-            "definition_file": "./definitions/test_randommove.json",
-            "transform_override":[{
-                "param": "direction",
-                "x": 5,
-                "y": 5
-            },
-            {
-                "param": "position",
-                "x": 1000,
-                "y": 100
-            },
-            {
-                "param": "behavior"
-            }]
+          "param": "position",
+          "x": 100,
+          "y": 100
+        },
+        {
+          "param": "controller"
         }
-    ]
-
+      ]
+    },
+    {
+      "name": "tile1",
+      "definition_file": "./definitions/test_tile1.json",
+      "transform_override": [
+        {
+          "param": "position",
+          "x": 200,
+          "y": 200
+        }
+      ]
+    },
+    {
+      "name": "wall",
+      "definition_file": "./definitions/test_randommove.json",
+      "transform_override": [
+        {
+          "param": "direction",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "param": "position",
+          "x": 1000,
+          "y": 100
+        },
+        {
+          "param": "behavior"
+        }
+      ]
+    }
+  ]
 }

@@ -4,6 +4,7 @@
 #include "./Components/CollisionComponent.hpp"
 #include "./Components/Component.hpp"
 #include "./Components/ControllerComponent.hpp"
+#include "./Components/CounterComponent.hpp"
 #include "./Components/HealthBarComponent.hpp"
 #include "./Components/SpriteComponent.hpp"
 #include "./Components/TileMapComponent.hpp"
@@ -120,4 +121,11 @@ PYBIND11_MODULE(mygameengine, m) {
     py::class_<BehaviorComponent, Component,
                std::shared_ptr<BehaviorComponent>>(m, "BehaviorComponent")
         .def(py::init<>());
+
+    py::class_<CounterComponent, Component, std::shared_ptr<CounterComponent>>(
+        m, "CounterComponent")
+        .def(py::init<>())
+        .def("SetCounter", &CounterComponent::SetCounter)
+        .def("GetCounter", &CounterComponent::GetCounter)
+        .def("RemoveCounter", &CounterComponent::RemoveCounter);
 }

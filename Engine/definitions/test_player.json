@@ -47,6 +47,10 @@
                     "value": 87
                 }
             ]
+        },
+        {
+            "component_type": "CounterComponent",
+            "args": []
         }
     ]
 }

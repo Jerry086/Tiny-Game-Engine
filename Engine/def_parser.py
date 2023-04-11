@@ -9,6 +9,7 @@ COMPONENTS = {
     "HealthBarComponent": mygameengine.HealthBarComponent,
     "CollisionComponent": mygameengine.CollisionComponent,
     "BehaviorComponent": mygameengine.BehaviorComponent,
+    "CounterComponent": mygameengine.CounterComponent,
 }
 
 BUILT_IN = {
