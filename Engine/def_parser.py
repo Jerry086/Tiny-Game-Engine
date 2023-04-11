@@ -83,6 +83,6 @@ def create_scene(json_path):
     game_object_defs = scene_def_json_object["game_objects"]
     for game_object_def in game_object_defs:
         go = create_go(game_object_def["name"], game_object_def["definition_file"])
-        game_objects.append(go)
+        game_objects.append((game_object_def["name"], go))
     return game_objects
         

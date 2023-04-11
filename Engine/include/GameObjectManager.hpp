@@ -2,24 +2,24 @@
 #define GAMEOBJECTMANAGER
 
 #include <iostream>
-#include <string>
 #include <map>
 #include <memory>
+#include <string>
 
 #include "GameObject.hpp"
 
 /**
  * This class sets up the main game engine
  */
-class GameObjectManager
-{
-public:
+class GameObjectManager {
+   public:
     static GameObjectManager &instance();
     void Update();
     void Render();
 
     void AddGameObject(std::string objectID, std::shared_ptr<GameObject> go);
     void RemoveGameObject(std::string objectID);
+    std::shared_ptr<GameObject> GetGameObject(std::string objectID);
 
     // void Start();
     // void Shutdown();
@@ -27,7 +27,7 @@ public:
     // std::map<std::string, std::shared_ptr<GameObject>> collision_objects;
     std::map<std::string, std::shared_ptr<GameObject>> m_gameobjects;
 
-private:
+   private:
     // std::map<std::string, std::shared_ptr<GameObject>> m_gameobjects;
 
     GameObjectManager();

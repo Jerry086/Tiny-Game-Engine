@@ -114,7 +114,8 @@ PYBIND11_MODULE(mygameengine, m) {
         .def("Update", &GameObjectManager::Update)
         .def("Render", &GameObjectManager::Render)
         .def("AddGameObject", &GameObjectManager::AddGameObject)
-        .def("RemoveGameObject", &GameObjectManager::RemoveGameObject);
+        .def("RemoveGameObject", &GameObjectManager::RemoveGameObject)
+        .def("GetGameObject", &GameObjectManager::GetGameObject);
 
     py::class_<BehaviorComponent, Component,
                std::shared_ptr<BehaviorComponent>>(m, "BehaviorComponent")
