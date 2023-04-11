@@ -17,6 +17,15 @@ SpriteComponent::SpriteComponent(
     mSrc.y = y;
     mSrc.w = w;
     mSrc.h = h;
+
+    if (transformer->m_controller != nullptr)
+    {
+        m_controller = transformer->m_controller;
+    }
+    else if (transformer->m_behavior != nullptr)
+    {
+        m_behavior = transformer->m_behavior;
+    }
 }
 
 // TODO: move texture unloading to shutdown method instead of destructor
@@ -37,8 +46,66 @@ void SpriteComponent::SetPosition(float x, float y)
 
 void SpriteComponent::Update()
 {
+    if (m_behavior != nullptr)
+    {
+        if (m_behavior->GetDirectionX() > 0)
+        {
+            mCurrentRow = RIGHT;
+        }
+        else if (m_behavior->GetDirectionX() < 0)
+        {
+            mCurrentRow = LEFT;
+        }
+        else if (m_behavior->GetDirectionY() > 0)
+        {
+            mCurrentRow = DOWN;
+        }
+        else if (m_behavior->GetDirectionY() < 0)
+        {
+            mCurrentRow = UP;
+        }
+        else
+        {
+            mCurrentRow = RIGHT;
+        }
+    }
+    else if (m_controller != nullptr)
+    {
+        if (m_controller->GetDirectionX() > 0)
+        {
+            mCurrentRow = RIGHT;
+        }
+        else if (m_controller->GetDirectionX() < 0)
+        {
+            mCurrentRow = LEFT;
+        }
+        else if (m_controller->GetDirectionY() > 0)
+        {
+            mCurrentRow = DOWN;
+        }
+        else if (m_controller->GetDirectionY() < 0)
+        {
+            mCurrentRow = UP;
+        }
+        else
+        {
+            mCurrentRow = RIGHT;
+        }
+    }
     // The part of the image that we want to render
-    mCurrentFrame = (mCurrentFrame + 1) % mLastFrame;
+    mCurrentFrame++;
+    mCurrentFrame = mCurrentFrame % mLastFrame;
+
+    if (m_behavior != nullptr || m_controller == !nullptr)
+    {
+        mSrc.x = mCurrentFrame * mSrc.w;
+        mSrc.y = mCurrentRow * mSrc.h;
+    }
+    else
+    {
+        mSrc.x = (mCurrentFrame % mNumCols) * mSrc.w;
+        mSrc.y = (mCurrentFrame % mNumRows) * mSrc.h;
+    }
     // if (mCurrentFrame >= mLastFrame) {
     //     mCurrentFrame = 0;
     // }
@@ -49,8 +116,6 @@ void SpriteComponent::Update()
     // sprite that we want to draw.
     // how to iterate through sprite sheet?
     // TODO: fix magic number
-    mSrc.x = (mCurrentFrame % mNumRows) * mSrc.w;
-    mSrc.y = (mCurrentFrame % mNumCols) * mSrc.h;
 
     // Where we want the rectangle to be rendered at.
     // This is an actual 'quad' that will draw our
