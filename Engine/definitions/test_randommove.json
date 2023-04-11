@@ -1,5 +1,6 @@
 {
     "type_name": "test_randommove",
+    "transform_signature":["direction", "position", "behavior"],
     "components": [
         {
             "component_type": "BehaviorComponent",
