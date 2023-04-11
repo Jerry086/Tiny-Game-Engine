@@ -8,8 +8,8 @@
         {
             "component_type":"TransformComponent",
             "args":[
-                {"arg_type":"Vec2", "x":5, "y":5},
-                {"arg_type":"Vec2", "x":1000, "y":100},
+                {"arg_type":"Vec2", "x":1, "y":1},
+                {"arg_type":"Vec2", "x":1, "y":1},
                 {"arg_type":"BehaviorComponent"}
             ]
         },
