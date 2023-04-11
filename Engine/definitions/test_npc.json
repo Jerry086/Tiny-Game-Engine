@@ -26,6 +26,26 @@
                 {"arg_type":"int", "value":7},
                 {"arg_type":"int", "value":4}
             ]
+        },
+        {
+            "component_type": "CollisionComponent",
+            "args": [
+                {
+                    "arg_type": "string",
+                    "value":"player"
+                },
+                {
+                    "arg_type": "TransformComponent"
+                },
+                {
+                    "arg_type": "int",
+                    "value": 75
+                },
+                {
+                    "arg_type": "int",
+                    "value": 87
+                }
+            ]
         }
     ]
 }

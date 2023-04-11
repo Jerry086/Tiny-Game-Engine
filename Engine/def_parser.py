@@ -7,6 +7,7 @@ COMPONENTS = {
     "SpriteComponent": mygameengine.SpriteComponent,
     "TileMapComponent": mygameengine.TileMapComponent,
     "HealthBarComponent": mygameengine.HealthBarComponent,
+    "CollisionComponent": mygameengine.CollisionComponent,
 }
 
 BUILT_IN = {
@@ -64,8 +65,13 @@ def create_go(id, json_path):
     go = mygameengine.GameObject(id)
     for i in range(len(components)):
         print('adding component: ', components[i])
-        # NOTE: component id using index for now is the correct way, even though hacky
-        go.AddComponent(str(i), components[i])
+
+        # TODO: Hacky AF
+        if isinstance(components[i], mygameengine.CollisionComponent):
+            go.AddComponent('3CollisionComponent', components[i])
+        else:
+            # NOTE: component id using index for now is the correct way, even though hacky
+            go.AddComponent(str(i), components[i])
     return go
 
 def create_scene(json_path):

@@ -7,28 +7,28 @@ WINDOW_HEIGHT = 720
 
 SDL = mygameengine.SDLGraphicsProgram(WINDOW_WIDTH, WINDOW_HEIGHT)
 
-# go = create_go('GO id', './definitions/test_npc.json')
+go = create_go('player', './definitions/test_npc.json')
+controller_component = go.GetComponent('0')
 # tilemap = create_go('Tilemap', './definitions/test_tilemap.json')
-go = mygameengine.GameObject('player id')
-controller_component = mygameengine.ControllerComponent()
-transform_component = mygameengine.TransformComponent(
-    mygameengine.Vec2(10, 10), mygameengine.Vec2(100, 100), controller_component)
-collision_component = mygameengine.CollisionComponent(
-    "player", transform_component, 75, 87)
-
-sprite_component = mygameengine.SpriteComponent(
-    './sprites/sprite.bmp', transform_component, 100, 100, 75, 87, 27, 7, 4)
-tilemap_component = mygameengine.TileMapComponent(
-    './sprites/Tiles1.bmp', 8, 8, 64, 64, 20, 11)
+# go = mygameengine.GameObject('player id')
+# controller_component = mygameengine.ControllerComponent()
+# transform_component = mygameengine.TransformComponent(
+#     mygameengine.Vec2(10, 10), mygameengine.Vec2(100, 100), controller_component)
+# collision_component = mygameengine.CollisionComponent(
+#     "player", transform_component, 75, 87)
+# sprite_component = mygameengine.SpriteComponent(
+#     './sprites/sprite.bmp', transform_component, 100, 100, 75, 87, 27, 7, 4)
+# tilemap_component = mygameengine.TileMapComponent(
+#     './sprites/Tiles1.bmp', 8, 8, 64, 64, 20, 11)
 
 # healthbar_component = mygameengine.HealthBarComponent(
 #     './sprites/healthBar.bmp', transform_component, 100, 100, 105, 1074)
 
-go.AddComponent('1', controller_component)
-go.AddComponent('2', transform_component)
-go.AddComponent('3CollisionComponent', collision_component)
-go.AddComponent('4', sprite_component)
-go.AddComponent('5', tilemap_component)
+# go.AddComponent('1', controller_component)
+# go.AddComponent('2', transform_component)
+# go.AddComponent('3CollisionComponent', collision_component)
+# go.AddComponent('4', sprite_component)
+# go.AddComponent('5', tilemap_component)
 # go.AddComponent('5', healthbar_component)
 
 # game_objects = create_scene('./definitions/test_scene_def.json')
