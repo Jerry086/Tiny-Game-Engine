@@ -8,6 +8,7 @@ COMPONENTS = {
     "TileMapComponent": mygameengine.TileMapComponent,
     "HealthBarComponent": mygameengine.HealthBarComponent,
     "CollisionComponent": mygameengine.CollisionComponent,
+    "BehaviorComponent": mygameengine.BehaviorComponent,
 }
 
 BUILT_IN = {
