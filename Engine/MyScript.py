@@ -77,7 +77,6 @@ counter.SetCounter('test counter', 0)
 # wall.AddComponent("1", transform_component2)
 # wall.AddComponent("3CollisionComponent", collision_component2)
 # wall.AddComponent("4", sprite_component2)
-
 # game_object_manager = mygameengine.GameObjectManager()
 # game_object_manager.AddGameObject("player", go)
 # game_object_manager.AddGameObject("wall", wall)
