@@ -8,30 +8,27 @@ void GameObject::StartUp() {}
 
 void GameObject::ShutDown() {}
 
-void GameObject::Update()
-{
-    for (auto it = m_components.begin(); it != m_components.end(); it++)
-    {
+void GameObject::Update() {
+    for (auto it = m_components.begin(); it != m_components.end(); it++) {
         it->second->Update();
     }
 }
 
-void GameObject::Render()
-{
-
-    for (auto it = m_components.begin(); it != m_components.end(); it++)
-    {
+void GameObject::Render() {
+    for (auto it = m_components.begin(); it != m_components.end(); it++) {
         it->second->Render();
     }
 }
 
 void GameObject::AddComponent(std::string componentName,
-                              std::shared_ptr<Component> component)
-{
+                              std::shared_ptr<Component> component) {
     m_components.emplace(componentName, component);
 }
 
-void GameObject::RemoveComponent(std::string componentName)
-{
+void GameObject::RemoveComponent(std::string componentName) {
     m_components.erase(componentName);
+}
+
+std::shared_ptr<Component> GameObject::GetComponent(std::string componentName) {
+    return m_components[componentName];
 }

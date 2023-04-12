@@ -1,0 +1,52 @@
+{
+    "type_name": "test_randommove",
+    "transform_signature":["direction", "position", "behavior"],
+    "components": [
+        {
+            "component_type": "BehaviorComponent",
+            "args": []
+        },
+        {
+            "component_type":"TransformComponent",
+            "args":[
+                {"arg_type":"Vec2", "x":1, "y":1},
+                {"arg_type":"Vec2", "x":1, "y":1},
+                {"arg_type":"BehaviorComponent"}
+            ]
+        },
+        {
+            "component_type":"SpriteComponent",
+            "args":[
+                {"arg_type":"string", "value":"./sprites/Tiles1.bmp"},
+                {"arg_type":"TransformComponent"},
+                {"arg_type":"int", "value":100},
+                {"arg_type":"int", "value":100},
+                {"arg_type":"int", "value":64},
+                {"arg_type":"int", "value":64},
+                {"arg_type":"int", "value":1},
+                {"arg_type":"int", "value":8},
+                {"arg_type":"int", "value":8}
+            ]
+        },
+        {
+            "component_type": "CollisionComponent",
+            "args": [
+                {
+                    "arg_type": "string",
+                    "value":"wall"
+                },
+                {
+                    "arg_type": "TransformComponent"
+                },
+                {
+                    "arg_type": "int",
+                    "value": 64
+                },
+                {
+                    "arg_type": "int",
+                    "value": 64
+                }
+            ]
+        }
+    ]
+}

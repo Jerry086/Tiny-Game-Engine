@@ -7,6 +7,9 @@ COMPONENTS = {
     "SpriteComponent": mygameengine.SpriteComponent,
     "TileMapComponent": mygameengine.TileMapComponent,
     "HealthBarComponent": mygameengine.HealthBarComponent,
+    "CollisionComponent": mygameengine.CollisionComponent,
+    "BehaviorComponent": mygameengine.BehaviorComponent,
+    "CounterComponent": mygameengine.CounterComponent,
 }
 
 BUILT_IN = {
@@ -24,7 +27,7 @@ def read_json(json_path):
         data = json.load(json_data_file)
     return data
 
-def create_components(go_def_json_object):
+def create_components(go_def_json_object, transform_override=None):
     type_name = go_def_json_object["type_name"]
     print('Creating game object of type: ' + type_name)
     component_defs = go_def_json_object["components"]
@@ -33,6 +36,18 @@ def create_components(go_def_json_object):
     for comp_def in component_defs:
         print('makging component of type: ' + comp_def["component_type"])
         typed_args = []
+
+        if comp_def["component_type"] == "TransformComponent" and transform_override:
+            comp_def["args"] = []
+            for a in transform_override:
+                if a['param'] == "direction":
+                   comp_def["args"].append({"arg_type": "Vec2", "x": int(a["x"]), "y": int(a["y"])})
+                elif a['param'] == "position":
+                    comp_def["args"].append({"arg_type": "Vec2", "x": int(a["x"]), "y": int(a["y"])})
+                elif a['param'] == "controller":
+                    comp_def["args"].append({"arg_type": "ControllerComponent"})
+                elif a['param'] == "behavior":
+                    comp_def["args"].append({"arg_type": "BehaviorComponent"})
 
         for raw_arg in comp_def["args"]:
             arg_type = raw_arg["arg_type"]
@@ -57,15 +72,20 @@ def create_components(go_def_json_object):
 
     return components
 
-def create_go(id, json_path):
+def create_go(id, json_path, transform_override=None):
     with open(json_path) as json_data_file:
         go_def_json_object = json.load(json_data_file)
-    components = create_components(go_def_json_object)
+    components = create_components(go_def_json_object, transform_override=transform_override)
     go = mygameengine.GameObject(id)
     for i in range(len(components)):
         print('adding component: ', components[i])
-        # NOTE: component id using index for now is the correct way, even though hacky
-        go.AddComponent(str(i), components[i])
+
+        # TODO: Hacky AF
+        if isinstance(components[i], mygameengine.CollisionComponent):
+            go.AddComponent('3CollisionComponent', components[i])
+        else:
+            # NOTE: component id using index for now is the correct way, even though hacky
+            go.AddComponent(str(i), components[i])
     return go
 
 def create_scene(json_path):
@@ -75,7 +95,10 @@ def create_scene(json_path):
     game_objects = []
     game_object_defs = scene_def_json_object["game_objects"]
     for game_object_def in game_object_defs:
-        go = create_go(game_object_def["name"], game_object_def["definition_file"])
-        game_objects.append(go)
+        transform_override = None
+        if "transform_override" in game_object_def:
+            transform_override = game_object_def["transform_override"]
+        go = create_go(game_object_def["name"], game_object_def["definition_file"], transform_override=transform_override)
+        game_objects.append((game_object_def["name"], go))
     return game_objects
         

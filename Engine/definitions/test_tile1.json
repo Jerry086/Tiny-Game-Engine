@@ -1,0 +1,49 @@
+{
+    "type_name": "test_tile1",
+    "transform_signature":["position"],
+    "components": [
+        {
+            "component_type":"TransformComponent",
+            "args":[
+                {"arg_type":"Vec2", "x":100, "y":100}
+            ]
+        },
+        {
+            "component_type":"SpriteComponent",
+            "args":[
+                {"arg_type":"string", "value":"./sprites/Tiles1.bmp"},
+                {"arg_type":"TransformComponent"},
+                {"arg_type":"int", "value":100},
+                {"arg_type":"int", "value":100},
+                {"arg_type":"int", "value":75},
+                {"arg_type":"int", "value":87},
+                {"arg_type":"int", "value":27},
+                {"arg_type":"int", "value":7},
+                {"arg_type":"int", "value":4}
+            ]
+        },
+        {
+            "component_type":"CollisionComponent",
+            "args":[
+                {
+                    "arg_type":"string",
+                    "value":"wall"
+                },
+                {
+                    "arg_type":"TransformComponent"
+                },
+                {
+                    "arg_type":"int",
+                    "value":75
+                },
+                {
+                    "arg_type":"int",
+                    "value":87
+                }
+
+                 
+            ]
+        }
+
+    ]
+}

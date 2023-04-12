@@ -1,16 +1,17 @@
+#include <pybind11/pybind11.h>
+
+#include "./Components/BehaviorComponent.hpp"
+#include "./Components/CollisionComponent.hpp"
 #include "./Components/Component.hpp"
 #include "./Components/ControllerComponent.hpp"
+#include "./Components/CounterComponent.hpp"
 #include "./Components/HealthBarComponent.hpp"
 #include "./Components/SpriteComponent.hpp"
 #include "./Components/TileMapComponent.hpp"
 #include "./Components/TransformComponent.hpp"
-#include "./Components/CollisionComponent.hpp"
-#include "./Components/BehaviorComponent.hpp"
 #include "GameObject.hpp"
 #include "GameObjectManager.hpp"
 #include "SDLGraphicsProgram.h"
-
-#include <pybind11/pybind11.h>
 
 namespace py = pybind11;
 
@@ -20,14 +21,13 @@ namespace py = pybind11;
 // 'm' is the interface (creates a py::module object)
 //      for which the bindings are created.
 //  The magic here is in 'template metaprogramming'
-PYBIND11_MODULE(mygameengine, m)
-{
-    m.doc() = "our game engine as a library"; // Optional docstring
+PYBIND11_MODULE(mygameengine, m) {
+    m.doc() = "our game engine as a library";  // Optional docstring
 
     py::class_<SDLGraphicsProgram>(m, "SDLGraphicsProgram")
         .def(py::init<int, int>(), py::arg("w"),
-             py::arg("h"))                        // our constructor
-        .def("clear", &SDLGraphicsProgram::clear) // Expose member methods
+             py::arg("h"))                         // our constructor
+        .def("clear", &SDLGraphicsProgram::clear)  // Expose member methods
         .def("delay", &SDLGraphicsProgram::delay)
         .def("flip", &SDLGraphicsProgram::flip)
         .def("getKeyAction", &SDLGraphicsProgram::getKeyAction)
@@ -41,7 +41,8 @@ PYBIND11_MODULE(mygameengine, m)
         .def("Render", &GameObject::Render)
         .def("StartUp", &GameObject::StartUp)
         .def("ShutDown", &GameObject::ShutDown)
-        .def("AddComponent", &GameObject::AddComponent);
+        .def("AddComponent", &GameObject::AddComponent)
+        .def("GetComponent", &GameObject::GetComponent);
 
     py::class_<Component, std::shared_ptr<Component>>(m, "Component")
         .def(py::init<>());
@@ -53,8 +54,7 @@ PYBIND11_MODULE(mygameengine, m)
 
     py::class_<TransformComponent, Component,
                std::shared_ptr<TransformComponent>>(m, "TransformComponent")
-        .def(py::init<Vec2 &>(),
-             py::arg("new_position"))
+        .def(py::init<Vec2 &>(), py::arg("new_position"))
         .def(py::init<Vec2 &, Vec2 &, std::shared_ptr<ControllerComponent> &>(),
              py::arg("direction"), py::arg("new_position"),
              py::arg("controller"))
@@ -64,8 +64,8 @@ PYBIND11_MODULE(mygameengine, m)
         .def_readwrite("m_position", &TransformComponent::m_position)
         .def_readwrite("m_speed", &TransformComponent::m_speed);
 
-    py::class_<SpriteComponent, Component,
-               std::shared_ptr<SpriteComponent>>(m, "SpriteComponent")
+    py::class_<SpriteComponent, Component, std::shared_ptr<SpriteComponent>>(
+        m, "SpriteComponent")
         .def(
             py::init<const std::string &, std::shared_ptr<TransformComponent> &,
                      int, int, int, int, int, int, int>(),
@@ -100,19 +100,32 @@ PYBIND11_MODULE(mygameengine, m)
 
     py::class_<CollisionComponent, Component,
                std::shared_ptr<CollisionComponent>>(m, "CollisionComponent")
-        .def(
-            py::init<const std::string &, std::shared_ptr<TransformComponent> &, int, int>(),
-            py::arg("objectType"), py::arg("transformComponent"), py::arg("w"), py::arg("h"));
+        .def(py::init<const std::string &,
+                      std::shared_ptr<TransformComponent> &, int, int>(),
+             py::arg("objectType"), py::arg("transformComponent"), py::arg("w"),
+             py::arg("h"));
 
-    py::class_<GameObjectManager, std::unique_ptr<GameObjectManager, py::nodelete>>(m, "GameObjectManager")
-        .def(py::init([]()
-                      { return std::unique_ptr<GameObjectManager, py::nodelete>(&GameObjectManager::instance()); }))
+    py::class_<GameObjectManager,
+               std::unique_ptr<GameObjectManager, py::nodelete>>(
+        m, "GameObjectManager")
+        .def(py::init([]() {
+            return std::unique_ptr<GameObjectManager, py::nodelete>(
+                &GameObjectManager::instance());
+        }))
         .def("Update", &GameObjectManager::Update)
         .def("Render", &GameObjectManager::Render)
         .def("AddGameObject", &GameObjectManager::AddGameObject)
-        .def("RemoveGameObject", &GameObjectManager::RemoveGameObject);
+        .def("RemoveGameObject", &GameObjectManager::RemoveGameObject)
+        .def("GetGameObject", &GameObjectManager::GetGameObject);
 
     py::class_<BehaviorComponent, Component,
                std::shared_ptr<BehaviorComponent>>(m, "BehaviorComponent")
         .def(py::init<>());
+
+    py::class_<CounterComponent, Component, std::shared_ptr<CounterComponent>>(
+        m, "CounterComponent")
+        .def(py::init<>())
+        .def("SetCounter", &CounterComponent::SetCounter)
+        .def("GetCounter", &CounterComponent::GetCounter)
+        .def("RemoveCounter", &CounterComponent::RemoveCounter);
 }
