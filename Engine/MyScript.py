@@ -14,14 +14,6 @@ game_object_manager = mygameengine.GameObjectManager()
 
 game_objects = create_scene('./definitions/test_scene_def.json')
 
-# tile1 = mygameengine.GameObject('tile1')
-# tile_transform = mygameengine.TransformComponent(mygameengine.Vec2(200, 200))
-# tile_sprite = mygameengine.SpriteComponent('./sprites/Tiles1.bmp', tile_transform, 100, 100, 75, 87, 27, 7, 4)
-# tile1.AddComponent('0', tile_transform)
-# tile1.AddComponent('1', tile_sprite)
-# game_objects = []
-# game_objects.append(('tile1', tile1))
-
 for go_name, player in game_objects:
     game_object_manager.AddGameObject(go_name, player)
 
@@ -31,6 +23,26 @@ controller_component = game_object_manager.GetGameObject('player').GetComponent(
 # TODO remove, test
 counter = game_object_manager.GetGameObject('player').GetComponent('4')
 counter.SetCounter('test counter', 0)
+
+
+print("Setting up game loop")
+while not controller_component.QuitProgram():
+    SDL.clear()
+
+    # for go in game_objects:
+    #     go.Update()
+
+    # for go in game_objects:
+    #     go.Render()
+
+    game_object_manager.Update()
+    game_object_manager.Render()
+
+    SDL.flip()
+    SDL.delay(20)
+
+
+
 # go = create_go('GO id', './definitions/test_npc.json')
 # tilemap = create_go('Tilemap', './definitions/test_tilemap.json')
 # go = mygameengine.GameObject("player id")
@@ -82,18 +94,10 @@ counter.SetCounter('test counter', 0)
 # game_object_manager.AddGameObject("wall", wall)
 
 
-print("Setting up game loop")
-while not controller_component.QuitProgram():
-    SDL.clear()
-
-    # for go in game_objects:
-    #     go.Update()
-
-    # for go in game_objects:
-    #     go.Render()
-
-    game_object_manager.Update()
-    game_object_manager.Render()
-
-    SDL.flip()
-    SDL.delay(20)
+# tile1 = mygameengine.GameObject('tile1')
+# tile_transform = mygameengine.TransformComponent(mygameengine.Vec2(200, 200))
+# tile_sprite = mygameengine.SpriteComponent('./sprites/Tiles1.bmp', tile_transform, 100, 100, 75, 87, 27, 7, 4)
+# tile1.AddComponent('0', tile_transform)
+# tile1.AddComponent('1', tile_sprite)
+# game_objects = []
+# game_objects.append(('tile1', tile1))
