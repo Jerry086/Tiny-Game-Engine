@@ -6,6 +6,7 @@ class MainApp(tk.Tk):
         tk.Tk.__init__(self) #Inherits the main window from tkinnter
         self.saved = True #holds a value for whether or not  the tilemap has been saved
         self.title("Tile Basic")
+        self.geometry("1280x720")
         self.tmap = TileMap(self, 125) #creates an object that holds the images, canvas objects, and paths for our tilemap
         self.ibox = ImageFrame(self) #creates the box that holds our tiles
         self.tbox = ToolFrame(self) #creates a box that holds our tools
