@@ -32,10 +32,8 @@ public:
     bool QuitProgram();
 
 private:
-    int8_t m_direction_x = 0;
-    int8_t m_direction_y = 0;
-    // record key state, 0 -> Key 'a' or 'left', 1 -> Key 'd' or 'right'
-    bool m_buttons[4] = {true, false, false, false};
+    int8_t m_direction_x = DIR_RIGHT;
+    int8_t m_direction_y = DIR_STAND;
     bool m_quit = false;
 };
 
