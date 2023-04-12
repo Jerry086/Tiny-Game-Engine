@@ -7,21 +7,21 @@
 #include <SDL.h>
 #endif
 
-#include "./Components/Component.hpp"
-#include "./Components/SpriteComponent.hpp"
+#include "Component.hpp"
+#include "TransformComponent.hpp"
 #include "./ResourceManager.hpp"
 
 // a new component or just use SpriteCOmponent?
 class HealthBarComponent : public Component
 {
 public:
-    HealthBarComponent(std::string filename, 
-    std::shared_ptr<TransformComponent> transformComponent, 
-    int x, int y, int w, int h);
+    HealthBarComponent(std::string filename,
+                       std::shared_ptr<TransformComponent> transformComponent,
+                       int x, int y, int w, int h);
     ~HealthBarComponent();
 
     int health = 100;
-    //0,20,40,60,80,100
+    // 0,20,40,60,80,100
     void SetHealth(int newHealth);
     void Update() override;
     void Render() override;
@@ -35,7 +35,7 @@ private:
     SDL_Texture *m_texture = nullptr;
 
     SDL_Rect mSrc;
-    SDL_Rect mDest = {100,100,100,100} ;
+    SDL_Rect mDest = {100, 100, 100, 100};
 };
 
 #endif
