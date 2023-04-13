@@ -26,15 +26,12 @@ PYBIND11_MODULE(mygameengine, m)
     m.doc() = "our game engine as a library"; // Optional docstring
 
     py::class_<SDLGraphicsProgram>(m, "SDLGraphicsProgram")
-        .def(py::init<int, int>(), py::arg("w"),
-             py::arg("h"))                        // our constructor
-        .def("clear", &SDLGraphicsProgram::clear) // Expose member methods
+        .def(py::init<int, int>(), py::arg("w"), py::arg("h"))
+        .def("clear", &SDLGraphicsProgram::clear)
         .def("delay", &SDLGraphicsProgram::delay)
         .def("flip", &SDLGraphicsProgram::flip)
-        .def("getKeyAction", &SDLGraphicsProgram::getKeyAction)
-        .def("loop", &SDLGraphicsProgram::loop)
-        .def("DrawPoint", &SDLGraphicsProgram::DrawPoint)
-        .def("DrawRectangle", &SDLGraphicsProgram::DrawRectangle);
+        .def("DrawRectangle", &SDLGraphicsProgram::DrawRectangle)
+        .def("DrawPoint", &SDLGraphicsProgram::DrawPoint);
 
     py::class_<GameObject, std::shared_ptr<GameObject>>(m, "GameObject")
         .def(py::init<const std::string &>(), py::arg("id"))
