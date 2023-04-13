@@ -19,6 +19,8 @@ const int RIGHT = 0;
 const int DOWN = 1;
 const int LEFT = 2;
 const int UP = 3;
+const int RENDER_WIDTH = 64;
+const int RENDER_HEIGHT = 64;
 
 /**
  * The SpriteComponent class that renders a sprite to the screen.
@@ -70,14 +72,14 @@ private:
     unsigned int mLastFrame{1};
     unsigned int mNumRows{1};
     unsigned int mNumCols{1};
-    unsigned int mCurrentRow{0};
+    unsigned int mSpriteSeries{0};
     const int m_type = SpriteComponent_TYPE;
     std::shared_ptr<TransformComponent> m_transformComponent;
     std::shared_ptr<ControllerComponent> m_controller = nullptr;
     std::shared_ptr<BehaviorComponent> m_behavior = nullptr;
     SDL_Surface *m_spriteSheet = nullptr;
     SDL_Texture *m_texture = nullptr;
-    SDL_Rect mSrc{0, 0, 125, 254};
+    SDL_Rect mSrc;
     SDL_Rect mDest;
 };
 
