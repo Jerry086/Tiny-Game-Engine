@@ -10,6 +10,7 @@
 #define TransformComponent_TYPE 2
 #define CollisionComponent_TYPE 3
 #define SpriteComponent_TYPE 4
+#define HealthBarComponent_TYPE 5
 
 /**
  * The Component class that is the base class for all components.

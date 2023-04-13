@@ -106,9 +106,9 @@ PYBIND11_MODULE(mygameengine, m)
                std::shared_ptr<HealthBarComponent>>(m, "HealthBarComponent")
         .def(
             py::init<const std::string &, std::shared_ptr<TransformComponent> &,
-                     int, int, int, int>(),
-            py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
-            py::arg("y"), py::arg("w"), py::arg("h"))
+                     int, int, int, int, int>(),
+            py::arg("filename"), py::arg("transformComponent"), py::arg("w"),
+            py::arg("h"), py::arg("frames"), py::arg("numRows"), py::arg("numCols"))
         .def("SetHealth", &HealthBarComponent::SetHealth);
 
     py::class_<CollisionComponent, Component,

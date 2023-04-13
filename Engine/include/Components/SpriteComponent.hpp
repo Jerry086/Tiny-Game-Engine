@@ -35,7 +35,7 @@ public:
      * @param x The x position of the sprite
      * @param y The y position of the sprite
      * @param w The width of the sprite
-     *  @param h The height of the sprite
+     * @param h The height of the sprite
      * @param frames The number of frames in the sprite
      * @param numRows The number of rows in the sprite
      * @param numCols The number of columns in the sprite
