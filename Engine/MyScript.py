@@ -5,42 +5,35 @@ import time
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
-#TODO: python collision object type enum as list
+# TODO: python collision object type enum as list
 
 
 SDL = mygameengine.SDLGraphicsProgram(WINDOW_WIDTH, WINDOW_HEIGHT)
 
 game_object_manager = mygameengine.GameObjectManager()
 
-game_objects = create_scene('./definitions/test_scene_def.json')
+game_objects = create_scene("./definitions/test_scene_def.json")
 
 for go_name, player in game_objects:
     game_object_manager.AddGameObject(go_name, player)
 
 # TODO Hackyyyy
-controller_component = game_object_manager.GetGameObject('player').GetComponent('0')
+controller_component = game_object_manager.GetGameObject("player").GetComponent("0")
 
 # TODO remove, test
-counter = game_object_manager.GetGameObject('player').GetComponent('4')
-counter.SetCounter('test counter', 0)
+counter = game_object_manager.GetGameObject("player").GetComponent("4")
+counter.SetCounter("test counter", 0)
 
 
 print("Setting up game loop")
 while not controller_component.QuitProgram():
     SDL.clear()
 
-    # for go in game_objects:
-    #     go.Update()
-
-    # for go in game_objects:
-    #     go.Render()
-
     game_object_manager.Update()
     game_object_manager.Render()
 
     SDL.flip()
     SDL.delay(20)
-
 
 
 # go = create_go('GO id', './definitions/test_npc.json')
@@ -60,9 +53,6 @@ while not controller_component.QuitProgram():
 # tilemap_component = mygameengine.TileMapComponent(
 #     "./sprites/Tiles1.bmp", 8, 8, 64, 64, 20, 11
 # )
-
-# # healthbar_component = mygameengine.HealthBarComponent(
-# #     './sprites/healthBar.bmp', transform_component, 100, 100, 105, 1074)
 
 # go.AddComponent("1", controller_component)
 # go.AddComponent("2", transform_component)
