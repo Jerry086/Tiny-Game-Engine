@@ -1,14 +1,14 @@
 #include <pybind11/pybind11.h>
 
-#include "./Components/BehaviorComponent.hpp"
-#include "./Components/CollisionComponent.hpp"
 #include "./Components/Component.hpp"
 #include "./Components/ControllerComponent.hpp"
-#include "./Components/CounterComponent.hpp"
-#include "./Components/HealthBarComponent.hpp"
+#include "./Components/BehaviorComponent.hpp"
+#include "./Components/TransformComponent.hpp"
+#include "./Components/CollisionComponent.hpp"
 #include "./Components/SpriteComponent.hpp"
 #include "./Components/TileMapComponent.hpp"
-#include "./Components/TransformComponent.hpp"
+#include "./Components/HealthBarComponent.hpp"
+#include "./Components/CounterComponent.hpp"
 #include "GameObject.hpp"
 #include "GameObjectManager.hpp"
 #include "SDLGraphicsProgram.h"
@@ -23,7 +23,7 @@ namespace py = pybind11;
 //  The magic here is in 'template metaprogramming'
 PYBIND11_MODULE(mygameengine, m)
 {
-    m.doc() = "our game engine as a library"; // Optional docstring
+    m.doc() = "our game engine as a library";
 
     py::class_<SDLGraphicsProgram>(m, "SDLGraphicsProgram")
         .def(py::init<int, int>(), py::arg("w"), py::arg("h"))
