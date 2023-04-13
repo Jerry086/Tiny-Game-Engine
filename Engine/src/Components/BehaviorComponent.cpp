@@ -42,3 +42,10 @@ int BehaviorComponent::GetDirectionY()
 {
     return m_direction_y;
 }
+/**
+ * Getter of the component type
+ */
+int BehaviorComponent::GetType()
+{
+    return m_type;
+}

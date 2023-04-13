@@ -132,3 +132,11 @@ void SpriteComponent::Render()
     SDL_Renderer *ren = ResourceManager::instance().GetRenderer();
     SDL_RenderCopy(ren, m_texture, &mSrc, &mDest);
 }
+
+/**
+ * Getter of the component type
+ */
+int SpriteComponent::GetType()
+{
+    return m_type;
+}

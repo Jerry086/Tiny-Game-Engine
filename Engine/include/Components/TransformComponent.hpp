@@ -43,11 +43,19 @@ public:
      * Update the position of a game object
      */
     void Update() override;
+    /**
+     * Getter of the component type
+     * @return The type of the component
+     */
+    int GetType() override;
 
     Vec2 m_position;
     Vec2 m_speed;
     std::shared_ptr<ControllerComponent> m_controller = nullptr;
     std::shared_ptr<BehaviorComponent> m_behavior = nullptr;
+
+private:
+    const int m_type = TransformComponent_TYPE;
 };
 
 #endif

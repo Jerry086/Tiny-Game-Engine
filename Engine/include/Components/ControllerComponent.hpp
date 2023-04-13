@@ -41,6 +41,11 @@ public:
      */
     int8_t GetDirectionY();
     /**
+     * Getter of the component type
+     * @return The type of the component
+     */
+    int GetType() override;
+    /**
      * Getter of quit flag
      */
     bool QuitProgram();
@@ -48,6 +53,7 @@ public:
 private:
     int8_t m_direction_x = DIR_RIGHT;
     int8_t m_direction_y = DIR_STAND;
+    const int m_type = ControllerComponent_TYPE;
     bool m_quit = false;
 };
 

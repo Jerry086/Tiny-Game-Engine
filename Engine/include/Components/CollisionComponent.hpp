@@ -27,7 +27,12 @@ public:
     ~CollisionComponent();
 
     Vec2 CheckCollision(std::shared_ptr<CollisionComponent> other);
-    void Update();
+    void Update() override;
+    /**
+     * Getter of the component type
+     * @return The type of the component
+     */
+    int GetType() override;
 
     std::shared_ptr<TransformComponent> m_transformer;
     std::string m_objectType;
@@ -35,6 +40,7 @@ public:
 private:
     int m_height = 0;
     int m_width = 0;
+    const int m_type = CollisionComponent_TYPE;
     ObjectType GetType(std::string inString);
     std::shared_ptr<ControllerComponent> m_controller = nullptr;
 };

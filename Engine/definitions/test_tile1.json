@@ -27,7 +27,7 @@
             "args":[
                 {
                     "arg_type":"string",
-                    "value":"wall"
+                    "value":"interactable"
                 },
                 {
                     "arg_type":"TransformComponent"

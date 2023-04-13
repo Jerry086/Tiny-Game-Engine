@@ -59,11 +59,16 @@ public:
      * @return The component
      */
     std::shared_ptr<Component> GetComponent(std::string componentName);
-
-    std::map<std::string, std::shared_ptr<Component>> m_components;
+    /**
+     * @brief Get the collision component of the game object
+     * @return The collision component
+     */
+    std::shared_ptr<Component> GetCollisionComponent();
 
 private:
     std::string gameObject_id;
+    std::map<std::string, std::shared_ptr<Component>> m_components;
+    std::shared_ptr<Component> m_collisionComponent = nullptr;
 };
 
 #endif

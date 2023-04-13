@@ -37,3 +37,11 @@ void TransformComponent::Update()
         m_position.y += m_controller->GetDirectionY() * m_speed.y;
     }
 }
+/**
+ * Getter of the component type
+ * @return The type of the component
+ */
+int TransformComponent::GetType()
+{
+    return m_type;
+}

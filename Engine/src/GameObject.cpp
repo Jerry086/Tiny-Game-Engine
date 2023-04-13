@@ -56,6 +56,10 @@ void GameObject::Render()
 void GameObject::AddComponent(std::string componentName,
                               std::shared_ptr<Component> component)
 {
+    if (component->GetType() == CollisionComponent_TYPE)
+    {
+        m_collisionComponent = component;
+    }
     m_components.emplace(componentName, component);
 }
 /**
@@ -71,4 +75,11 @@ void GameObject::RemoveComponent(std::string componentName)
 std::shared_ptr<Component> GameObject::GetComponent(std::string componentName)
 {
     return m_components[componentName];
+}
+/**
+ * Get the collision component of the game object
+ */
+std::shared_ptr<Component> GameObject::GetCollisionComponent()
+{
+    return m_collisionComponent;
 }
