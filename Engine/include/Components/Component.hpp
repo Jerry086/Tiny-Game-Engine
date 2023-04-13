@@ -26,6 +26,10 @@ public:
     */
    virtual ~Component();
    /**
+    * ShutDown the component
+    */
+   virtual void ShutDown(){};
+   /**
     * Update the component
     */
    virtual void Update(){};

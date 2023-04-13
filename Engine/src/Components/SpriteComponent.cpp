@@ -1,5 +1,8 @@
 #include "./Components/SpriteComponent.hpp"
 
+/**
+ * Constructor
+ */
 SpriteComponent::SpriteComponent(
     std::string filename, std::shared_ptr<TransformComponent> transformer,
     int x, int y, int w, int h, int frames, int numRows, int numCols)
@@ -28,20 +31,14 @@ SpriteComponent::SpriteComponent(
     }
 }
 
-// TODO: move texture unloading to shutdown method instead of destructor
-SpriteComponent::~SpriteComponent()
-{
-    // ResourceManager::instance().FreeSurface(m_filename);
-    // m_spriteSheet = nullptr;
-    // ResourceManager::instance().DestroyTexture(m_filename);
-    // m_texture = nullptr;
-}
+SpriteComponent::~SpriteComponent() {}
 
-// Set the sprite position
-void SpriteComponent::SetPosition(float x, float y)
+void SpriteComponent::ShutDown()
 {
-    m_transformComponent->m_position.x = x;
-    m_transformComponent->m_position.y = y;
+    ResourceManager::instance().FreeSurface(m_filename);
+    m_spriteSheet = nullptr;
+    ResourceManager::instance().DestroyTexture(m_filename);
+    m_texture = nullptr;
 }
 
 void SpriteComponent::Update()

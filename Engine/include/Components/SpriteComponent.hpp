@@ -43,15 +43,15 @@ public:
                     int x, int y, int w, int h, int frames, int numRows,
                     int numCols);
     /**
-     * Constructor
+     * Destructor
      */
     ~SpriteComponent();
     /**
-     * Initialize the sprite
+     * @brief Shutdown the sprite component
      */
-    void SetPosition(float x, float y);
+    void ShutDown() override;
     /**
-     * Update the sprites position and frame
+     * @brief Update the sprite series and frame
      */
     void Update() override;
     /**
@@ -66,12 +66,12 @@ public:
 
 private:
     std::string m_filename;
-    const int m_type = SpriteComponent_TYPE;
     unsigned int mCurrentFrame{0};
     unsigned int mLastFrame{1};
     unsigned int mNumRows{1};
     unsigned int mNumCols{1};
     unsigned int mCurrentRow{0};
+    const int m_type = SpriteComponent_TYPE;
     std::shared_ptr<TransformComponent> m_transformComponent;
     std::shared_ptr<ControllerComponent> m_controller = nullptr;
     std::shared_ptr<BehaviorComponent> m_behavior = nullptr;

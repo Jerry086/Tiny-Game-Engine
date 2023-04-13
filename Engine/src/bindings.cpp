@@ -93,8 +93,7 @@ PYBIND11_MODULE(mygameengine, m)
                      int, int, int, int, int, int, int>(),
             py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
             py::arg("y"), py::arg("w"), py::arg("h"), py::arg("frames"),
-            py::arg("numRows"), py::arg("numCols"))
-        .def("SetPosition", &SpriteComponent::SetPosition);
+            py::arg("numRows"), py::arg("numCols"));
 
     py::class_<TileMapComponent, Component, std::shared_ptr<TileMapComponent>>(
         m, "TileMapComponent")

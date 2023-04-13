@@ -19,6 +19,7 @@ void GameObject::ShutDown()
 {
     for (auto it = m_components.begin(); it != m_components.end(); it++)
     {
+        it->second->ShutDown();
         RemoveComponent(it->first);
     }
 }
