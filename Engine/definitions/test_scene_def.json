@@ -48,6 +48,17 @@
           "param": "behavior"
         }
       ]
+    },
+    {
+      "name": "pac",
+      "definition_file": "./definitions/test_pac.json",
+      "transform_override": [
+        {
+          "param": "position",
+          "x": 300,
+          "y": 500
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,47 @@
+{
+    "type_name": "test_pac",
+    "transform_signature":["position"],
+    "components": [
+        {
+            "component_type":"TransformComponent",
+            "args":[
+                {"arg_type":"Vec2", "x":300, "y":500}
+            ]
+        },
+        {
+            "component_type":"SpriteComponent",
+            "args":[
+                {"arg_type":"string", "value":"./sprites/pac.bmp"},
+                {"arg_type":"TransformComponent"},
+                {"arg_type":"int", "value":0},
+                {"arg_type":"int", "value":0},
+                {"arg_type":"int", "value":174},
+                {"arg_type":"int", "value":168},
+                {"arg_type":"int", "value":1},
+                {"arg_type":"int", "value":1},
+                {"arg_type":"int", "value":1}
+            ]
+        },
+        {
+            "component_type":"CollisionComponent",
+            "args":[
+                {
+                    "arg_type":"string",
+                    "value":"interactable"
+                },
+                {
+                    "arg_type":"TransformComponent"
+                },
+                {
+                    "arg_type":"int",
+                    "value":64
+                },
+                {
+                    "arg_type":"int",
+                    "value":64
+                }                 
+            ]
+        }
+
+    ]
+}
