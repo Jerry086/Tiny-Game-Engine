@@ -55,11 +55,15 @@ void CollisionComponent::Update() {
                         break;
                     }
 
-                    case interactable: {
-                        GameObjectManager::instance().RemoveGameObject(
-                            it->first);
-                        break;
+                case interactable:
+                {
+                    Vec2 penetration = CheckCollision(it->second);
+                    if (penetration.x != 0 || penetration.y != 0)
+                    {
+                        GameObjectManager::instance().RemoveGameObject(it->first);
                     }
+                    break;
+                }
 
                     case enemy: {
                         // TODO: Game over!

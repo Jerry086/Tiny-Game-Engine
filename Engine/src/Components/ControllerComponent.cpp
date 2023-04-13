@@ -16,71 +16,30 @@ void ControllerComponent::Update()
         {
             m_quit = true;
         }
-        // Record key state (up/down)
+        // handle keyboard input
         else if (event.type == SDL_KEYDOWN)
         {
             if (event.key.keysym.sym == SDLK_a || event.key.keysym.sym == SDLK_LEFT)
             {
-                m_buttons[0] = true;
+                m_direction_x = DIR_LEFT;
+                m_direction_y = DIR_STAND;
             }
             else if (event.key.keysym.sym == SDLK_d || event.key.keysym.sym == SDLK_RIGHT)
             {
-                m_buttons[1] = true;
+                m_direction_x = DIR_RIGHT;
+                m_direction_y = DIR_STAND;
             }
             else if (event.key.keysym.sym == SDLK_w || event.key.keysym.sym == SDLK_UP)
             {
-                m_buttons[2] = true;
+                m_direction_x = DIR_STAND;
+                m_direction_y = DIR_UP;
             }
             else if (event.key.keysym.sym == SDLK_s || event.key.keysym.sym == SDLK_DOWN)
             {
-                m_buttons[3] = true;
+                m_direction_x = DIR_STAND;
+                m_direction_y = DIR_DOWN;
             }
         }
-        else if (event.type == SDL_KEYUP)
-        {
-            if (event.key.keysym.sym == SDLK_a || event.key.keysym.sym == SDLK_LEFT)
-            {
-                m_buttons[0] = false;
-            }
-            else if (event.key.keysym.sym == SDLK_d || event.key.keysym.sym == SDLK_RIGHT)
-            {
-                m_buttons[1] = false;
-            }
-            else if (event.key.keysym.sym == SDLK_w || event.key.keysym.sym == SDLK_UP)
-            {
-                m_buttons[2] = false;
-            }
-            else if (event.key.keysym.sym == SDLK_s || event.key.keysym.sym == SDLK_DOWN)
-            {
-                m_buttons[3] = false;
-            }
-        }
-    }
-    // Translate key state to moving direction
-    if (m_buttons[0])
-    {
-        m_direction_x = DIR_LEFT;
-    }
-    else if (m_buttons[1])
-    {
-        m_direction_x = DIR_RIGHT;
-    }
-    else
-    {
-        m_direction_x = DIR_STAND;
-    }
-
-    if (m_buttons[2])
-    {
-        m_direction_y = DIR_UP;
-    }
-    else if (m_buttons[3])
-    {
-        m_direction_y = DIR_DOWN;
-    }
-    else
-    {
-        m_direction_y = DIR_STAND;
     }
 }
 
