@@ -1,34 +1,74 @@
 #include "GameObject.hpp"
-
+/**
+ * Constructor for the GameObject class
+ * The id of the game object mush be unique
+ */
 GameObject::GameObject(std::string id) : gameObject_id(id) {}
-
+/**
+ * Destructor for the GameObject class
+ */
 GameObject::~GameObject() {}
-
+/**
+ * StartUp the game object
+ */
 void GameObject::StartUp() {}
-
-void GameObject::ShutDown() {}
-
-void GameObject::Update() {
-    for (auto it = m_components.begin(); it != m_components.end(); it++) {
+/**
+ * ShutDown the game object by clearing the components map
+ */
+void GameObject::ShutDown()
+{
+    for (auto it = m_components.begin(); it != m_components.end(); it++)
+    {
+        RemoveComponent(it->first);
+    }
+}
+/**
+ * Update the game object by iterating through all the components and
+ * calling their Update function. The components are stored in a ordered
+ * map, with the key being the id of the component. The order to update
+ * the components is important, as some components may depend
+ */
+void GameObject::Update()
+{
+    for (auto it = m_components.begin(); it != m_components.end(); it++)
+    {
         it->second->Update();
     }
 }
-
-void GameObject::Render() {
-    for (auto it = m_components.begin(); it != m_components.end(); it++) {
+/**
+ * Render the game object by iterating through all the components and
+ * calling their Render function. The components are stored in a ordered
+ * map, with the key being the id of the component. The order to render
+ * the components is important, as some components may depend
+ */
+void GameObject::Render()
+{
+    for (auto it = m_components.begin(); it != m_components.end(); it++)
+    {
         it->second->Render();
     }
 }
-
+/**
+ * Add a component to the game object. The component name is used as the
+ * key for the component in the map. It must order the components in the
+ * right place for the Update and Render functions to work correctly.
+ */
 void GameObject::AddComponent(std::string componentName,
-                              std::shared_ptr<Component> component) {
+                              std::shared_ptr<Component> component)
+{
     m_components.emplace(componentName, component);
 }
-
-void GameObject::RemoveComponent(std::string componentName) {
+/**
+ * Remove a component from the game object given the component name
+ */
+void GameObject::RemoveComponent(std::string componentName)
+{
     m_components.erase(componentName);
 }
-
-std::shared_ptr<Component> GameObject::GetComponent(std::string componentName) {
+/**
+ * Get a component from the game object given the component name
+ */
+std::shared_ptr<Component> GameObject::GetComponent(std::string componentName)
+{
     return m_components[componentName];
 }

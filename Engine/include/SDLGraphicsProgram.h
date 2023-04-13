@@ -22,7 +22,6 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
-#include "constants.hpp"
 #include "Vec.hpp"
 #include "ResourceManager.hpp"
 // Purpose:
