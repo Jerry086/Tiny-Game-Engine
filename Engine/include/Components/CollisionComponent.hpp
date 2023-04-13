@@ -1,17 +1,14 @@
 #ifndef COLLISIONCOMPONENT_HPP
 #define COLLISIONCOMPONENT_HPP
 
-#if defined(LINUX) || defined(MINGW)
-#include <SDL2/SDL.h>
-#else // This works for Mac
-#include <SDL.h>
-#endif
-
 #include "Component.hpp"
 #include "ControllerComponent.hpp"
 #include "TransformComponent.hpp"
 #include "GameObjectManager.hpp"
 
+/**
+ * @brief The type of the collision component
+ */
 enum ObjectType
 {
     player,
@@ -20,29 +17,57 @@ enum ObjectType
     interactable
 };
 
+/**
+ * @brief The CollisionComponent class
+ *
+ * A component that handles collision
+ */
 class CollisionComponent : public Component
 {
 public:
+    /**
+     * @brief Constructor
+     * @param objectType The type of the object
+     * @param transformer The transform component of the object
+     * @param w The width of the object
+     * @param h The height of the object
+     */
     CollisionComponent(std::string objectType, std::shared_ptr<TransformComponent> transformer, int w, int h);
+    /**
+     * @brief Destructor
+     */
     ~CollisionComponent();
-
+    /**
+     * @brief Check collision with another object
+     * @param other The other object
+     * @return The penetration vector
+     */
     Vec2 CheckCollision(std::shared_ptr<CollisionComponent> other);
+    /**
+     * @brief Update the component
+     */
     void Update() override;
     /**
-     * Getter of the component type
+     * @brief Getter of the component type
      * @return The type of the component
      */
     int GetType() override;
+    /**
+     * @brief Getter of the object type
+     * @return The type of the object
+     */
+    ObjectType GetObjectType();
 
     std::shared_ptr<TransformComponent> m_transformer;
-    std::string m_objectType;
 
 private:
-    int m_height = 0;
-    int m_width = 0;
+    int m_height;
+    int m_width;
     const int m_type = CollisionComponent_TYPE;
-    ObjectType GetType(std::string inString);
+    std::string m_objectType;
+    ObjectType m_objectType_enum;
     std::shared_ptr<ControllerComponent> m_controller = nullptr;
+    std::shared_ptr<BehaviorComponent> m_behavior = nullptr;
 };
 
 #endif
