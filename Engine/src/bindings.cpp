@@ -70,6 +70,10 @@ PYBIND11_MODULE(mygameengine, m)
         .def(py::init<>())
         .def("QuitProgram", &ControllerComponent::QuitProgram);
 
+    py::class_<BehaviorComponent, Component,
+               std::shared_ptr<BehaviorComponent>>(m, "BehaviorComponent")
+        .def(py::init<>());
+
     py::class_<TransformComponent, Component,
                std::shared_ptr<TransformComponent>>(m, "TransformComponent")
         .def(py::init<Vec2 &>(), py::arg("new_position"))
@@ -114,10 +118,6 @@ PYBIND11_MODULE(mygameengine, m)
                       std::shared_ptr<TransformComponent> &, int, int>(),
              py::arg("objectType"), py::arg("transformComponent"), py::arg("w"),
              py::arg("h"));
-
-    py::class_<BehaviorComponent, Component,
-               std::shared_ptr<BehaviorComponent>>(m, "BehaviorComponent")
-        .def(py::init<>());
 
     py::class_<CounterComponent, Component, std::shared_ptr<CounterComponent>>(
         m, "CounterComponent")

@@ -6,18 +6,31 @@
 #include "Component.hpp"
 #include "Vec.hpp"
 
-// Directions of movement
+/**
+ * The BehaviorComponent class that defines the behavior of a game object.
+ */
 class BehaviorComponent : public Component
 {
 public:
-    // Constructor
+    /**
+     * Constructor
+     */
     BehaviorComponent();
-    // Destructor
+    /**
+     * Destructor
+     */
     ~BehaviorComponent();
-    // Update position of a game object
+    /**
+     * Update the moving direction of the game object
+     */
     void Update() override;
-
+    /**
+     * Getter of current moving direction towards x-axis
+     */
     int GetDirectionX();
+    /**
+     * Getter of current moving direction towards y-axis
+     */
     int GetDirectionY();
 
 private:
