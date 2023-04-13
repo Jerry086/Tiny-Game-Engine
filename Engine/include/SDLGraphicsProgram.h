@@ -1,20 +1,10 @@
 #ifndef SDLGRAPHICSPROGRAM
 #define SDLGRAPHICSPROGRAM
 
-// ==================== Libraries ==================
-// Depending on the operating system we use
-// The paths to SDL are actually different.
-// The #define statement should be passed in
-// when compiling using the -D argument.
-// This gives an example of how a programmer
-// may support multiple platforms with different
-// dependencies.
 #if defined(LINUX) || defined(MINGW)
 #include <SDL2/SDL.h>
-
-#else // This works for Mac
+#else
 #include <SDL.h>
-
 #endif
 
 #include <iostream>
@@ -22,64 +12,75 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
-#include "constants.hpp"
 #include "Vec.hpp"
 #include "ResourceManager.hpp"
-// Purpose:
-// This class sets up a full graphics program using SDL
-//
-//
-//
+
+/**
+ * The SDLGraphicsProgram class that handles all graphics.
+ */
 class SDLGraphicsProgram
 {
 public:
-    // Constructor
+    /**
+     * Constructor
+     * @param w The width of the window
+     * @param h The height of the window
+     */
     SDLGraphicsProgram(int w, int h);
-    // Destructor
+    /**
+     * Destructor
+     */
     ~SDLGraphicsProgram();
-    // Setup OpenGL
-    bool initGL();
-    // Clears the screen
+    /**
+     * Clear the screen for rendering
+     */
     void clear();
-    // Flips to new buffer
+    /**
+     * Flip the back buffer to the front
+     */
     void flip();
-    // Delay rendering
-
+    /**
+     * Delay the program for a given number of milliseconds
+     * @param milliseconds The number of milliseconds to delay
+     */
     void delay(int milliseconds);
-
-    // loop that runs forever
-    void loop();
-
-    // Get Pointer to Window
+    /**
+     * Get the SDL_Window
+     */
     SDL_Window *getSDLWindow();
-    // Draw a simple rectangle
+    /**
+     * Draw a rectangle to the screen
+     * @param x The x coordinate of the rectangle
+     * @param y The y coordinate of the rectangle
+     * @param w The width of the rectangle
+     * @param h The height of the rectangle
+     */
     void DrawRectangle(int x, int y, int w, int h);
+    /**
+     * Draw a point to the screen
+     * @param x The x coordinate of the point
+     * @param y The y coordinate of the point
+     */
     void DrawPoint(int x, int y);
 
-    std::string getKeyAction();
-
 private:
-    // Screen dimension constants
     int screenHeight;
     int screenWidth;
-    // The window we'll be rendering to
-    SDL_Window *gWindow;
-    // Our renderer
-    SDL_Renderer *gRenderer;
+    SDL_Window *gWindow = nullptr;
+    SDL_Renderer *gRenderer = nullptr;
 };
 
-// Initialization function
-// Returns a true or false value based on successful completion of setup.
-// Takes in dimensions of window.
+/**
+ * Constructor
+ * @param w The width of the window
+ * @param h The height of the window
+ */
 SDLGraphicsProgram::SDLGraphicsProgram(int w, int h) : screenWidth(w), screenHeight(h)
 {
     // Initialization flag
     bool success = true;
     // String to hold any errors that occur.
     std::stringstream errorStream;
-    // The window we'll be rendering to
-    gWindow = NULL;
-    // Render flag
 
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -93,7 +94,7 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h) : screenWidth(w), screenHei
         gWindow = SDL_CreateWindow("Lab", 100, 100, screenWidth, screenHeight, SDL_WINDOW_SHOWN);
 
         // Check if Window did not create.
-        if (gWindow == NULL)
+        if (gWindow == nullptr)
         {
             errorStream << "Window could not be created! SDL Error: " << SDL_GetError() << "\n";
             success = false;
@@ -102,7 +103,7 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h) : screenWidth(w), screenHei
         // Create a Renderer to draw on
         gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
         // Check if Renderer did not create.
-        if (gRenderer == NULL)
+        if (gRenderer == nullptr)
         {
             errorStream << "Renderer could not be created! SDL Error: " << SDL_GetError() << "\n";
             success = false;
@@ -120,11 +121,13 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h) : screenWidth(w), screenHei
     {
         SDL_Log("SDLGraphicsProgram::SDLGraphicsProgram - No SDL, GLAD, or OpenGL, errors detected during initialization\n\n");
     }
-
+    // Initialize the resource manager
     ResourceManager::instance().StartUp(gRenderer);
 }
-
-// Proper shutdown of SDL and destroy initialized objects
+/**
+ * Destructor
+ * Proper shutdown of SDL and destroy initialized objects
+ */
 SDLGraphicsProgram::~SDLGraphicsProgram()
 {
     ResourceManager::instance().ShutDown();
@@ -132,248 +135,59 @@ SDLGraphicsProgram::~SDLGraphicsProgram()
     SDL_DestroyRenderer(gRenderer);
     // Destroy window
     SDL_DestroyWindow(gWindow);
-    // Point gWindow to NULL to ensure it points to nothing.
-    gWindow = NULL;
+    // Point to NULL to ensure it points to nothing.
+    gWindow = nullptr;
+    gRenderer = nullptr;
     // Quit SDL subsystems
     SDL_Quit();
 }
 
-void SDLGraphicsProgram::DrawPoint(int x, int y)
-{
-    SDL_RenderDrawPoint(gRenderer, x, y);
-}
-
-// Initialize OpenGL
-// Setup any of our shaders here.
-bool SDLGraphicsProgram::initGL()
-{
-    // Success flag
-    bool success = true;
-
-    return success;
-}
-
-// clear
-// Clears the screen
+/**
+ * Clear the screen with a black background for rendering
+ * Set the color to white for drawing
+ */
 void SDLGraphicsProgram::clear()
 {
-    // Nothing yet!
     SDL_SetRenderDrawColor(gRenderer, 0x0, 0x0, 0x0, 0xFF);
     SDL_RenderClear(gRenderer);
     SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 }
-// Flip
-// The flip function gets called once per loop
-// It swaps out the previvous frame in a double-buffering system
+/**
+ * Flip the back buffer to the front
+ */
 void SDLGraphicsProgram::flip()
 {
-    // Nothing yet!
     SDL_RenderPresent(gRenderer);
 }
-
+/**
+ * Delay the program for a given number of milliseconds
+ */
 void SDLGraphicsProgram::delay(int milliseconds)
 {
     SDL_Delay(milliseconds);
 }
-
-// Loops forever!
-void SDLGraphicsProgram::loop()
-{
-    // Main loop flag
-    // If this is quit = 'true' then the program terminates.
-    bool quit = false;
-    // Event handler that handles various events in SDL
-    // that are related to input and output
-    SDL_Event e;
-    // Enable text input
-    SDL_StartTextInput();
-    // While application is running
-    while (!quit)
-    {
-        // Handle events on queue
-        while (SDL_PollEvent(&e) != 0)
-        {
-            // User posts an event to quit
-            // An example is hitting the "x" in the corner of the window.
-            if (e.type == SDL_QUIT)
-            {
-                quit = true;
-            }
-        } // End SDL_PollEvent loop.
-
-        // Update screen of our specified window
-        SDL_GL_SwapWindow(getSDLWindow());
-    }
-
-    // Disable text input
-    SDL_StopTextInput();
-}
-
-// Get Pointer to Window
+/**
+ * Get the SDL_Window
+ */
 SDL_Window *SDLGraphicsProgram::getSDLWindow()
 {
     return gWindow;
 }
-
-// Okay, render our rectangles!
+/**
+ * Draw a white rectangle to the screen
+ */
 void SDLGraphicsProgram::DrawRectangle(int x, int y, int w, int h)
 {
     SDL_Rect fillRect = {x, y, w, h};
     SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
     SDL_RenderDrawRect(gRenderer, &fillRect);
 }
-
-std::string SDLGraphicsProgram::getKeyAction()
+/**
+ * Draw a point to the screen
+ */
+void SDLGraphicsProgram::DrawPoint(int x, int y)
 {
-
-    SDL_Event event;
-
-    while (SDL_PollEvent(&event))
-    {
-        if (event.type == SDL_QUIT)
-        {
-            return "exit";
-        }
-        else if (event.type == SDL_KEYDOWN)
-        {
-            if (event.key.keysym.sym == SDLK_ESCAPE)
-            {
-                return "exit";
-            }
-            else if (event.key.keysym.sym == SDLK_w)
-            {
-                return "1,up,0";
-            }
-            else if (event.key.keysym.sym == SDLK_s)
-            {
-                return "1,down,0";
-            }
-            else if (event.key.keysym.sym == SDLK_UP)
-            {
-                return "2,up,0";
-            }
-            else if (event.key.keysym.sym == SDLK_DOWN)
-            {
-                return "2,down,0";
-            }
-        }
-        else if (event.type == SDL_KEYUP)
-        {
-            if (event.key.keysym.sym == SDLK_w)
-            {
-                return "1,up,1";
-            }
-            else if (event.key.keysym.sym == SDLK_s)
-            {
-                return "1,down,1";
-            }
-            else if (event.key.keysym.sym == SDLK_UP)
-            {
-                return "2,up,1";
-            }
-            else if (event.key.keysym.sym == SDLK_DOWN)
-            {
-                return "2,down,1";
-            }
-        }
-    }
-    SDL_GL_SwapWindow(getSDLWindow());
-    return "empty";
+    SDL_RenderDrawPoint(gRenderer, x, y);
 }
-
-// Contact CheckPaddleCollision(Ball const &ball, Paddle const &paddle)
-// {
-//     float ballLeft = ball.position.x;
-//     float ballRight = ball.position.x + BALL_WIDTH;
-//     float ballTop = ball.position.y;
-//     float ballBottom = ball.position.y + BALL_HEIGHT;
-
-//     float paddleLeft = paddle.position.x;
-//     float paddleRight = paddle.position.x + PADDLE_WIDTH;
-//     float paddleTop = paddle.position.y;
-//     float paddleBottom = paddle.position.y + PADDLE_HEIGHT;
-
-//     Contact contact{};
-
-//     if (ballLeft >= paddleRight)
-//     {
-//         return contact;
-//     }
-
-//     if (ballRight <= paddleLeft)
-//     {
-//         return contact;
-//     }
-
-//     if (ballTop >= paddleBottom)
-//     {
-//         return contact;
-//     }
-
-//     if (ballBottom <= paddleTop)
-//     {
-//         return contact;
-//     }
-
-//     float paddleRangeUpper = paddleBottom - (2.0f * PADDLE_HEIGHT / 3.0f);
-//     float paddleRangeMiddle = paddleBottom - (PADDLE_HEIGHT / 3.0f);
-
-//     if (ball.velocity.x < 0)
-//     {
-
-//         contact.penetration = paddleRight - ballLeft;
-//     }
-//     else if (ball.velocity.x > 0)
-//     {
-
-//         contact.penetration = paddleLeft - ballRight;
-//     }
-
-//     if ((ballBottom > paddleTop) && (ballBottom < paddleRangeUpper))
-//     {
-//         contact.type = 1;
-//     }
-//     else if ((ballBottom > paddleRangeUpper) && (ballBottom < paddleRangeMiddle))
-//     {
-//         contact.type = 2;
-//     }
-//     else
-//     {
-//         contact.type = 3;
-//     }
-
-//     return contact;
-// }
-
-// Contact CheckWallCollision(Ball const &ball)
-// {
-//     float ballLeft = ball.position.x;
-//     float ballRight = ball.position.x + BALL_WIDTH;
-//     float ballTop = ball.position.y;
-//     float ballBottom = ball.position.y + BALL_HEIGHT;
-
-//     Contact contact{};
-
-//     if (ballLeft < 0.0f)
-//     {
-//         contact.type = 4;
-//     }
-//     else if (ballRight > WINDOW_WIDTH)
-//     {
-//         contact.type = 5;
-//     }
-//     else if (ballTop < 0.0f)
-//     {
-//         contact.type = 1;
-//         contact.penetration = -ballTop;
-//     }
-//     else if (ballBottom > WINDOW_HEIGHT)
-//     {
-//         contact.type = 3;
-//         contact.penetration = WINDOW_HEIGHT - ballBottom;
-//     }
-
-//     return contact;
-// }
 
 #endif

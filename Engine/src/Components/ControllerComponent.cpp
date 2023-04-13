@@ -1,22 +1,25 @@
 #include "./Components/ControllerComponent.hpp"
-
+/**
+ * Constructor
+ */
 ControllerComponent::ControllerComponent() {}
-
+/**
+ * Destructor
+ */
 ControllerComponent::~ControllerComponent() {}
-
-// Update game object's moving direction based on user input.
-// Flip 'quit' to true upon quit event
+/**
+ * Update game object's moving direction based on user input.
+ * Flip 'm_quit' to true upon quit event
+ */
 void ControllerComponent::Update()
 {
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
-        // quit the program
         if (event.type == SDL_QUIT)
         {
             m_quit = true;
         }
-        // handle keyboard input
         else if (event.type == SDL_KEYDOWN)
         {
             if (event.key.keysym.sym == SDLK_a || event.key.keysym.sym == SDLK_LEFT)
@@ -42,18 +45,30 @@ void ControllerComponent::Update()
         }
     }
 }
-
-// Getter of current moving direction
+/**
+ * Getter of current moving direction towards x-axis
+ */
 int8_t ControllerComponent::GetDirectionX()
 {
     return m_direction_x;
 }
-
+/**
+ * Getter of current moving direction towards y-axis
+ */
 int8_t ControllerComponent::GetDirectionY()
 {
     return m_direction_y;
 }
-
+/**
+ * Getter of the component type
+ */
+int ControllerComponent::GetType()
+{
+    return m_type;
+}
+/**
+ * Getter of quit flag
+ */
 bool ControllerComponent::QuitProgram()
 {
     return m_quit;
