@@ -3,43 +3,49 @@
 #include <iostream>
 #include <iterator>
 
+/**
+ * Constructor
+ */
 ResourceManager::ResourceManager() {}
-
+/**
+ * Destructor
+ */
 ResourceManager::~ResourceManager() {}
-
+/**
+ * Get the instance of the ResourceManager
+ */
 ResourceManager &ResourceManager::instance()
 {
     static ResourceManager instance;
     return instance;
 }
-
-// search if this surface has been loaded, and then
-// only call SDL_LoadBMP if that resource does not previously exist.
+/**
+ * Search if the image has been loaded
+ * Call SDL_LoadBMP if that resource does not previously exist.
+ * Otherwise, increment the reference count.
+ */
 void ResourceManager::LoadSurface(std::string image_filename)
 {
     auto it = surfaceMap.find(image_filename);
-    // check if resource is already loaded
     if (it != surfaceMap.end())
     {
-        // increment resource counter
         ++it->second.second;
     }
     else
     {
-        // load new resource
         SDL_Surface *spriteSheet = SDL_LoadBMP(image_filename.c_str());
         if (spriteSheet == nullptr)
         {
             std::cerr << image_filename << " not found!\n";
             return;
         }
-        std::cout << "New SDL_Surface copy of " << image_filename
-                  << " has been loaded\n";
         surfaceMap.emplace(image_filename, std::make_pair(spriteSheet, 1));
     }
 }
 
-// retrieve a loaded surface
+/**
+ * Retrieve a loaded SDL_Surface given the image filename as a key
+ */
 SDL_Surface *ResourceManager::GetSurface(std::string image_filename)
 {
     auto it = surfaceMap.find(image_filename);
@@ -48,12 +54,13 @@ SDL_Surface *ResourceManager::GetSurface(std::string image_filename)
         std::cout << "Resource " << image_filename << " has not been loaded\n";
         return nullptr;
     }
-    std::cout << "Retrieved saved SDL_Surface copy of " << image_filename
-              << " from GetResource\n";
     return it->second.first;
 }
 
-// free a SDL_Surface
+/**
+ * Free a SDL_Surface given the image filename as a key
+ * Decrement the reference count if the resource is still in use
+ */
 void ResourceManager::FreeSurface(std::string image_filename)
 {
     auto it = surfaceMap.find(image_filename);
@@ -63,35 +70,30 @@ void ResourceManager::FreeSurface(std::string image_filename)
     }
     else
     {
-        // decrement resource counter
         --it->second.second;
-        // free SDL_Surface when it is not used by other objects
         if (!it->second.second)
         {
             SDL_FreeSurface(it->second.first);
             it->second.first = nullptr;
             surfaceMap.erase(it);
-            std::cout << "SDL_Surface Resource " << it->first
-                      << " has been freed\n";
         }
     }
 }
 
-// search if this texture has been loaded, and then
-// only call SDL_CreateTextureFromSurface if that resource does not previously
-// exist.
+/**
+ * Search if the texture has been loaded
+ * Load the texture if that resource does not previously exist.
+ * Otherwise, increment the reference count.
+ */
 void ResourceManager::LoadTexture(std::string image_filename)
 {
     auto it = textureMap.find(image_filename);
-    // check if resource is already loaded
     if (it != textureMap.end())
     {
-        // increment resource counter
         ++it->second.second;
     }
     else
     {
-        // create new texture
         SDL_Texture *texture = SDL_CreateTextureFromSurface(
             m_renderer, GetSurface(image_filename));
         if (texture == nullptr)
@@ -99,13 +101,13 @@ void ResourceManager::LoadTexture(std::string image_filename)
             std::cerr << "Error creating texture\n";
             return;
         }
-        std::cout << "New SDL_Texture copy of " << image_filename
-                  << " has been loaded\n";
         textureMap.emplace(image_filename, std::make_pair(texture, 1));
     }
 }
 
-// retrieve a loaded texture
+/**
+ * Retrieve a loaded SDL_Texture given the image filename as a key
+ */
 SDL_Texture *ResourceManager::GetTexture(std::string image_filename)
 {
     auto it = textureMap.find(image_filename);
@@ -115,12 +117,13 @@ SDL_Texture *ResourceManager::GetTexture(std::string image_filename)
                   << " has not been loaded\n";
         return nullptr;
     }
-    std::cout << "Retrieved saved SDL_Texture copy of " << image_filename
-              << " from GetResource\n";
     return it->second.first;
 }
 
-// destroy a SDL_Texture
+/**
+ * Destroy a SDL_Texture given the image filename as a key
+ * Decrement the reference count if the resource is still in use
+ */
 void ResourceManager::DestroyTexture(std::string image_filename)
 {
     auto it = textureMap.find(image_filename);
@@ -130,48 +133,53 @@ void ResourceManager::DestroyTexture(std::string image_filename)
     }
     else
     {
-        // decrement resource counter
         --it->second.second;
-        // destroy SDL_Texture when it is not used by other objects
         if (!it->second.second)
         {
             SDL_DestroyTexture(it->second.first);
             it->second.first = nullptr;
             textureMap.erase(it);
-            std::cout << "SDL_Texture Resource " << it->first
-                      << " has been destroyed\n";
         }
     }
 }
-
+/**
+ * Get the renderer
+ */
+SDL_Renderer *ResourceManager::GetRenderer()
+{
+    return m_renderer;
+}
+/**
+ * Set the renderer and initialize the resource manager
+ */
 int ResourceManager::StartUp(SDL_Renderer *renderer)
 {
+    if (renderer == nullptr)
+    {
+        std::cerr << "Renderer not found!\n";
+        return -1;
+    }
     m_renderer = renderer;
     return 0;
 }
-
-// Kill all resource in resource manager
+/**
+ * Free all resources in the resource manager
+ */
 int ResourceManager::ShutDown()
 {
-    // Kill all SDL_Surface
     auto it_surface = surfaceMap.begin();
     while (it_surface != surfaceMap.end())
     {
         SDL_FreeSurface(it_surface->second.first);
         it_surface->second.first = nullptr;
-        std::cout << "SDL_Surface Resource " << it_surface->first
-                  << " has been freed\n";
         it_surface = surfaceMap.erase(it_surface);
     }
 
-    // Kill all SDL_Texture
     auto it_texture = textureMap.begin();
     while (it_texture != textureMap.end())
     {
         SDL_DestroyTexture(it_texture->second.first);
         it_texture->second.first = nullptr;
-        std::cout << "SDL_Texture Resource " << it_texture->first
-                  << " has been destroyed\n";
         it_texture = textureMap.erase(it_texture);
     }
     return 0;

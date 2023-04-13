@@ -3,49 +3,75 @@
 
 #if defined(LINUX) || defined(MINGW)
 #include <SDL2/SDL.h>
-#else  // This works for Mac
+#else
 #include <SDL.h>
 #endif
 
-// I recommend a map for filling in the resource manager
 #include <string>
 #include <unordered_map>
 
-class ResourceManager {
-   public:
-    // get the only instance of Resource Manager
+/**
+ * @brief The ResourceManager class
+ *
+ * Singleton class that manages all resources, including surfaces and textures.
+ */
+class ResourceManager
+{
+public:
+    /**
+     * @brief Obtain the instance of the resource manager
+     */
     static ResourceManager &instance();
-    // Load a image on the CPU
+    /**
+     * @brief Load a SDL_Surface from a image file
+     * @param image_filename The path to the image file
+     */
     void LoadSurface(std::string image_filename);
-    // SDL_Surface Getter of previously loaded image
+    /**
+     * @brief Get a previously loaded SDL_Surface
+     * @param image_filename The path to the image file
+     */
     SDL_Surface *GetSurface(std::string image_filename);
-    // Free a image on the CPU
+    /**
+     * @brief Free a previously loaded SDL_Surface
+     */
     void FreeSurface(std::string image_filename);
-    // Load a SDL_Texture from a SDL_Surface
+    /**
+     * @brief Load a SDL_Texture from a image file
+     * @param image_filename The path to the image file
+     */
     void LoadTexture(std::string image_filename);
-    // SDL_Texture Getter of previously loaded texture;
+    /**
+     * @brief Get a previously loaded SDL_Texture
+     * @param image_filename The path to the image file
+     */
     SDL_Texture *GetTexture(std::string image_filename);
-    // Destroy a SDL_Texture on the GPU
+    /**
+     * @brief Destroy a previously loaded SDL_Texture
+     * @param image_filename The path to the image file
+     */
     void DestroyTexture(std::string image_filename);
-    // Destroy resources in resource manager
+    /**
+     * @brief Get the SDL_Renderer
+     */
+    SDL_Renderer *GetRenderer();
+    /**
+     * @brief Initialize the resource manager
+     * @param renderer The SDL_Renderer to use
+     */
     int StartUp(SDL_Renderer *renderer);
+    /**
+     * @brief Destroy all resources
+     */
     int ShutDown();
 
-    // TODO ugly, make it private or make a getter or find a better way
+private:
     SDL_Renderer *m_renderer;
-
-   private:
-    // unordered_map data structure to search if a resource has been previously
-    // loaded
     std::unordered_map<std::string, std::pair<SDL_Surface *, int>> surfaceMap;
     std::unordered_map<std::string, std::pair<SDL_Texture *, int>> textureMap;
-    // private constructor
     ResourceManager();
-    // destructor
     ~ResourceManager();
-    // avoid copy constructor
     ResourceManager(const ResourceManager &) = delete;
-    // avoid assignment operator
     ResourceManager &operator=(const ResourceManager &) = delete;
 };
 

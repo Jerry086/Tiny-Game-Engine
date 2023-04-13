@@ -129,8 +129,6 @@ void SpriteComponent::Update()
 
 void SpriteComponent::Render()
 {
-    // TODO: ugly, find a better way
-    // How to get the renderer???
-    SDL_Renderer *ren = ResourceManager::instance().m_renderer;
+    SDL_Renderer *ren = ResourceManager::instance().GetRenderer();
     SDL_RenderCopy(ren, m_texture, &mSrc, &mDest);
 }

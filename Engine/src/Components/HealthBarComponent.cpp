@@ -22,7 +22,7 @@ HealthBarComponent::~HealthBarComponent()
 
 void HealthBarComponent::Update()
 {
-    //Collision + keyboard detect or simply collision
+    // Collision + keyboard detect or simply collision
     mDest.x = m_transformComponent->m_position.x;
     mDest.y = m_transformComponent->m_position.y;
     mDest.w = 128;
@@ -31,7 +31,7 @@ void HealthBarComponent::Update()
 
 void HealthBarComponent::Render()
 {
-    SDL_Renderer *ren = ResourceManager::instance().m_renderer;
+    SDL_Renderer *ren = ResourceManager::instance().GetRenderer();
     SDL_RenderCopy(ren, m_texture, &mSrc, &mDest);
 }
 

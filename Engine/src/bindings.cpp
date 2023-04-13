@@ -21,13 +21,14 @@ namespace py = pybind11;
 // 'm' is the interface (creates a py::module object)
 //      for which the bindings are created.
 //  The magic here is in 'template metaprogramming'
-PYBIND11_MODULE(mygameengine, m) {
-    m.doc() = "our game engine as a library";  // Optional docstring
+PYBIND11_MODULE(mygameengine, m)
+{
+    m.doc() = "our game engine as a library"; // Optional docstring
 
     py::class_<SDLGraphicsProgram>(m, "SDLGraphicsProgram")
         .def(py::init<int, int>(), py::arg("w"),
-             py::arg("h"))                         // our constructor
-        .def("clear", &SDLGraphicsProgram::clear)  // Expose member methods
+             py::arg("h"))                        // our constructor
+        .def("clear", &SDLGraphicsProgram::clear) // Expose member methods
         .def("delay", &SDLGraphicsProgram::delay)
         .def("flip", &SDLGraphicsProgram::flip)
         .def("getKeyAction", &SDLGraphicsProgram::getKeyAction)
@@ -43,6 +44,26 @@ PYBIND11_MODULE(mygameengine, m) {
         .def("ShutDown", &GameObject::ShutDown)
         .def("AddComponent", &GameObject::AddComponent)
         .def("GetComponent", &GameObject::GetComponent);
+
+    py::class_<GameObjectManager,
+               std::unique_ptr<GameObjectManager, py::nodelete>>(
+        m, "GameObjectManager")
+        .def(py::init([]()
+                      { return std::unique_ptr<GameObjectManager, py::nodelete>(
+                            &GameObjectManager::instance()); }))
+        .def("Update", &GameObjectManager::Update)
+        .def("Render", &GameObjectManager::Render)
+        .def("AddGameObject", &GameObjectManager::AddGameObject)
+        .def("RemoveGameObject", &GameObjectManager::RemoveGameObject)
+        .def("GetGameObject", &GameObjectManager::GetGameObject);
+
+    py::class_<Vec2>(m, "Vec2")
+        .def(py::init<float, float>())
+        .def_readwrite("x", &Vec2::x)
+        .def_readwrite("y", &Vec2::y)
+        .def("__add__", &Vec2::operator+)
+        .def("__iadd__", &Vec2::operator+=)
+        .def("__mul__", &Vec2::operator*);
 
     py::class_<Component, std::shared_ptr<Component>>(m, "Component")
         .def(py::init<>());
@@ -74,14 +95,6 @@ PYBIND11_MODULE(mygameengine, m) {
             py::arg("numRows"), py::arg("numCols"))
         .def("SetPosition", &SpriteComponent::SetPosition);
 
-    py::class_<Vec2>(m, "Vec2")
-        .def(py::init<float, float>())
-        .def_readwrite("x", &Vec2::x)
-        .def_readwrite("y", &Vec2::y)
-        .def("__add__", &Vec2::operator+)
-        .def("__iadd__", &Vec2::operator+=)
-        .def("__mul__", &Vec2::operator*);
-
     py::class_<TileMapComponent, Component, std::shared_ptr<TileMapComponent>>(
         m, "TileMapComponent")
         .def(py::init<std::string &, int, int, int, int, int, int>(),
@@ -104,19 +117,6 @@ PYBIND11_MODULE(mygameengine, m) {
                       std::shared_ptr<TransformComponent> &, int, int>(),
              py::arg("objectType"), py::arg("transformComponent"), py::arg("w"),
              py::arg("h"));
-
-    py::class_<GameObjectManager,
-               std::unique_ptr<GameObjectManager, py::nodelete>>(
-        m, "GameObjectManager")
-        .def(py::init([]() {
-            return std::unique_ptr<GameObjectManager, py::nodelete>(
-                &GameObjectManager::instance());
-        }))
-        .def("Update", &GameObjectManager::Update)
-        .def("Render", &GameObjectManager::Render)
-        .def("AddGameObject", &GameObjectManager::AddGameObject)
-        .def("RemoveGameObject", &GameObjectManager::RemoveGameObject)
-        .def("GetGameObject", &GameObjectManager::GetGameObject);
 
     py::class_<BehaviorComponent, Component,
                std::shared_ptr<BehaviorComponent>>(m, "BehaviorComponent")

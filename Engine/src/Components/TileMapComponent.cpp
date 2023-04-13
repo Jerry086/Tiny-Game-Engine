@@ -15,9 +15,11 @@
 // are in the actual sprite sheet file loaded.
 TileMapComponent::TileMapComponent(std::string tileSheetFileName, int rows,
                                    int cols, int _TileWidth, int _TileHeight,
-                                   int _mapX, int _mapY) {
-    SDL_Renderer *ren = ResourceManager::instance().m_renderer;
-    if (nullptr == ren) {
+                                   int _mapX, int _mapY)
+{
+    SDL_Renderer *ren = ResourceManager::instance().GetRenderer();
+    if (nullptr == ren)
+    {
         SDL_Log("No valid renderer found");
     }
 
@@ -38,9 +40,12 @@ TileMapComponent::TileMapComponent(std::string tileSheetFileName, int rows,
     m_Texture = ResourceManager::instance().GetTexture(tileSheetFileName);
     // m_TileSpriteSheet = SDL_LoadBMP(tileSheetFileName.c_str());
 
-    if (nullptr == m_TileSpriteSheet) {
+    if (nullptr == m_TileSpriteSheet)
+    {
         SDL_Log("Failed to allocate surface");
-    } else {
+    }
+    else
+    {
         // Create a texture from our surface
         // Textures run faster and take advantage of
         //  hardware acceleration
@@ -50,8 +55,9 @@ TileMapComponent::TileMapComponent(std::string tileSheetFileName, int rows,
     // Setup the TileMap array
     // This sets each tile to '0'
     m_Tiles = new int[m_MapX * m_MapY];
-    for (int i = 0; i < m_MapX * m_MapY; i++) {
-        m_Tiles[i] = -1;  // Default value is no tile.
+    for (int i = 0; i < m_MapX * m_MapY; i++)
+    {
+        m_Tiles[i] = -1; // Default value is no tile.
     }
 
     this->GenerateSimpleMap();
@@ -59,20 +65,26 @@ TileMapComponent::TileMapComponent(std::string tileSheetFileName, int rows,
 }
 
 // Destructor
-TileMapComponent::~TileMapComponent() {
+TileMapComponent::~TileMapComponent()
+{
     // SDL_DestroyTexture(m_Texture);
     // // Remove our TileMap
     // delete[] m_Tiles;
 }
 
 // Helper function to gegenerate a simlpe map
-void TileMapComponent::GenerateSimpleMap() {
-    for (int y = 0; y < m_MapY; y++) {
-        for (int x = 0; x < m_MapX; x++) {
-            if (y == 0) {
+void TileMapComponent::GenerateSimpleMap()
+{
+    for (int y = 0; y < m_MapY; y++)
+    {
+        for (int x = 0; x < m_MapX; x++)
+        {
+            if (y == 0)
+            {
                 SetTile(x, y, 12);
             }
-            if (y == m_MapY - 1) {
+            if (y == m_MapY - 1)
+            {
                 SetTile(x, y, 0);
             }
         }
@@ -81,9 +93,12 @@ void TileMapComponent::GenerateSimpleMap() {
 
 // Helper function to print out the tile map
 // to the console
-void TileMapComponent::PrintMap() {
-    for (int y = 0; y < m_MapY; y++) {
-        for (int x = 0; x < m_MapX; x++) {
+void TileMapComponent::PrintMap()
+{
+    for (int y = 0; y < m_MapY; y++)
+    {
+        for (int x = 0; x < m_MapX; x++)
+        {
             std::cout << std::setw(3) << GetTileType(x, y);
         }
         std::cout << "\n";
@@ -91,29 +106,36 @@ void TileMapComponent::PrintMap() {
 }
 
 // Sets a tile a certain type
-void TileMapComponent::SetTile(int x, int y, int type) {
+void TileMapComponent::SetTile(int x, int y, int type)
+{
     m_Tiles[y * m_MapX + x] = type;
 }
 
 // Returns what the tile is at a specific position.
-int TileMapComponent::GetTileType(int x, int y) {
+int TileMapComponent::GetTileType(int x, int y)
+{
     return m_Tiles[y * m_MapX + x];
 }
 
 // render TileMap
-void TileMapComponent::Render() {
+void TileMapComponent::Render()
+{
     std::cout << "TileMapComponent::Render()" << std::endl;
-    SDL_Renderer *ren = ResourceManager::instance().m_renderer;
-    if (nullptr == ren) {
+    SDL_Renderer *ren = ResourceManager::instance().GetRenderer();
+    if (nullptr == ren)
+    {
         SDL_Log("No valid renderer found");
     }
 
     SDL_Rect Src, Dest;
-    for (int y = 0; y < m_MapY; y++) {
-        for (int x = 0; x < m_MapX; x++) {
+    for (int y = 0; y < m_MapY; y++)
+    {
+        for (int x = 0; x < m_MapX; x++)
+        {
             // Select our Tile
             int currentTile = GetTileType(x, y);
-            if (currentTile > -1) {
+            if (currentTile > -1)
+            {
                 // Reverse lookup, given the tile type
                 // and then figuring out how to select it
                 // from the texture atlas.
@@ -132,7 +154,8 @@ void TileMapComponent::Render() {
     }
 }
 
-void TileMapComponent::Update() {
+void TileMapComponent::Update()
+{
     std::cout << "TileMapComponent::Update()" << std::endl;
     return;
 }
