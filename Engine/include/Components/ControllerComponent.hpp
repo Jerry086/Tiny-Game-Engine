@@ -3,7 +3,7 @@
 
 #if defined(LINUX) || defined(MINGW)
 #include <SDL2/SDL.h>
-#else // This works for Mac
+#else
 #include <SDL.h>
 #endif
 
@@ -20,20 +20,40 @@ const int8_t DIR_STAND = 0;
 class ControllerComponent : public Component
 {
 public:
-    // Constructor
+    /**
+     * Constructor
+     */
     ControllerComponent();
-    // Destructor
+    /**
+     * Destructor
+     */
     ~ControllerComponent();
-    // Analyze input from player, update the direction
+    /**
+     * Update game object's moving direction based on user input.
+     */
     void Update() override;
-    // Getter of movement direction
+    /**
+     * Getter of current moving direction towards x-axis
+     */
     int8_t GetDirectionX();
+    /**
+     * Getter of current moving direction towards y-axis
+     */
     int8_t GetDirectionY();
+    /**
+     * Getter of the component type
+     * @return The type of the component
+     */
+    int GetType() override;
+    /**
+     * Getter of quit flag
+     */
     bool QuitProgram();
 
 private:
     int8_t m_direction_x = DIR_RIGHT;
     int8_t m_direction_y = DIR_STAND;
+    const int m_type = ControllerComponent_TYPE;
     bool m_quit = false;
 };
 

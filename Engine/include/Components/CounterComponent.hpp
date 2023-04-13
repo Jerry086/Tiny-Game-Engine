@@ -5,6 +5,11 @@
 
 #include "Component.hpp"
 
+/*
+ * @brief The CounterComponent class
+ *
+ * A component that keeps track of counters
+ */
 class CounterComponent : public Component {
    public:
     CounterComponent();

@@ -1,12 +1,17 @@
 #include "./Components/BehaviorComponent.hpp"
 
-// Construct a transform component with an initial position (x, y)
-BehaviorComponent::BehaviorComponent()
-{
-}
-
+/**
+ * Constructor
+ */
+BehaviorComponent::BehaviorComponent() {}
+/**
+ * Destructor
+ */
 BehaviorComponent::~BehaviorComponent() {}
-
+/**
+ * Update the moving direction of the game object
+ * Flip the moving directions after a certain amount of frames
+ */
 void BehaviorComponent::Update()
 {
     ++counter_x;
@@ -23,13 +28,24 @@ void BehaviorComponent::Update()
     }
 }
 
-// Getter of current moving direction
+/**
+ * Getter of current moving direction towards x-axis
+ */
 int BehaviorComponent::GetDirectionX()
 {
     return m_direction_x;
 }
-
+/**
+ * Getter of current moving direction towards y-axis
+ */
 int BehaviorComponent::GetDirectionY()
 {
     return m_direction_y;
+}
+/**
+ * Getter of the component type
+ */
+int BehaviorComponent::GetType()
+{
+    return m_type;
 }
