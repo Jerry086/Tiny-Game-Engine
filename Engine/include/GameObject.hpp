@@ -4,6 +4,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "./Components/Component.hpp"
 
@@ -22,6 +23,9 @@ class GameObject {
                       std::shared_ptr<Component> component);
     void RemoveComponent(std::string componentName);
     std::shared_ptr<Component> GetComponent(std::string componentName);
+
+    template <typename T>
+    std::vector<std::shared_ptr<T>> GetComponents();
 
     std::map<std::string, std::shared_ptr<Component>> m_components;
 

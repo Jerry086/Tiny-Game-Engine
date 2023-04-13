@@ -35,14 +35,18 @@ PYBIND11_MODULE(mygameengine, m) {
         .def("DrawPoint", &SDLGraphicsProgram::DrawPoint)
         .def("DrawRectangle", &SDLGraphicsProgram::DrawRectangle);
 
-    py::class_<GameObject, std::shared_ptr<GameObject>>(m, "GameObject")
+    py::class_<GameObject, std::shared_ptr<GameObject>,
+               std::vector<std::shared_ptr<ControllerComponent>>>(m,
+                                                                  "GameObject")
         .def(py::init<const std::string &>(), py::arg("id"))
         .def("Update", &GameObject::Update)
         .def("Render", &GameObject::Render)
         .def("StartUp", &GameObject::StartUp)
         .def("ShutDown", &GameObject::ShutDown)
         .def("AddComponent", &GameObject::AddComponent)
-        .def("GetComponent", &GameObject::GetComponent);
+        .def("GetComponent", &GameObject::GetComponent)
+        .def("GetControllerComponents",
+             &GameObject::GetComponents<ControllerComponent>);
 
     py::class_<Component, std::shared_ptr<Component>>(m, "Component")
         .def(py::init<>());
