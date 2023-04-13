@@ -31,8 +31,8 @@ void GameObjectManager::Shutdown()
     for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++)
     {
         it->second->ShutDown();
-        RemoveGameObject(it->first);
     }
+    m_gameobjects.clear();
 }
 /**
  * Update all game objects of the game.
@@ -51,6 +51,12 @@ void GameObjectManager::Update()
  */
 void GameObjectManager::Render()
 {
+    if (m_shutdown)
+    {
+        // TODO: Render game over screen
+        std::cout << "Game over" << std::endl;
+        return;
+    }
     for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++)
     {
         it->second->Render();
@@ -79,4 +85,11 @@ std::shared_ptr<GameObject> GameObjectManager::GetGameObject(
     std::string objectID)
 {
     return m_gameobjects[objectID];
+}
+/**
+ * Set the shutdown flag when game is over
+ */
+void GameObjectManager::SetShutdown(bool shutdown)
+{
+    m_shutdown = shutdown;
 }

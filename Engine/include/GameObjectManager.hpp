@@ -53,10 +53,16 @@ public:
      * @return The game object
      */
     std::shared_ptr<GameObject> GetGameObject(std::string objectID);
+    /**
+     * @brief set the shutdown flag
+     * @param shutdown The shutdown flag
+     */
+    void SetShutdown(bool shutdown);
 
     std::map<std::string, std::shared_ptr<GameObject>> m_gameobjects;
 
 private:
+    bool m_shutdown = false;
     GameObjectManager();
     ~GameObjectManager();
     GameObjectManager(const GameObjectManager &) = delete;

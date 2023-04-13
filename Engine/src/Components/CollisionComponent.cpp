@@ -81,8 +81,9 @@ void CollisionComponent::Update()
                 case enemy:
                 {
                     // TODO: add player death animation
-                    GameObjectManager::instance().Shutdown();
-                    std::cout << "Game Over" << std::endl;
+                    Vec2 penetration = CheckCollision(other);
+                    if (penetration.x != 0 || penetration.y != 0)
+                        GameObjectManager::instance().SetShutdown(true);
                     break;
                 }
 
@@ -93,21 +94,14 @@ void CollisionComponent::Update()
             }
             else
             {
-                // enemy + player / enemy + wall
+                // enemy + wall
+                // enemy + player - hand over to player
                 switch (other->m_objectType_enum)
                 {
                 case wall:
                 {
                     Vec2 penetration = CheckCollision(other);
                     m_transformer->m_position += penetration;
-                    break;
-                }
-
-                case player:
-                {
-                    // TODO: add player death animation
-                    GameObjectManager::instance().Shutdown();
-                    std::cout << "Game Over" << std::endl;
                     break;
                 }
 
