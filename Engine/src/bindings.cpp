@@ -1,14 +1,14 @@
 #include <pybind11/pybind11.h>
 
+#include "./Components/BehaviorComponent.hpp"
+#include "./Components/CollisionComponent.hpp"
 #include "./Components/Component.hpp"
 #include "./Components/ControllerComponent.hpp"
-#include "./Components/BehaviorComponent.hpp"
-#include "./Components/TransformComponent.hpp"
-#include "./Components/CollisionComponent.hpp"
+#include "./Components/CounterComponent.hpp"
+#include "./Components/HealthBarComponent.hpp"
 #include "./Components/SpriteComponent.hpp"
 #include "./Components/TileMapComponent.hpp"
-#include "./Components/HealthBarComponent.hpp"
-#include "./Components/CounterComponent.hpp"
+#include "./Components/TransformComponent.hpp"
 #include "GameObject.hpp"
 #include "GameObjectManager.hpp"
 #include "SDLGraphicsProgram.h"
@@ -21,8 +21,7 @@ namespace py = pybind11;
 // 'm' is the interface (creates a py::module object)
 //      for which the bindings are created.
 //  The magic here is in 'template metaprogramming'
-PYBIND11_MODULE(mygameengine, m)
-{
+PYBIND11_MODULE(mygameengine, m) {
     m.doc() = "our game engine as a library";
 
     py::class_<SDLGraphicsProgram>(m, "SDLGraphicsProgram")
@@ -33,9 +32,7 @@ PYBIND11_MODULE(mygameengine, m)
         .def("DrawRectangle", &SDLGraphicsProgram::DrawRectangle)
         .def("DrawPoint", &SDLGraphicsProgram::DrawPoint);
 
-    py::class_<GameObject, std::shared_ptr<GameObject>,
-               std::vector<std::shared_ptr<ControllerComponent>>>(m,
-                                                                  "GameObject")
+    py::class_<GameObject, std::shared_ptr<GameObject>>(m, "GameObject")
         .def(py::init<const std::string &>(), py::arg("id"))
         .def("Update", &GameObject::Update)
         .def("Render", &GameObject::Render)
@@ -49,9 +46,10 @@ PYBIND11_MODULE(mygameengine, m)
     py::class_<GameObjectManager,
                std::unique_ptr<GameObjectManager, py::nodelete>>(
         m, "GameObjectManager")
-        .def(py::init([]()
-                      { return std::unique_ptr<GameObjectManager, py::nodelete>(
-                            &GameObjectManager::instance()); }))
+        .def(py::init([]() {
+            return std::unique_ptr<GameObjectManager, py::nodelete>(
+                &GameObjectManager::instance());
+        }))
         .def("Update", &GameObjectManager::Update)
         .def("Render", &GameObjectManager::Render)
         .def("AddGameObject", &GameObjectManager::AddGameObject)
@@ -112,7 +110,8 @@ PYBIND11_MODULE(mygameengine, m)
             py::init<const std::string &, std::shared_ptr<TransformComponent> &,
                      int, int, int, int, int>(),
             py::arg("filename"), py::arg("transformComponent"), py::arg("w"),
-            py::arg("h"), py::arg("frames"), py::arg("numRows"), py::arg("numCols"))
+            py::arg("h"), py::arg("frames"), py::arg("numRows"),
+            py::arg("numCols"))
         .def("SetHealth", &HealthBarComponent::SetHealth);
 
     py::class_<CollisionComponent, Component,

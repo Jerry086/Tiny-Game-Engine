@@ -1,10 +1,15 @@
 #ifndef GAMEOBJECT_HPP
 #define GAMEOBJECT_HPP
 
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+
 #include <map>
 #include <memory>
 #include <string>
 #include <vector>
+
+namespace py = pybind11;
 
 #include "./Components/Component.hpp"
 
@@ -60,8 +65,30 @@ class GameObject {
      */
     std::shared_ptr<Component> GetComponent(std::string componentName);
 
+    /**
+     * @brief Get a list of components of a given type
+     *
+     * @tparam T The type of the component
+     * @return pybind11::list A pybind list of components
+     */
+    // For some pybind reason it can only be implemented in header
     template <typename T>
-    std::vector<std::shared_ptr<T>> GetComponents();
+    pybind11::list GetComponents() {
+        std::vector<std::shared_ptr<T>> components;
+        for (auto it = m_components.begin(); it != m_components.end(); it++) {
+            std::shared_ptr<T> component =
+                std::dynamic_pointer_cast<T>(it->second);
+            if (component != nullptr) {
+                components.push_back(component);
+            }
+        }
+        pybind11::list result;
+        for (auto it = components.begin(); it != components.end(); it++) {
+            result.append(*it);
+        }
+        return result;
+    }
+
     /**
      * @brief Get the collision component of the game object
      * @return The collision component
