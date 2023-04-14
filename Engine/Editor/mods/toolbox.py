@@ -8,7 +8,7 @@ class ToolFrame(tk.Frame):
         self.parent = parent
         self.boxstart = [] #variable that holds the position of the topmost corner of a selection box.
         self.boxend = [] #variable that holds the position of the bottommost corner of the selection box.
-        self.grid(column=0, row=0,padx=100, pady=210, sticky = "") # set to left most column and second row
+        self.grid(column=0, row=1,padx=100, pady=210, sticky = "") # set to left most column and second row
 
         self.pointer_img = Tile('images/Pointer.png', 32).image # load cursor icon
         # make a click tool for setting tiles

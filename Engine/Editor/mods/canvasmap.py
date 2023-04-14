@@ -89,11 +89,14 @@ class CanvasMap(tk.Canvas):
         self.setTile()
 
     def setTile(self):
+        # print(self.parent.parent.ibox.loader.comps)
+        # print(self.parent.parent.ibox.currentComponent)
         tm = self.parent.parent.tmap  # easy reference to the entire tilemap array
         if self.parent.parent.tbox.tool == "click":
             # easy reference to the current selected image
             img = self.parent.parent.ibox.currentImage
             path = self.parent.parent.ibox.currentImagePath
+            cmpType = self.parent.parent.ibox.currentComponent
             # if len(img) == 0:
             #     return messagebox.showwarning(title="Error",message="Please select image first")
             # if a tile is already in the position we clicked
@@ -105,8 +108,10 @@ class CanvasMap(tk.Canvas):
                 self.tilepos[0] * self.tsize, self.tilepos[1] * self.tsize, image=img, anchor=tk.NW)
             tm.tilearray[self.tilepos[1]][self.tilepos[0]] = path
             tm.canvasarray[self.tilepos[1]][self.tilepos[0]] = canimg
+            tm.componentNameArray[self.tilepos[1]][self.tilepos[0]] = cmpType
+
             # ...and a canvas compatible image to another array.
-            # print (tm.tilearray)
+            # print (س)
 
         if self.parent.parent.tbox.tool == "erase":
             self.delete(tm.canvasarray[self.tilepos[1]]
@@ -115,6 +120,7 @@ class CanvasMap(tk.Canvas):
             tm.canvasarray[self.tilepos[1]][self.tilepos[0]] = ' '
             # remove tile from tilemap
             tm.tilearray[self.tilepos[1]][self.tilepos[0]] = ' '
+            tm.componentNameArray[self.tilepos[1]][self.tilepos[0]] = ' '
 
         if self.parent.parent.tbox.tool == "boxselect":
             # if there is not a selection box being drawn...
@@ -131,7 +137,7 @@ class CanvasMap(tk.Canvas):
                 self.rect = self.create_rectangle(self.parent.parent.tbox.boxstart[0] * self.tsize, self.parent.parent.tbox.boxstart[1]
                                                   * self.tsize, self.tilepos[0] * self.tsize, self.tilepos[1] * self.tsize, dash=(5, 5), outline="black")
 
-        self.title('Tile Basic (column: ' + str(self.tilepos[0]+1) +
+        self.title('NEU-TileMap Editor (column: ' + str(self.tilepos[0]+1) +
                    ', row: ' + str(self.tilepos[1]+1) + ')')
 
     def boxSelect(self, event):
@@ -176,3 +182,4 @@ class CanvasMap(tk.Canvas):
         # put the tile in the tile array and canvas array
         self.parent.parent.tmap.tilearray[j + pos2][i + pos1] = path
         self.parent.parent.tmap.canvasarray[j + pos2][i + pos1] = canimg
+        self.parent.parent.tmap.componentNameArray[j + pos2][i + pos1] = self.parent.parent.ibox.currentComponent
