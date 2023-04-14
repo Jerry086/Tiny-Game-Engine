@@ -4,10 +4,13 @@ from tkinter import RIDGE, FLAT, NSEW
 import os
 from .filehandle import *
 import json
-
+import sys
+sys.path.insert(0,  os.path.abspath('../'))
+import def_parser
 
 class ImageFrame(tk.Frame):
     def __init__(self, parent):
+        # print(  def_parser)
         tk.Frame.__init__(self, parent, height=210, width=180,
                           padx=0, pady=0, borderwidth=2, relief=RIDGE)
         self.parent = parent
@@ -44,7 +47,11 @@ class LoaderFrame(tk.Frame):
         # Create and place the "Load File" button next to the frame
         self.load_button = tk.Button(
             self, text="Load File", command=self.load_file)
-        self.load_button.grid(column=2, row=0, padx=90, pady=10, )
+        self.load_button.grid(column=2, row=0, padx=20, pady=10, )     
+        
+        self.load_button = tk.Button(
+            self, text="Create GameObject", command=self.createGameObject)
+        self.load_button.grid(column=3, row=0, padx=20, pady=10, )
 
         self.label = tk.Label(self, text="Select an option: ")
         self.label.grid(row=0, column=0)
@@ -79,7 +86,7 @@ class LoaderFrame(tk.Frame):
         path = tk.filedialog.askopenfilename(title="Open Def File", filetypes=[
                                              ("Json File(.json)", ".json")])
         print(str(path))
-
+        self.jsonPath = path
         if (path):
             with open(path, "r") as file:
                 data = json.load(file)
@@ -105,7 +112,9 @@ class LoaderFrame(tk.Frame):
                         self.component_var, option))
                 component_menu.update()
                 self.component_var.trace("w", self.on_component_change)
-
+    def createGameObject(self):
+        playerGO = def_parser.create_go('Player',self.jsonPath)
+        print(playerGO)
 
 class ImageCanvas(tk.Canvas):
     def __init__(self, parent):
