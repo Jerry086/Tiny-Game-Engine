@@ -2,11 +2,11 @@
 
 #include "IService.hpp"
 
-class InputService : public IService {
+class InputManager : public IService {
     friend class ServiceLocator;
 
    public:
-    static InputService &instance();
+    static InputManager &instance();
     void ShutDown() override;
     void Update() override;
 
@@ -21,8 +21,8 @@ class InputService : public IService {
     InputState m_inputStateThisFrame;
 
    private:
-    InputService() = default;
-    ~InputService() = default;
-    InputService(const InputService &) = delete;
-    InputService &operator=(const InputService &) = delete;
+    InputManager() = default;
+    ~InputManager() = default;
+    InputManager(const InputManager &) = delete;
+    InputManager &operator=(const InputManager &) = delete;
 };

@@ -1,4 +1,4 @@
-#include "./Services/InputService.hpp"
+#include "./Services/InputManager.hpp"
 
 #if defined(LINUX) || defined(MINGW)
 #include <SDL2/SDL.h>
@@ -9,14 +9,14 @@
 #include <cstdint>
 #include <iostream>
 
-InputService &InputService::instance() {
-    static InputService instance;
+InputManager &InputManager::instance() {
+    static InputManager instance;
     return instance;
 }
 
-void InputService::ShutDown() {}
+void InputManager::ShutDown() {}
 
-void InputService::Update() {
+void InputManager::Update() {
     SDL_Event event;
     InputState state;
     while (SDL_PollEvent(&event)) {

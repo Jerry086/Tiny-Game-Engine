@@ -1,6 +1,6 @@
 #include "./Components/ControllerComponent.hpp"
 
-#include "./Services/InputService.hpp"
+#include "./Services/InputManager.hpp"
 #include "./Services/ServiceLocator.hpp"
 /**
  * Constructor
@@ -15,8 +15,8 @@ ControllerComponent::~ControllerComponent() {}
  * Flip 'm_quit' to true upon quit event
  */
 void ControllerComponent::Update() {
-    InputService::InputState state =
-        ServiceLocator::GetService<InputService>().m_inputStateThisFrame;
+    InputManager::InputState state =
+        ServiceLocator::GetService<InputManager>().m_inputStateThisFrame;
     if (state.left) {
         m_direction_x = DIR_LEFT;
         m_direction_y = DIR_STAND;

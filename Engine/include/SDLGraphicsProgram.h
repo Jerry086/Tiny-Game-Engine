@@ -14,7 +14,7 @@
 #include <vector>
 
 #include "./Services/GameManager.hpp"
-#include "./Services/InputService.hpp"
+#include "./Services/InputManager.hpp"
 #include "./Services/ResourceManager.hpp"
 #include "./Services/ServiceLocator.hpp"
 #include "Vec.hpp"
@@ -128,7 +128,7 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h)
     ServiceLocator::RegisterService<ResourceManager>();
     ServiceLocator::GetService<ResourceManager>().StartUp(gRenderer);
 
-    ServiceLocator::RegisterService<InputService>();
+    ServiceLocator::RegisterService<InputManager>();
     ServiceLocator::RegisterService<GameManager>();
     // ResourceManager::instance().StartUp(gRenderer);
 }
