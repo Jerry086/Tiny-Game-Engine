@@ -18,6 +18,7 @@
 #include "./Services/ResourceManager.hpp"
 #include "./Services/SDLWrapper.hpp"
 #include "./Services/ServiceLocator.hpp"
+#include "./Services/VariableManager.hpp"
 #include "Vec.hpp"
 
 /**

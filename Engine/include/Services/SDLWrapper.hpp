@@ -3,10 +3,13 @@
 #include <memory>
 
 #include "IService.hpp"
+class ServiceLocator;
 
 // TODO HACKYYYYYY
 class SDLGraphicsProgram;
 class SDLWrapper : public IService {
+    friend class ServiceLocator;
+
    public:
     static SDLWrapper &instance() {
         static SDLWrapper instance;

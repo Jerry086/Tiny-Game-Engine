@@ -4,7 +4,6 @@
 #include "./Components/CollisionComponent.hpp"
 #include "./Components/Component.hpp"
 #include "./Components/ControllerComponent.hpp"
-#include "./Components/CounterComponent.hpp"
 #include "./Components/HealthBarComponent.hpp"
 #include "./Components/SpriteComponent.hpp"
 #include "./Components/TransformComponent.hpp"
@@ -114,14 +113,16 @@ PYBIND11_MODULE(mygameengine, m) {
         .def(py::init<const std::string &,
                       std::shared_ptr<TransformComponent> &, int, int>(),
              py::arg("objectType"), py::arg("transformComponent"), py::arg("w"),
-             py::arg("h"));
-
-    py::class_<CounterComponent, Component, std::shared_ptr<CounterComponent>>(
-        m, "CounterComponent")
-        .def(py::init<>())
-        .def("SetCounter", &CounterComponent::SetCounter)
-        .def("GetCounter", &CounterComponent::GetCounter)
-        .def("RemoveCounter", &CounterComponent::RemoveCounter);
+             py::arg("h"))
+        .def(py::init<const std::string &,
+                      std::shared_ptr<TransformComponent> &, int, int>(),
+             py::arg("objectType"), py::arg("transformComponent"), py::arg("w"),
+             py::arg("h"), 
+             py::arg(const std::unordered_map<std::string, int> &),
+             py::arg(const std::unordered_map<std::string, int> &),
+             py::arg(const std::vector<std::string> &), 
+             py::arg(const std::vector<std::string> &),
+             py::arg(const std::vector<std::string> &> ());
 
     py::class_<ServiceLocator>(m, "ServiceLocator")
         .def_static("Update", &ServiceLocator::Update);

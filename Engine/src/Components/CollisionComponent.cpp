@@ -30,6 +30,38 @@ CollisionComponent::CollisionComponent(
         m_objectType_enum = none;
     }
 }
+CollisionComponent::CollisionComponent(
+    std::string objectType, std::shared_ptr<TransformComponent> transformer,
+    int width, int height, std::unordered_map<std::string, int> variables_set,
+    std::unordered_map<std::string, int> variables_increment,
+    std::vector<std::string> bools_true, std::vector<std::string> bools_false,
+    std::vector<std::string> bools_toggle)
+    : m_objectType(objectType),
+      m_transformer(transformer),
+      m_height(height),
+      m_width(width),
+      m_variables_set(variables_set),
+      m_variables_increment(variables_increment),
+      m_bools_true(bools_true),
+      m_bools_false(bools_false),
+      m_bools_toggle(bools_toggle) {
+    m_controller = transformer->m_controller;
+    m_behavior = transformer->m_behavior;
+    if (m_objectType == "player")
+        m_objectType_enum = player;
+    else if (m_objectType == "wall")
+        m_objectType_enum = wall;
+    else if (m_objectType == "enemy")
+        m_objectType_enum = enemy;
+    else if (m_objectType == "interactable")
+        m_objectType_enum = interactable;
+    else if (m_objectType == "none")
+        m_objectType_enum = none;
+    else {
+        std::cout << "Error: Invalid object type" << std::endl;
+        m_objectType_enum = none;
+    }
+}
 /**
  * Destructor
  */
@@ -91,7 +123,6 @@ void CollisionComponent::Update() {
                             .ShowGameOverPopup();
                         ServiceLocator::GetService<GameManager>().m_isGameOver =
                             true;
-                        // GameObjectManager::instance().Shutdown();
                     }
                     break;
                 }

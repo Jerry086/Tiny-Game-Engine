@@ -39,7 +39,19 @@
                 {
                     "arg_type":"int",
                     "value":64
-                }                 
+                },
+                {
+                    "arg_type": "CollisionCallbacks",
+                    "value":{
+                        "variables_set": {},
+                        "variables_increment": {
+                            "score": 10
+                        },
+                        "bools_true":{},
+                        "bools_false":{},
+                        "bools_toggle":{}
+                    }
+                }
             ]
         }
 

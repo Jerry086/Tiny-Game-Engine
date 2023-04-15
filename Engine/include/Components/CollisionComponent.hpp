@@ -28,6 +28,16 @@ class CollisionComponent : public Component {
     CollisionComponent(std::string objectType,
                        std::shared_ptr<TransformComponent> transformer, int w,
                        int h);
+
+    CollisionComponent(std::string objectType,
+                       std::shared_ptr<TransformComponent> transformer, int w,
+                       int h,
+                       std::unordered_map<std::string, int> variables_set,
+                       std::unordered_map<std::string, int> variables_increment,
+                       std::vector<std::string> bools_true,
+                       std::vector<std::string> bools_false,
+                       std::vector<std::string> bools_toggle);
+
     /**
      * @brief Destructor
      */
@@ -63,6 +73,11 @@ class CollisionComponent : public Component {
     ObjectType m_objectType_enum;
     std::shared_ptr<ControllerComponent> m_controller = nullptr;
     std::shared_ptr<BehaviorComponent> m_behavior = nullptr;
+    std::unordered_map<std::string, int> m_variables_set;
+    std::unordered_map<std::string, int> m_variables_increment;
+    std::vector<std::string> m_bools_true;
+    std::vector<std::string> m_bools_false;
+    std::vector<std::string> m_bools_toggle;
 };
 
 #endif
