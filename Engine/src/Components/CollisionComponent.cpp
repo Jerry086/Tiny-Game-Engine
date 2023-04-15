@@ -99,72 +99,71 @@ void CollisionComponent::Update() {
                 default: {
                 }
             }
-            else {
-                // enemy + player / enemy + wall
-                switch (other->m_objectType_enum) {
-                    case wall: {
-                        Vec2 penetration = CheckCollision(other);
-                        m_transformer->m_position += penetration;
-                        break;
-                    }
+        } else {
+            // enemy + player / enemy + wall
+            switch (other->m_objectType_enum) {
+                case wall: {
+                    Vec2 penetration = CheckCollision(other);
+                    m_transformer->m_position += penetration;
+                    break;
+                }
 
-                    case player: {
-                        // TODO: add player death animation
-                        GameObjectManager::instance().Shutdown();
-                        std::cout << "Game Over" << std::endl;
-                        break;
-                    }
+                    // case player: {
+                    //     // TODO: add player death animation
+                    //     GameObjectManager::instance().ShutDown();
+                    //     std::cout << "Game Over" << std::endl;
+                    //     break;
+                    // }
 
-                    default: {
-                    }
+                default: {
                 }
             }
         }
     }
+}
 
-    /**
-     * Check collision between two objects
-     * Return the penetration vector
-     */
-    Vec2 CollisionComponent::CheckCollision(
-        std::shared_ptr<CollisionComponent> other) {
-        Vec2 penetration;
+/**
+ * Check collision between two objects
+ * Return the penetration vector
+ */
+Vec2 CollisionComponent::CheckCollision(
+    std::shared_ptr<CollisionComponent> other) {
+    Vec2 penetration;
 
-        // projected position of the other object
-        float other_left = other->m_transformer->m_position.x;
-        float other_right = other->m_transformer->m_position.x + other->m_width;
-        float other_top = other->m_transformer->m_position.y;
-        float other_bottom =
-            other->m_transformer->m_position.y + other->m_height;
+    // projected position of the other object
+    float other_left = other->m_transformer->m_position.x;
+    float other_right = other->m_transformer->m_position.x + other->m_width;
+    float other_top = other->m_transformer->m_position.y;
+    float other_bottom = other->m_transformer->m_position.y + other->m_height;
 
-        // projected position of this object
-        float this_left = m_transformer->m_position.x;
-        float this_right = m_transformer->m_position.x + m_width;
-        float this_top = m_transformer->m_position.y;
-        float this_bottom = m_transformer->m_position.y + m_height;
+    // projected position of this object
+    float this_left = m_transformer->m_position.x;
+    float this_right = m_transformer->m_position.x + m_width;
+    float this_top = m_transformer->m_position.y;
+    float this_bottom = m_transformer->m_position.y + m_height;
 
-        // no collision
-        if (this_right <= other_left || this_left >= other_right ||
-            this_bottom <= other_top || this_top >= other_bottom)
-            return penetration;
-        else {
-            if (m_controller->GetDirectionX() > 0)
-                penetration.x = other_left - this_right;
-            else if (m_controller && m_controller->GetDirectionX() < 0 ||
-                     m_behavior && m_behavior->GetDirectionX() < 0)
-                penetration.x = other_right - this_left;
-            else if (m_controller && m_controller->GetDirectionY() > 0 ||
-                     m_behavior && m_behavior->GetDirectionY() > 0)
-                penetration.y = other_top - this_bottom;
-            else if (m_controller && m_controller->GetDirectionY() < 0 ||
-                     m_behavior && m_behavior->GetDirectionY() < 0)
-                penetration.y = other_bottom - this_top;
-        }
-
+    // no collision
+    if (this_right <= other_left || this_left >= other_right ||
+        this_bottom <= other_top || this_top >= other_bottom)
         return penetration;
+    else {
+        if (m_controller->GetDirectionX() > 0)
+            penetration.x = other_left - this_right;
+        else if (m_controller && m_controller->GetDirectionX() < 0 ||
+                 m_behavior && m_behavior->GetDirectionX() < 0)
+            penetration.x = other_right - this_left;
+        else if (m_controller && m_controller->GetDirectionY() > 0 ||
+                 m_behavior && m_behavior->GetDirectionY() > 0)
+            penetration.y = other_top - this_bottom;
+        else if (m_controller && m_controller->GetDirectionY() < 0 ||
+                 m_behavior && m_behavior->GetDirectionY() < 0)
+            penetration.y = other_bottom - this_top;
     }
 
-    /**
-     * Getter of the component type
-     */
-    int CollisionComponent::GetType() { return m_type; }
+    return penetration;
+}
+
+/**
+ * Getter of the component type
+ */
+int CollisionComponent::GetType() { return m_type; }

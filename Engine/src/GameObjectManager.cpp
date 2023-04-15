@@ -30,7 +30,7 @@ void GameObjectManager::StartUp() {
  * Shut down the game object manager by shutting down all game objects
  * and removing them from the game object manager
  */
-void GameObjectManager::Shutdown() {
+void GameObjectManager::ShutDown() {
     for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++) {
         it->second->ShutDown();
     }
