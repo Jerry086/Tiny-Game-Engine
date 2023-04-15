@@ -82,9 +82,7 @@ ObjectType CollisionComponent::GetObjectType() { return m_objectType_enum; }
 void CollisionComponent::Update() {
     // player: dynamic, enemy: dynamic, wall: static, pac:static
     // ignore static objects
-    if (m_objectType_enum == wall || m_objectType_enum == none ||
-        m_objectType_enum == interactable)
-        return;
+    if (m_objectType_enum == wall || m_objectType_enum == none) return;
 
     // get the list of game objects
     std::map<std::string, std::shared_ptr<GameObject>> list =
@@ -111,9 +109,11 @@ void CollisionComponent::Update() {
 
                 case interactable: {
                     Vec2 penetration = CheckCollision(other);
-                    if (penetration.x != 0 || penetration.y != 0)
+                    if (penetration.x != 0 || penetration.y != 0) {
+                        other->UpdateVariables();
                         GameObjectManager::instance().RemoveGameObject(
                             it->first);
+                    }
                     break;
                 }
 
@@ -135,20 +135,13 @@ void CollisionComponent::Update() {
                 }
             }
         } else {
-            // enemy + player / enemy + wall
+            // enemy + wall / interactable + wall
             switch (other->m_objectType_enum) {
                 case wall: {
                     Vec2 penetration = CheckCollision(other);
                     m_transformer->m_position += penetration;
                     break;
                 }
-
-                    // case player: {
-                    //     // TODO: add player death animation
-                    //     GameObjectManager::instance().ShutDown();
-                    //     std::cout << "Game Over" << std::endl;
-                    //     break;
-                    // }
 
                 default: {
                 }
