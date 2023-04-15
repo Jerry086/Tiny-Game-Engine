@@ -155,5 +155,6 @@ PYBIND11_MODULE(mygameengine, m) {
         .def_static("GetCounter", &VariableManager::GetCounter)
         .def_static("SetBool", &VariableManager::SetBool)
         .def_static("SetCounter", &VariableManager::SetCounter)
+        .def_static("IncrementCounter", &VariableManager::IncrementCounter)
         .def_static("ToggleBool", &VariableManager::ToggleBool);
 }

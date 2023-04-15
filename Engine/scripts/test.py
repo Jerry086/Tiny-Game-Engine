@@ -1,2 +1,4 @@
+import mygameengine
 def testembed():
-    print("EMBBEDDED PYTHON TEST")
+    mygameengine.VariableManager.IncrementCounter("test embed", 1)
+    print("value of testembed in python", mygameengine.VariableManager.GetCounter("test embed"))
