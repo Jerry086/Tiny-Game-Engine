@@ -5,9 +5,6 @@ import time
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
-# TODO: python collision object type enum as list
-
-
 SDL = mygameengine.SDLGraphicsProgram(WINDOW_WIDTH, WINDOW_HEIGHT)
 
 game_object_manager = mygameengine.GameObjectManager()
