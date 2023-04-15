@@ -1,5 +1,7 @@
 #include "./Components/CollisionComponent.hpp"
 
+#include <iostream>
+
 #include "./Services/GameManager.hpp"
 #include "./Services/ServiceLocator.hpp"
 #include "./Services/VariableManager.hpp"
@@ -88,6 +90,9 @@ void CollisionComponent::Update() {
     std::map<std::string, std::shared_ptr<GameObject>> list =
         GameObjectManager::instance().m_gameobjects;
 
+    ServiceLocator::GetService<VariableManager>().SetBool(
+        m_name + "_collided_this_frame", false);
+
     // detect collisions, O(n^2)
     for (auto it = list.begin(); it != list.end(); it++) {
         std::vector<std::shared_ptr<CollisionComponent>> collisionComponents =
@@ -99,35 +104,24 @@ void CollisionComponent::Update() {
         if (other == nullptr || m_objectType_enum == other->m_objectType_enum)
             continue;
 
+        Vec2 penetration = CheckCollision(other);
+        if (penetration.x == 0 && penetration.y == 0) continue;
         if (m_objectType_enum == player) {
             switch (other->m_objectType_enum) {
                 case wall: {
-                    Vec2 penetration = CheckCollision(other);
                     m_transformer->m_position += penetration;
                     break;
                 }
 
                 case interactable: {
-                    Vec2 penetration = CheckCollision(other);
-                    if (penetration.x != 0 || penetration.y != 0) {
-                        other->UpdateVariables();
-                        GameObjectManager::instance().RemoveGameObject(
-                            it->first);
-                    }
+                    OnCollision(other);
+                    GameObjectManager::instance().RemoveGameObject(it->first);
                     break;
                 }
 
                 case enemy: {
                     // TODO: add player death animation
-                    Vec2 penetration = CheckCollision(other);
-                    if (penetration.x != 0 || penetration.y != 0)
-                        GameObjectManager::instance().SetGameOver(true);
-
-                    // std::cout << "Game Over" << std::endl;
-                    // ServiceLocator::GetService<GameManager>()
-                    //     .ShowGameOverPopup();
-                    // ServiceLocator::GetService<GameManager>().m_isGameOver =
-                    // true;
+                    GameObjectManager::instance().SetGameOver(true);
                     break;
                 }
 
@@ -138,7 +132,6 @@ void CollisionComponent::Update() {
             // enemy + wall / interactable + wall
             switch (other->m_objectType_enum) {
                 case wall: {
-                    Vec2 penetration = CheckCollision(other);
                     m_transformer->m_position += penetration;
                     break;
                 }
@@ -200,27 +193,18 @@ Vec2 CollisionComponent::CheckCollision(
  */
 int CollisionComponent::GetType() { return m_type; }
 
-void CollisionComponent::UpdateVariables() {
-    for (auto it = m_counter_set.begin(); it != m_counter_set.end(); it++) {
-        ServiceLocator::GetService<VariableManager>().SetCounter(it->first,
-                                                                 it->second);
-    }
+void CollisionComponent::OnCollision(
+    std::shared_ptr<CollisionComponent> other) {
+    std::cout << "C++ CollisionComponent::OnCollision  - " << m_name
+              << std::endl;
 
-    for (auto it = m_counters_increment.begin();
-         it != m_counters_increment.end(); it++) {
-        ServiceLocator::GetService<VariableManager>().SetCounter(it->first,
-                                                                 it->second);
-    }
+    ServiceLocator::GetService<VariableManager>().SetBool(
+        m_name + "_collided_this_frame", true);
 
-    for (auto it = m_bools_true.begin(); it != m_bools_true.end(); it++) {
-        ServiceLocator::GetService<VariableManager>().SetBool(*it, true);
-    }
+    ServiceLocator::GetService<VariableManager>().SetDict(
+        m_name + "_other_name", other->m_name);
 
-    for (auto it = m_bools_false.begin(); it != m_bools_false.end(); it++) {
-        ServiceLocator::GetService<VariableManager>().SetBool(*it, false);
-    }
-
-    for (auto it = m_bools_toggle.begin(); it != m_bools_toggle.end(); it++) {
-        ServiceLocator::GetService<VariableManager>().ToggleBool(*it);
+    if (m_python && py::hasattr(m_python, "collision_component_on_collision")) {
+        m_python.attr("collision_component_on_collision")();
     }
 }

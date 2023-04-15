@@ -81,7 +81,7 @@ class CollisionComponent : public Component {
     std::vector<std::string> m_bools_true;
     std::vector<std::string> m_bools_false;
     std::vector<std::string> m_bools_toggle;
-    void UpdateVariables();
+    void OnCollision(std::shared_ptr<CollisionComponent> other);
 };
 
 #endif

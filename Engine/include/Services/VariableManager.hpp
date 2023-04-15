@@ -26,9 +26,13 @@ class VariableManager : public IService {
     static bool ToggleBool(std::string name);
     static void ResetAllBools();
 
-   private:
+    static std::string GetDict(std::string name);
+    static void SetDict(std::string name, std::string value);
+
+private:
     std::unordered_map<std::string, int> m_counters;
     std::unordered_map<std::string, bool> m_booleans;
+    std::unordered_map<std::string, std::string> m_dict;
     VariableManager() = default;
     // ~VariableManager() = default;
     VariableManager(const VariableManager &) = delete;

@@ -1,4 +1,9 @@
 import mygameengine
+
 def game_object_update():
-    mygameengine.VariableManager.IncrementCounter("test player", 1)
-    print("value of test player in python", mygameengine.VariableManager.GetCounter("test player"))
+    pass
+
+
+def collision_component_on_collision():
+    other_name = mygameengine.VariableManager.GetDict("player_CollisionComponent_other_name")
+    print("Collision with: ", other_name)
