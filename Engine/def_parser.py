@@ -1,6 +1,7 @@
 import mygameengine
 import json
 
+## @brief A dictionary of component name strings to their respective classes
 COMPONENTS = {
     "ControllerComponent": mygameengine.ControllerComponent,
     "TransformComponent": mygameengine.TransformComponent,
@@ -12,26 +13,33 @@ COMPONENTS = {
     "CounterComponent": mygameengine.CounterComponent,
 }
 
+## @brief A dictionary of built in types name strings to their respective classes
 BUILT_IN = {
     "int": int,
     "float": float,
     "string": str,
 }
 
+## @brief A dictionary of custom types name strings to their respective classes
 CUSTOM = {
     "Vec2": mygameengine.Vec2,
 }
 
 
+## @brief Reads a json file and returns the json object
+#  @param json_path The path to the json file
+#  @return The json object
 def read_json(json_path):
     with open(json_path) as json_data_file:
         data = json.load(json_data_file)
     return data
 
 
+## @brief Creates a list of components for a game object from a type definition json object
+#  @param go_def_json_object The json object containing the type definition for a game object type
+# @param transform_override A list of transform parameters to override the transform component
+# @return A list of components
 def create_components(go_def_json_object, transform_override=None):
-    type_name = go_def_json_object["type_name"]
-    print("Creating game object of type: " + type_name)
     component_defs = go_def_json_object["components"]
     components = []
 
@@ -83,9 +91,17 @@ def create_components(go_def_json_object, transform_override=None):
     return components
 
 
+## @brief Creates a game object from a json type definition file
+# @details The type definition file contains the definition for a game object type.
+# @param id The (in-game/in-engine) id of the game object
+# @param json_path The path to the json type definition file
+# @param transform_override A list of transform parameters to override the transform component
+# @return A game object
 def create_go(id, json_path, transform_override=None):
     with open(json_path) as json_data_file:
         go_def_json_object = json.load(json_data_file)
+    type_name = go_def_json_object["type_name"]
+    print("Creating game object of type: " + type_name)
     components = create_components(
         go_def_json_object, transform_override=transform_override
     )
@@ -97,6 +113,10 @@ def create_go(id, json_path, transform_override=None):
     return go
 
 
+# @brief Creates a scene from a json scene definition file
+# @details A scene is a list of game objects. The scene definition file contains a list of game object definitions.
+# @param json_path The path to the json scene definition file
+# @return A list of game objects
 def create_scene(json_path):
     with open(json_path) as json_data_file:
         scene_def_json_object = json.load(json_data_file)

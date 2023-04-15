@@ -71,15 +71,3 @@ void GameObject::RemoveComponent(std::string componentName) {
 std::shared_ptr<Component> GameObject::GetComponent(std::string componentName) {
     return m_components[componentName];
 }
-
-// template <typename T>
-// std::vector<std::shared_ptr<T>> GameObject::GetComponents() {
-//     std::vector<std::shared_ptr<T>> components;
-//     for (auto it = m_components.begin(); it != m_components.end(); it++) {
-//         std::shared_ptr<T> component =
-//         std::dynamic_pointer_cast<T>(it->second); if (component != nullptr) {
-//             components.push_back(component);
-//         }
-//     }
-//     return components;
-// }
