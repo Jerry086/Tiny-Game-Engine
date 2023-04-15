@@ -69,11 +69,11 @@ class GameObject {
      * @brief Get a list of components of a given type
      *
      * @tparam T The type of the component
-     * @return pybind11::list A pybind list of components
+     * @return std::vector<std::shared_ptr<T>> A vector of components
      */
     // For some pybind reason it can only be implemented in header
     template <typename T>
-    pybind11::list GetComponents() {
+    std::vector<std::shared_ptr<T>> GetComponents() {
         std::vector<std::shared_ptr<T>> components;
         for (auto it = m_components.begin(); it != m_components.end(); it++) {
             std::shared_ptr<T> component =
@@ -82,18 +82,25 @@ class GameObject {
                 components.push_back(component);
             }
         }
+        return components;
+    }
+
+    /**
+     * @brief Get a list of components of a given type
+     *
+     * @tparam T The type of the component
+     * @return pybind11::list A pybind list of components
+     */
+    // For some pybind reason it can only be implemented in header
+    template <typename T>
+    pybind11::list GetComponentsPython() {
+        std::vector<std::shared_ptr<T>> components = GetComponents<T>();
         pybind11::list result;
         for (auto it = components.begin(); it != components.end(); it++) {
             result.append(*it);
         }
         return result;
     }
-
-    /**
-     * @brief Get the collision component of the game object
-     * @return The collision component
-     */
-    std::shared_ptr<Component> GetCollisionComponent();
 
    private:
     std::string gameObject_id;

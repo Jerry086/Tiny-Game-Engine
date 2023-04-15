@@ -1,4 +1,8 @@
 #include "GameObject.hpp"
+
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+namespace py = pybind11;
 /**
  * Constructor for the GameObject class
  * The id of the game object mush be unique
@@ -79,9 +83,3 @@ std::shared_ptr<Component> GameObject::GetComponent(std::string componentName) {
 //     }
 //     return components;
 // }
-/**
- * Get the collision component of the game object
- */
-std::shared_ptr<Component> GameObject::GetCollisionComponent() {
-    return m_collisionComponent;
-}
