@@ -141,13 +141,13 @@ Vec2 CollisionComponent::CheckCollision(
         return penetration;
     else
     {
-        if (m_controller->GetDirectionX() > 0)
+        if (m_controller && m_controller->GetDirectionX() > 0 || m_behavior && m_behavior->GetDirectionX() > 0)
             penetration.x = other_left - this_right;
-        else if (m_controller->GetDirectionX() < 0)
+        else if (m_controller && m_controller->GetDirectionX() < 0 || m_behavior && m_behavior->GetDirectionX() < 0)
             penetration.x = other_right - this_left;
-        else if (m_controller->GetDirectionY() > 0)
+        else if (m_controller && m_controller->GetDirectionY() > 0 || m_behavior && m_behavior->GetDirectionY() > 0)
             penetration.y = other_top - this_bottom;
-        else if (m_controller->GetDirectionY() < 0)
+        else if (m_controller && m_controller->GetDirectionY() < 0 || m_behavior && m_behavior->GetDirectionY() < 0)
             penetration.y = other_bottom - this_top;
     }
 
