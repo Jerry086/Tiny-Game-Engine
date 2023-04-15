@@ -1,12 +1,31 @@
 #pragma once
 #include "IService.hpp"
 
+/**
+ * @brief The GameManager class that manages the game state
+ *
+ */
 class GameManager : public IService {
     friend class ServiceLocator;
 
    public:
+    /**
+     * @brief Obtain the instance of the GameManager
+     *
+     * @return GameManager& instance
+     */
     static GameManager &instance();
+
+    /**
+     * @brief Shutdown the GameManager
+     *
+     */
     void ShutDown() override;
+
+    /**
+     * @brief Update the GameManager
+     *
+     */
     void Update() override;
 
     static bool IsQuit();

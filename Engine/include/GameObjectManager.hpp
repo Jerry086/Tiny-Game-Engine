@@ -6,7 +6,11 @@
 #include <memory>
 #include <string>
 
+#include "./Components/SpriteComponent.hpp"
 #include "GameObject.hpp"
+#include "./Services/ResourceManager.hpp"
+
+#define GameOver "./sprites/gameOver.bmp"
 
 /**
  * @brief The GameObjectManager class
@@ -52,10 +56,17 @@ class GameObjectManager {
      * @return The game object
      */
     std::shared_ptr<GameObject> GetGameObject(std::string objectID);
+    /**
+     * @brief set the game over flag
+     * @param shutdown The game over flag
+     */
+    void SetGameOver(bool gameOver);
 
     std::map<std::string, std::shared_ptr<GameObject>> m_gameobjects;
 
    private:
+    bool m_gameOver = false;
+    std::shared_ptr<SpriteComponent> m_sprite;
     GameObjectManager();
     ~GameObjectManager();
     GameObjectManager(const GameObjectManager &) = delete;

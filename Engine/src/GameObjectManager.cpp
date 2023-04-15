@@ -20,7 +20,12 @@ GameObjectManager &GameObjectManager::instance() {
 /**
  * Start up the game object manager
  */
-void GameObjectManager::StartUp() {}
+void GameObjectManager::StartUp() {
+    std::shared_ptr<TransformComponent> transform =
+        std::make_shared<TransformComponent>(Vec2(0, 0));
+    m_sprite = std::make_shared<SpriteComponent>(GameOver, transform, 0, 0,
+                                                 1400, 815, 1, 1, 1);
+}
 /**
  * Shut down the game object manager by shutting down all game objects
  * and removing them from the game object manager
@@ -28,8 +33,9 @@ void GameObjectManager::StartUp() {}
 void GameObjectManager::ShutDown() {
     for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++) {
         it->second->ShutDown();
-        RemoveGameObject(it->first);
     }
+    m_gameobjects.clear();
+    m_sprite->ShutDown();
 }
 /**
  * Update all game objects of the game.
@@ -45,6 +51,10 @@ void GameObjectManager::Update() {
  * The order of the render is not important.
  */
 void GameObjectManager::Render() {
+    if (m_gameOver) {
+        m_sprite->Render();
+        return;
+    }
     for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++) {
         it->second->Render();
     }
@@ -70,3 +80,7 @@ std::shared_ptr<GameObject> GameObjectManager::GetGameObject(
     std::string objectID) {
     return m_gameobjects[objectID];
 }
+/**
+ * Set the shutdown flag when game is over
+ */
+void GameObjectManager::SetGameOver(bool gameOver) { m_gameOver = gameOver; }

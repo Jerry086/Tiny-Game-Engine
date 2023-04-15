@@ -22,8 +22,8 @@ void GameObject::StartUp() {}
 void GameObject::ShutDown() {
     for (auto it = m_components.begin(); it != m_components.end(); it++) {
         it->second->ShutDown();
-        RemoveComponent(it->first);
     }
+    m_components.clear();
 }
 /**
  * Update the game object by iterating through all the components and
@@ -63,7 +63,9 @@ void GameObject::AddComponent(std::string componentName,
  * Remove a component from the game object given the component name
  */
 void GameObject::RemoveComponent(std::string componentName) {
+    std::cout << "Removing " << componentName << std::endl;
     m_components.erase(componentName);
+    std::cout << "Removing complete" << componentName << std::endl;
 }
 /**
  * Get a component from the game object given the component name

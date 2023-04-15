@@ -30,38 +30,6 @@ CollisionComponent::CollisionComponent(
         m_objectType_enum = none;
     }
 }
-CollisionComponent::CollisionComponent(
-    std::string objectType, std::shared_ptr<TransformComponent> transformer,
-    int width, int height, std::unordered_map<std::string, int> variables_set,
-    std::unordered_map<std::string, int> variables_increment,
-    std::vector<std::string> bools_true, std::vector<std::string> bools_false,
-    std::vector<std::string> bools_toggle)
-    : m_objectType(objectType),
-      m_transformer(transformer),
-      m_height(height),
-      m_width(width),
-      m_variables_set(variables_set),
-      m_variables_increment(variables_increment),
-      m_bools_true(bools_true),
-      m_bools_false(bools_false),
-      m_bools_toggle(bools_toggle) {
-    m_controller = transformer->m_controller;
-    m_behavior = transformer->m_behavior;
-    if (m_objectType == "player")
-        m_objectType_enum = player;
-    else if (m_objectType == "wall")
-        m_objectType_enum = wall;
-    else if (m_objectType == "enemy")
-        m_objectType_enum = enemy;
-    else if (m_objectType == "interactable")
-        m_objectType_enum = interactable;
-    else if (m_objectType == "none")
-        m_objectType_enum = none;
-    else {
-        std::cout << "Error: Invalid object type" << std::endl;
-        m_objectType_enum = none;
-    }
-}
 /**
  * Destructor
  */
@@ -117,13 +85,14 @@ void CollisionComponent::Update() {
                 case enemy: {
                     // TODO: add player death animation
                     Vec2 penetration = CheckCollision(other);
-                    if (penetration.x != 0 || penetration.y != 0) {
-                        std::cout << "Game Over" << std::endl;
-                        ServiceLocator::GetService<GameManager>()
-                            .ShowGameOverPopup();
-                        ServiceLocator::GetService<GameManager>().m_isGameOver =
-                            true;
-                    }
+                    if (penetration.x != 0 || penetration.y != 0)
+                        GameObjectManager::instance().SetGameOver(true);
+
+                    // std::cout << "Game Over" << std::endl;
+                    // ServiceLocator::GetService<GameManager>()
+                    //     .ShowGameOverPopup();
+                    // ServiceLocator::GetService<GameManager>().m_isGameOver =
+                    // true;
                     break;
                 }
 
@@ -141,7 +110,7 @@ void CollisionComponent::Update() {
 
                     // case player: {
                     //     // TODO: add player death animation
-                    //     GameObjectManager::instance().Shutdown();
+                    //     GameObjectManager::instance().ShutDown();
                     //     std::cout << "Game Over" << std::endl;
                     //     break;
                     // }
@@ -178,13 +147,17 @@ Vec2 CollisionComponent::CheckCollision(
         this_bottom <= other_top || this_top >= other_bottom)
         return penetration;
     else {
-        if (m_controller->GetDirectionX() > 0)
+        if (m_controller && m_controller->GetDirectionX() > 0 ||
+            m_behavior && m_behavior->GetDirectionX() > 0)
             penetration.x = other_left - this_right;
-        else if (m_controller->GetDirectionX() < 0)
+        else if (m_controller && m_controller->GetDirectionX() < 0 ||
+                 m_behavior && m_behavior->GetDirectionX() < 0)
             penetration.x = other_right - this_left;
-        else if (m_controller->GetDirectionY() > 0)
+        else if (m_controller && m_controller->GetDirectionY() > 0 ||
+                 m_behavior && m_behavior->GetDirectionY() > 0)
             penetration.y = other_top - this_bottom;
-        else if (m_controller->GetDirectionY() < 0)
+        else if (m_controller && m_controller->GetDirectionY() < 0 ||
+                 m_behavior && m_behavior->GetDirectionY() < 0)
             penetration.y = other_bottom - this_top;
     }
 
