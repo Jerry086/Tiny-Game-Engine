@@ -9,7 +9,6 @@ COMPONENTS = {
     "HealthBarComponent": mygameengine.HealthBarComponent,
     "CollisionComponent": mygameengine.CollisionComponent,
     "BehaviorComponent": mygameengine.BehaviorComponent,
-    "CounterComponent": mygameengine.CounterComponent,
 }
 
 ## @brief A dictionary of built in types name strings to their respective classes
