@@ -1,6 +1,9 @@
 #include "GameObjectManager.hpp"
 
+#include <pybind11/embed.h>
+
 #include <iterator>
+namespace py = pybind11;
 
 /**
  * Private constructor
@@ -21,6 +24,11 @@ GameObjectManager &GameObjectManager::instance() {
  * Start up the game object manager
  */
 void GameObjectManager::StartUp() {
+    // import script directory
+    auto sys = py::module_::import("sys");
+    auto path = sys.attr("path");
+    path.attr("insert")(0, "./scripts");
+
     std::shared_ptr<TransformComponent> transform =
         std::make_shared<TransformComponent>(Vec2(0, 0));
     m_sprite = std::make_shared<SpriteComponent>(GameOver, transform, 0, 0,

@@ -14,8 +14,6 @@ game_objects = create_scene("./definitions/test_scene_def.json")
 for go_name, go in game_objects:
     game_object_manager.AddGameObject(go_name, go)
 
-game_objects[0][1].SetPythonScriptPath("./scripts/test.py")
-
 game_object_manager.StartUp()
 
 print("Setting up game loop")

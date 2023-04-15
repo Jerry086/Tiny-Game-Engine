@@ -22,7 +22,8 @@ void GameObject::StartUp() {
     if (m_pythonScriptPath != "") {
         // Alternatively, you can load a script from a file
         // py::eval_file(script_path.c_str(), py::globals(), py::dict());
-        py::eval_file(m_pythonScriptPath, py::globals());
+        // py::eval_file(m_pythonScriptPath, py::globals());
+        m_python = py::module_::import(m_pythonScriptPath.c_str());
     }
     for (auto it = m_components.begin(); it != m_components.end(); it++) {
         if (m_pythonScriptPath != "")
@@ -56,10 +57,11 @@ void GameObject::Update() {
         // py::eval_file(m_pythonScriptPath, py::globals());
 
         // Get the update function from the Python script
-        py::function update_func = py::globals()["testembed"];
+        // py::function update_func = py::globals()["update"];
+        m_python.attr("update")();
 
         // Call the update function
-        update_func();
+        // update_func();
     }
 }
 /**

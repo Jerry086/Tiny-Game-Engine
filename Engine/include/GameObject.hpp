@@ -20,7 +20,7 @@ namespace py = pybind11;
  * The GameObject class is the base class for all game objects.
  *
  */
-class GameObject {
+class __attribute__((visibility("default"))) GameObject {
    public:
     /**
      * @brief Constructor
@@ -110,6 +110,7 @@ class GameObject {
     std::map<std::string, std::shared_ptr<Component>> m_components;
     std::shared_ptr<Component> m_collisionComponent = nullptr;
     std::string m_pythonScriptPath;
+    py::module_ m_python;
 };
 
 #endif
