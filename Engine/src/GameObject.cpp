@@ -78,6 +78,7 @@ void GameObject::AddComponent(std::string componentName,
         m_collisionComponent = component;
     }
     m_components.emplace(componentName, component);
+    component->m_name = componentName;
     component->SetParent(std::make_shared<GameObject>(*this));
 }
 /**

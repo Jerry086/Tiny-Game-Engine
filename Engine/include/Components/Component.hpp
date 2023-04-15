@@ -54,6 +54,8 @@ class __attribute__((visibility("default"))) Component {
 
     virtual void SetParent(std::shared_ptr<GameObject> parent);
 
+    std::string m_name;
+
    protected:
     py::module_ m_python;
     std::shared_ptr<GameObject> m_parent;
