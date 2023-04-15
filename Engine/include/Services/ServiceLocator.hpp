@@ -50,6 +50,13 @@ class ServiceLocator {
         }
     }
 
+    static void Update() {
+        for (auto it = ServiceLocator::instance().m_services.begin();
+             it != ServiceLocator::instance().m_services.end(); ++it) {
+            // it->second->Update();
+        }
+    }
+
    private:
     ServiceLocator() = default;
     std::unordered_map<std::type_index, IService *> m_services;

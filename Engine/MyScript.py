@@ -24,6 +24,7 @@ print("Setting up game loop")
 while not controller_component.QuitProgram():
     SDL.clear()
 
+    mygameengine.ServiceLocator.Update()
     game_object_manager.Update()
     game_object_manager.Render()
 

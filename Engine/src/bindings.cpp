@@ -127,4 +127,7 @@ PYBIND11_MODULE(mygameengine, m) {
         .def("SetCounter", &CounterComponent::SetCounter)
         .def("GetCounter", &CounterComponent::GetCounter)
         .def("RemoveCounter", &CounterComponent::RemoveCounter);
+
+    py::class_<ServiceLocator>(m, "ServiceLocator")
+        .def_static("Update", &ServiceLocator::Update);
 }
