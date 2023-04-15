@@ -7,8 +7,8 @@
 #include <string>
 
 #include "./Components/SpriteComponent.hpp"
+#include "./Services/ResourceManager.hpp"
 #include "GameObject.hpp"
-#include "ResourceManager.hpp"
 
 #define GameOver "./sprites/gameOver.bmp"
 
