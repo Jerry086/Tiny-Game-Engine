@@ -1,5 +1,6 @@
 {
     "type_name": "test_pac",
+    "script_path": "./scripts/test.py",
     "transform_signature":["position"],
     "components": [
         {

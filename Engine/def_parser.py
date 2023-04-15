@@ -117,6 +117,11 @@ def create_go(id, json_path, transform_override=None):
         go_def_json_object, transform_override=transform_override
     )
     go = mygameengine.GameObject(id)
+
+    if "script_path" in go_def_json_object.keys():
+        script_path = go_def_json_object["script_path"]
+        go.SetPythonScriptPath(script_path)
+
     for i in range(len(components)):
         print("adding component: ", components[i])
         # NOTE: component id using index for now is the correct way, even though hacky
