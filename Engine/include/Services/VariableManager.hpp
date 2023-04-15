@@ -15,20 +15,22 @@ class VariableManager : public IService {
     void ShutDown() override;
     void Update() override{};
 
-    void SetCounter(std::string name, int value);
-    int GetCounter(std::string name);
-    void RemoveCounter(std::string name);
-    int IncrementCounter(std::string name, int value);
+    static void SetCounter(std::string name, int value);
+    static int GetCounter(std::string name);
+    static void RemoveCounter(std::string name);
+    static int IncrementCounter(std::string name, int value);
+    static void ResetAllCounters();
 
-    bool GetBool(std::string name);
-    void SetBool(std::string name, bool value);
-    bool ToggleBool(std::string name);
+    static bool GetBool(std::string name);
+    static void SetBool(std::string name, bool value);
+    static bool ToggleBool(std::string name);
+    static void ResetAllBools();
 
    private:
     std::unordered_map<std::string, int> m_counters;
     std::unordered_map<std::string, bool> m_booleans;
     VariableManager() = default;
-    ~VariableManager() = default;
+    // ~VariableManager() = default;
     VariableManager(const VariableManager &) = delete;
     VariableManager &operator=(const VariableManager &) = delete;
 };

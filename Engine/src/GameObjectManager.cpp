@@ -25,6 +25,9 @@ void GameObjectManager::StartUp() {
         std::make_shared<TransformComponent>(Vec2(0, 0));
     m_sprite = std::make_shared<SpriteComponent>(GameOver, transform, 0, 0,
                                                  1400, 815, 1, 1, 1);
+    for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++) {
+        it->second->StartUp();
+    }
 }
 /**
  * Shut down the game object manager by shutting down all game objects

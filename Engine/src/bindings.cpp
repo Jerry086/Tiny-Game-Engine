@@ -1,3 +1,4 @@
+#include <pybind11/embed.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
@@ -148,4 +149,11 @@ PYBIND11_MODULE(mygameengine, m) {
         .def_static("IsQuit", &GameManager::IsQuit)
         .def_static("IsGameOver", &GameManager::IsGameOver)
         .def_static("ShowGameOverPopup", &GameManager::ShowGameOverPopup);
+
+    py::class_<VariableManager>(m, "VariableManager")
+        .def_static("GetBool", &VariableManager::GetBool)
+        .def_static("GetCounter", &VariableManager::GetCounter)
+        .def_static("SetBool", &VariableManager::SetBool)
+        .def_static("SetCounter", &VariableManager::SetCounter)
+        .def_static("ToggleBool", &VariableManager::ToggleBool);
 }
