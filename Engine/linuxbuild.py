@@ -13,14 +13,14 @@ import os
 COMPILER = "g++"
 
 # SOURCE="./src/*.cpp"
-SOURCE = "./src/*.cpp ./src/Components/*.cpp"
+SOURCE = "./src/*.cpp ./src/Components/*.cpp ./src/Services/*.cpp"
 
 # You can can add other arguments as you see fit.
 # What does the "-D LINUX" command do?
 ARGUMENTS = "-D LINUX -std=c++14 -shared -fPIC"
 
 # Which directories do we want to include.
-INCLUDE_DIR = "-I ./include/ -I./include/Components -I./pybind11/include/ `python3.8 -m pybind11 --includes`"
+INCLUDE_DIR = "-I ./include/ -I./include/Components -I./include/Services -I./pybind11/include/ `python3.8 -m pybind11 --includes`"
 
 # What libraries do we want to include
 LIBRARIES = "-lSDL2 -ldl `python3.8-config --ldflags`"
