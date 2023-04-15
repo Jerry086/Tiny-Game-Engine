@@ -51,6 +51,8 @@ PYBIND11_MODULE(mygameengine, m) {
             return std::unique_ptr<GameObjectManager, py::nodelete>(
                 &GameObjectManager::instance());
         }))
+        .def("StartUp", &GameObjectManager::StartUp)
+        .def("ShutDown", &GameObjectManager::ShutDown)
         .def("Update", &GameObjectManager::Update)
         .def("Render", &GameObjectManager::Render)
         .def("AddGameObject", &GameObjectManager::AddGameObject)
