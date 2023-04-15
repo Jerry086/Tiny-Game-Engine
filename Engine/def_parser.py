@@ -6,7 +6,6 @@ COMPONENTS = {
     "ControllerComponent": mygameengine.ControllerComponent,
     "TransformComponent": mygameengine.TransformComponent,
     "SpriteComponent": mygameengine.SpriteComponent,
-    "TileMapComponent": mygameengine.TileMapComponent,
     "HealthBarComponent": mygameengine.HealthBarComponent,
     "CollisionComponent": mygameengine.CollisionComponent,
     "BehaviorComponent": mygameengine.BehaviorComponent,

@@ -3,28 +3,21 @@
 
 #include "Component.hpp"
 #include "ControllerComponent.hpp"
-#include "TransformComponent.hpp"
 #include "GameObjectManager.hpp"
+#include "TransformComponent.hpp"
 
 /**
  * @brief The type of the collision component
  */
-enum ObjectType
-{
-    player,
-    wall,
-    enemy,
-    interactable
-};
+enum ObjectType { player = 1, wall = 2, enemy = 3, interactable = 4, none = 0 };
 
 /**
  * @brief The CollisionComponent class
  *
  * A component that handles collision
  */
-class CollisionComponent : public Component
-{
-public:
+class CollisionComponent : public Component {
+   public:
     /**
      * @brief Constructor
      * @param objectType The type of the object
@@ -32,7 +25,9 @@ public:
      * @param w The width of the object
      * @param h The height of the object
      */
-    CollisionComponent(std::string objectType, std::shared_ptr<TransformComponent> transformer, int w, int h);
+    CollisionComponent(std::string objectType,
+                       std::shared_ptr<TransformComponent> transformer, int w,
+                       int h);
     /**
      * @brief Destructor
      */
@@ -60,7 +55,7 @@ public:
 
     std::shared_ptr<TransformComponent> m_transformer;
 
-private:
+   private:
     int m_height;
     int m_width;
     const int m_type = CollisionComponent_TYPE;
