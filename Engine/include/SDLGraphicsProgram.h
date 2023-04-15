@@ -13,8 +13,8 @@
 #include <string>
 #include <vector>
 
-#include "ResourceManager.hpp"
-#include "ServiceLocator.hpp"
+#include "./Services/ResourceManager.hpp"
+#include "./Services/ServiceLocator.hpp"
 #include "Vec.hpp"
 
 /**

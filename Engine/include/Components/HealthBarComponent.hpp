@@ -7,9 +7,9 @@
 #include <SDL.h>
 #endif
 
+#include "../Services/ResourceManager.hpp"
 #include "Component.hpp"
 #include "TransformComponent.hpp"
-#include "ResourceManager.hpp"
 
 #define HealthBar_Width 64
 #define HealthBar_Height 5
@@ -18,9 +18,8 @@
  *
  * A component that renders a health bar
  */
-class HealthBarComponent : public Component
-{
-public:
+class HealthBarComponent : public Component {
+   public:
     /**
      * @brief Constructor
      * @param filename The filename of the sprite sheet
@@ -61,7 +60,7 @@ public:
      */
     int GetType() override;
 
-private:
+   private:
     unsigned int health{5};
     unsigned int m_currentFrame{0};
     unsigned int m_lastFrame{1};

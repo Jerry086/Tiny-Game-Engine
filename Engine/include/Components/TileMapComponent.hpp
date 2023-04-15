@@ -6,24 +6,24 @@
 #if defined(LINUX) || defined(MINGW)
 #include <SDL2/SDL.h>
 
-#else // This works for Mac
+#else  // This works for Mac
 #include <SDL.h>
 
 #endif
 
+#include "./Services/ResourceManager.hpp"
 #include "Component.hpp"
-#include "ResourceManager.hpp"
 
 /**
  * This is a minimal implementation of a TileMap
  */
-class TileMapComponent : public Component
-{
-public:
+class TileMapComponent : public Component {
+   public:
     /**
      * Constructor for a tilemap
      */
-    TileMapComponent(std::string tileSheetFileName, int rows, int cols, int _TileWidth, int _TileHeight, int _mapX, int _mapY);
+    TileMapComponent(std::string tileSheetFileName, int rows, int cols,
+                     int _TileWidth, int _TileHeight, int _mapX, int _mapY);
     /**
      * Destructor for a tilemap
      */
@@ -56,7 +56,7 @@ public:
 
     void MoveObject(float left, float right);
 
-private:
+   private:
     // Dimensions of our TileMap and individual tiles.
     // Used for spiltting up the sprite sheet
     int m_Rows;
