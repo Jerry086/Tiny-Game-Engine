@@ -10,14 +10,15 @@
 #include <string>
 #include <unordered_map>
 
-class ServiceLocator;
+#include "IService.hpp"
+#include "ServiceLocator.hpp"
 
 /**
  * @brief The ResourceManager class
  *
  * Singleton class that manages all resources, including surfaces and textures.
  */
-class ResourceManager {
+class ResourceManager : public IService {
     friend class ServiceLocator;
 
    public:
@@ -72,7 +73,7 @@ class ResourceManager {
     SDL_Renderer *m_renderer;
     std::unordered_map<std::string, std::pair<SDL_Surface *, int>> surfaceMap;
     std::unordered_map<std::string, std::pair<SDL_Texture *, int>> textureMap;
-    ResourceManager();
+    ResourceManager() = default;
     ~ResourceManager();
     ResourceManager(const ResourceManager &) = delete;
     ResourceManager &operator=(const ResourceManager &) = delete;
