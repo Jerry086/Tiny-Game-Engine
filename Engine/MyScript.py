@@ -11,6 +11,7 @@ WINDOW_HEIGHT = 720
 SDL = mygameengine.SDLGraphicsProgram(WINDOW_WIDTH, WINDOW_HEIGHT)
 
 game_object_manager = mygameengine.GameObjectManager()
+game_object_manager.StartUp()
 
 game_objects = create_scene("./definitions/test_scene_def.json")
 
@@ -34,3 +35,5 @@ while not controller_component.QuitProgram():
 
     SDL.flip()
     SDL.delay(20)
+
+game_object_manager.ShutDown()

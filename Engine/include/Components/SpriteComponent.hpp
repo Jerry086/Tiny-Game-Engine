@@ -80,7 +80,7 @@ private:
     SDL_Surface *m_spriteSheet = nullptr;
     SDL_Texture *m_texture = nullptr;
     SDL_Rect mSrc;
-    SDL_Rect mDest;
+    SDL_Rect mDest{0, 0, 1280, 720};
 };
 
 #endif

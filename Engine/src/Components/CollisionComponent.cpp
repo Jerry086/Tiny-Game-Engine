@@ -83,7 +83,7 @@ void CollisionComponent::Update()
                     // TODO: add player death animation
                     Vec2 penetration = CheckCollision(other);
                     if (penetration.x != 0 || penetration.y != 0)
-                        GameObjectManager::instance().SetShutdown(true);
+                        GameObjectManager::instance().SetGameOver(true);
                     break;
                 }
 
