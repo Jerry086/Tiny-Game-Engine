@@ -53,7 +53,7 @@ class ServiceLocator {
     static void Update() {
         for (auto it = ServiceLocator::instance().m_services.begin();
              it != ServiceLocator::instance().m_services.end(); ++it) {
-            // it->second->Update();
+            it->second->Update();
         }
     }
 
