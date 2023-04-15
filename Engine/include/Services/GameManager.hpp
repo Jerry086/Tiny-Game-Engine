@@ -10,9 +10,14 @@ class GameManager : public IService {
     void Update() override;
 
     static bool IsQuit();
+    static bool IsGameOver();
+
+    static void ShowGameOverPopup();
+
+    bool m_isQuit = false;
+    bool m_isGameOver = false;
 
    private:
-    bool m_isQuit = false;
     GameManager() = default;
     // ~GameManager() = default;
     GameManager(const GameManager &) = delete;

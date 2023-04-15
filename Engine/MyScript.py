@@ -18,7 +18,7 @@ for go_name, go in game_objects:
     game_object_manager.AddGameObject(go_name, go)
 
 print("Setting up game loop")
-while not mygameengine.GameManager.IsQuit():
+while not mygameengine.GameManager.IsQuit() and not mygameengine.GameManager.IsGameOver():
     SDL.clear()
 
     mygameengine.ServiceLocator.Update()
@@ -28,3 +28,8 @@ while not mygameengine.GameManager.IsQuit():
 
     SDL.flip()
     SDL.delay(20)
+game_object_manager.ShutDown()
+# mygameengine.GameManager.ShowGameOverPopup()
+SDL.ShutDown()
+print("Python End of game loop")
+

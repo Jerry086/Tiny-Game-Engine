@@ -30,7 +30,8 @@ PYBIND11_MODULE(mygameengine, m) {
         .def("delay", &SDLGraphicsProgram::delay)
         .def("flip", &SDLGraphicsProgram::flip)
         .def("DrawRectangle", &SDLGraphicsProgram::DrawRectangle)
-        .def("DrawPoint", &SDLGraphicsProgram::DrawPoint);
+        .def("DrawPoint", &SDLGraphicsProgram::DrawPoint)
+        .def("ShutDown", &SDLGraphicsProgram::ShutDown);
 
     py::class_<GameObject, std::shared_ptr<GameObject>>(m, "GameObject")
         .def(py::init<const std::string &>(), py::arg("id"))
@@ -54,7 +55,8 @@ PYBIND11_MODULE(mygameengine, m) {
         .def("Render", &GameObjectManager::Render)
         .def("AddGameObject", &GameObjectManager::AddGameObject)
         .def("RemoveGameObject", &GameObjectManager::RemoveGameObject)
-        .def("GetGameObject", &GameObjectManager::GetGameObject);
+        .def("GetGameObject", &GameObjectManager::GetGameObject)
+        .def("ShutDown", &GameObjectManager::ShutDown);
 
     py::class_<Vec2>(m, "Vec2")
         .def(py::init<float, float>())
@@ -125,5 +127,7 @@ PYBIND11_MODULE(mygameengine, m) {
         .def_static("Update", &ServiceLocator::Update);
 
     py::class_<GameManager>(m, "GameManager")
-        .def_static("IsQuit", &GameManager::IsQuit);
+        .def_static("IsQuit", &GameManager::IsQuit)
+        .def_static("IsGameOver", &GameManager::IsGameOver)
+        .def_static("ShowGameOverPopup", &GameManager::ShowGameOverPopup);
 }

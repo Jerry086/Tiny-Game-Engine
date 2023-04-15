@@ -13,9 +13,8 @@
  *
  * Singleton class that manages all game objects
  */
-class GameObjectManager
-{
-public:
+class GameObjectManager {
+   public:
     /**
      * @brief instance of the game object manager
      */
@@ -27,7 +26,7 @@ public:
     /**
      * @brief shut down the game object manager
      */
-    void Shutdown();
+    void ShutDown();
     /**
      * @brief update all game objects of the game
      */
@@ -56,7 +55,7 @@ public:
 
     std::map<std::string, std::shared_ptr<GameObject>> m_gameobjects;
 
-private:
+   private:
     GameObjectManager();
     ~GameObjectManager();
     GameObjectManager(const GameObjectManager &) = delete;

@@ -1,5 +1,8 @@
 #include "./Components/CollisionComponent.hpp"
 
+#include "./Services/GameManager.hpp"
+#include "./Services/ServiceLocator.hpp"
+
 /**
  * Constructor
  */
@@ -84,7 +87,11 @@ void CollisionComponent::Update() {
                     Vec2 penetration = CheckCollision(other);
                     if (penetration.x != 0 || penetration.y != 0) {
                         std::cout << "Game Over" << std::endl;
-                        GameObjectManager::instance().Shutdown();
+                        ServiceLocator::GetService<GameManager>()
+                            .ShowGameOverPopup();
+                        ServiceLocator::GetService<GameManager>().m_isGameOver =
+                            true;
+                        // GameObjectManager::instance().Shutdown();
                     }
                     break;
                 }
