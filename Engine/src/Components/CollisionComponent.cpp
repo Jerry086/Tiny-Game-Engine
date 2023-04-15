@@ -1,7 +1,5 @@
 #include "./Components/CollisionComponent.hpp"
 
-#include <algorithm>
-
 #include "./Services/GameManager.hpp"
 #include "./Services/ServiceLocator.hpp"
 
@@ -132,24 +130,35 @@ Vec2 CollisionComponent::CheckCollision(
     std::shared_ptr<CollisionComponent> other) {
     Vec2 penetration;
 
-    Vec2 thisMin = m_transformer->m_position;
-    Vec2 thisMax = m_transformer->m_position + Vec2(m_width, m_height);
-    Vec2 otherMin = other->m_transformer->m_position;
-    Vec2 otherMax = other->m_transformer->m_position +
-                    Vec2(other->m_width, other->m_height);
-    if (thisMax.x <= otherMin.x || thisMin.x >= otherMax.x ||
-        thisMax.y <= otherMin.y || thisMin.y >= otherMax.y)
+    // projected position of the other object
+    float other_left = other->m_transformer->m_position.x;
+    float other_right = other->m_transformer->m_position.x + other->m_width;
+    float other_top = other->m_transformer->m_position.y;
+    float other_bottom = other->m_transformer->m_position.y + other->m_height;
+
+    // projected position of this object
+    float this_left = m_transformer->m_position.x;
+    float this_right = m_transformer->m_position.x + m_width;
+    float this_top = m_transformer->m_position.y;
+    float this_bottom = m_transformer->m_position.y + m_height;
+
+    // no collision
+    if (this_right <= other_left || this_left >= other_right ||
+        this_bottom <= other_top || this_top >= other_bottom)
         return penetration;
-
-    Vec2 penMin;
-    penMin.x = std::max(thisMin.x, otherMin.x);
-    penMin.y = std::max(thisMin.y, otherMin.y);
-    Vec2 penMax;
-    penMax.x = std::min(thisMax.x, otherMax.x);
-    penMax.y = std::min(thisMax.y, otherMax.y);
-
-    penetration.x = penMax.x - penMin.x;
-    penetration.y = penMax.y - penMin.y;
+    else {
+        if (m_controller->GetDirectionX() > 0)
+            penetration.x = other_left - this_right;
+        else if (m_controller && m_controller->GetDirectionX() < 0 ||
+                 m_behavior && m_behavior->GetDirectionX() < 0)
+            penetration.x = other_right - this_left;
+        else if (m_controller && m_controller->GetDirectionY() > 0 ||
+                 m_behavior && m_behavior->GetDirectionY() > 0)
+            penetration.y = other_top - this_bottom;
+        else if (m_controller && m_controller->GetDirectionY() < 0 ||
+                 m_behavior && m_behavior->GetDirectionY() < 0)
+            penetration.y = other_bottom - this_top;
+    }
 
     return penetration;
 }
