@@ -3,6 +3,8 @@
 #include "IService.hpp"
 
 class InputService : public IService {
+    friend class ServiceLocator;
+
    public:
     static InputService &instance();
     void ShutDown() override;

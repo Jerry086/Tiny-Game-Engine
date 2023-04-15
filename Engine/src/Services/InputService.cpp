@@ -17,7 +17,6 @@ InputService &InputService::instance() {
 void InputService::ShutDown() {}
 
 void InputService::Update() {
-    std::cout << "InputService::Update()" << std::endl;
     SDL_Event event;
     InputState state;
     while (SDL_PollEvent(&event)) {

@@ -21,7 +21,8 @@ for go_name, player in game_objects:
 controller_component = game_object_manager.GetGameObject('player').GetControllerComponents()[0]
 
 print("Setting up game loop")
-while not controller_component.QuitProgram():
+while not mygameengine.GameManager.IsQuit():
+# while not controller_component.QuitProgram():
     SDL.clear()
 
     mygameengine.ServiceLocator.Update()

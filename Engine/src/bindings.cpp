@@ -9,6 +9,7 @@
 #include "./Components/SpriteComponent.hpp"
 #include "./Components/TileMapComponent.hpp"
 #include "./Components/TransformComponent.hpp"
+#include "./Services/GameManager.hpp"
 #include "GameObject.hpp"
 #include "GameObjectManager.hpp"
 #include "SDLGraphicsProgram.h"
@@ -130,4 +131,7 @@ PYBIND11_MODULE(mygameengine, m) {
 
     py::class_<ServiceLocator>(m, "ServiceLocator")
         .def_static("Update", &ServiceLocator::Update);
+
+    py::class_<GameManager>(m, "GameManager")
+        .def_static("IsQuit", &GameManager::IsQuit);
 }
