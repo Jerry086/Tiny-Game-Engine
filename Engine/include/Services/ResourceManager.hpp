@@ -67,7 +67,7 @@ class ResourceManager : public IService {
     /**
      * @brief Destroy all resources
      */
-    int ShutDown();
+    void ShutDown();
 
    private:
     SDL_Renderer *m_renderer;

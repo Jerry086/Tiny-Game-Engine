@@ -43,6 +43,13 @@ class ServiceLocator {
         return *static_cast<T *>(it2->second);
     }
 
+    static void ShutDown() {
+        for (auto it = ServiceLocator::instance().m_services.begin();
+             it != ServiceLocator::instance().m_services.end(); ++it) {
+            it->second->ShutDown();
+        }
+    }
+
    private:
     ServiceLocator() = default;
     std::unordered_map<std::type_index, IService *> m_services;

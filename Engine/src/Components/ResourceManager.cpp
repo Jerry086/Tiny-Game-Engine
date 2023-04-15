@@ -131,7 +131,7 @@ int ResourceManager::StartUp(SDL_Renderer *renderer) {
 /**
  * Free all resources in the resource manager
  */
-int ResourceManager::ShutDown() {
+void ResourceManager::ShutDown() {
     auto it_surface = surfaceMap.begin();
     while (it_surface != surfaceMap.end()) {
         SDL_FreeSurface(it_surface->second.first);
@@ -145,5 +145,4 @@ int ResourceManager::ShutDown() {
         it_texture->second.first = nullptr;
         it_texture = textureMap.erase(it_texture);
     }
-    return 0;
 }
