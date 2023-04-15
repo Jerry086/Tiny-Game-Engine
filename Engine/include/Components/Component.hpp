@@ -26,6 +26,7 @@ class Component {
      * Destructor
      */
     virtual ~Component();
+    virtual void StartUp(){};
     /**
      * ShutDown the component
      */
@@ -43,6 +44,11 @@ class Component {
      * @return The type of the component
      */
     virtual int GetType();
+
+    virtual void SetPythonScriptPath(std::string path);
+
+   protected:
+    std::string m_pythonScriptPath;
 
    private:
     const int m_type = Component_TYPE;

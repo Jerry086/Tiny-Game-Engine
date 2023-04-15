@@ -19,20 +19,16 @@ GameObject::~GameObject() {}
  * StartUp the game object
  */
 void GameObject::StartUp() {
-    // py::gil_scoped_acquire();  // Acquire the GIL since we're creating a
-    // Python
-    //                            // interpreter
-
-    // // Construct the scoped interpreter guard and store it as a member
-    // variable py_guard_ = new py::scoped_interpreter{};
-
-    // Load the Python script file and execute it in the global namespace
-    // py::scoped_interpreter guard{};
-    // std::string script_path = "./test.py";
-    // py::eval_file(script_path.c_str(), py::globals(), py::dict());
-
-    // py::gil_scoped_release();  // Release the GIL since we're done with the
-    // Python interpreter
+    if (m_pythonScriptPath != "") {
+        // Alternatively, you can load a script from a file
+        // py::eval_file(script_path.c_str(), py::globals(), py::dict());
+        py::eval_file(m_pythonScriptPath, py::globals());
+    }
+    for (auto it = m_components.begin(); it != m_components.end(); it++) {
+        if (m_pythonScriptPath != "")
+            it->second->SetPythonScriptPath(m_pythonScriptPath);
+        it->second->StartUp();
+    }
 }
 /**
  * ShutDown the game object by clearing the components map
@@ -42,14 +38,6 @@ void GameObject::ShutDown() {
         it->second->ShutDown();
     }
     m_components.clear();
-
-    // py::gil_scoped_acquire();  // Acquire the GIL since we're destroying a
-    //                            // Python interpreter
-
-    // delete py_guard_;  // Destroy the scoped interpreter guard
-
-    // py::gil_scoped_release();  // Release the GIL since we're done with the
-    //                            // Python interpreter
 }
 /**
  * Update the game object by iterating through all the components and
@@ -62,17 +50,17 @@ void GameObject::Update() {
         it->second->Update();
     }
 
-    // py::scoped_interpreter guard{};
-    // Alternatively, you can load a script from a file
-    std::string script_path = "./scripts/test.py";
-    // py::eval_file(script_path.c_str(), py::globals(), py::dict());
-    py::eval_file("./scripts/test.py", py::globals());
+    if (m_pythonScriptPath != "") {
+        // Alternatively, you can load a script from a file
+        // py::eval_file(script_path.c_str(), py::globals(), py::dict());
+        // py::eval_file(m_pythonScriptPath, py::globals());
 
-    // Get the update function from the Python script
-    py::function update_func = py::globals()["testembed"];
+        // Get the update function from the Python script
+        py::function update_func = py::globals()["testembed"];
 
-    // Call the update function
-    update_func();
+        // Call the update function
+        update_func();
+    }
 }
 /**
  * Render the game object by iterating through all the components and
@@ -110,4 +98,8 @@ void GameObject::RemoveComponent(std::string componentName) {
  */
 std::shared_ptr<Component> GameObject::GetComponent(std::string componentName) {
     return m_components[componentName];
+}
+
+void GameObject::SetPythonScriptPath(std::string path) {
+    m_pythonScriptPath = path;
 }

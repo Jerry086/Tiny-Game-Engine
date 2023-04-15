@@ -66,6 +66,8 @@ class GameObject {
      */
     std::shared_ptr<Component> GetComponent(std::string componentName);
 
+    void SetPythonScriptPath(std::string path);
+
     /**
      * @brief Get a list of components of a given type
      *
@@ -107,6 +109,7 @@ class GameObject {
     std::string gameObject_id;
     std::map<std::string, std::shared_ptr<Component>> m_components;
     std::shared_ptr<Component> m_collisionComponent = nullptr;
+    std::string m_pythonScriptPath;
 };
 
 #endif

@@ -55,7 +55,8 @@ PYBIND11_MODULE(mygameengine, m) {
         .def("AddComponent", &GameObject::AddComponent)
         .def("GetComponent", &GameObject::GetComponent)
         .def("GetControllerComponents",
-             &GameObject::GetComponentsPython<ControllerComponent>);
+             &GameObject::GetComponentsPython<ControllerComponent>)
+        .def("SetPythonScriptPath", &GameObject::SetPythonScriptPath);
 
     py::class_<GameObjectManager,
                std::unique_ptr<GameObjectManager, py::nodelete>>(
