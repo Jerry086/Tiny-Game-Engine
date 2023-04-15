@@ -9,11 +9,11 @@
 #include <SDL.h>
 #endif
 
-#include "Component.hpp"
-#include "ResourceManager.hpp"
-#include "TransformComponent.hpp"
-#include "ControllerComponent.hpp"
+#include "../Services/ResourceManager.hpp"
 #include "BehaviorComponent.hpp"
+#include "Component.hpp"
+#include "ControllerComponent.hpp"
+#include "TransformComponent.hpp"
 
 const int RIGHT = 0;
 const int DOWN = 1;
@@ -25,13 +25,13 @@ const int RENDER_HEIGHT = 64;
 /**
  * The SpriteComponent class that renders a sprite to the screen.
  */
-class SpriteComponent : public Component
-{
-public:
+class SpriteComponent : public Component {
+   public:
     /**
      * Constructor
      * @param filename The filename of the sprite
-     * @param transformComponent The transform component that defines the position
+     * @param transformComponent The transform component that defines the
+     * position
      * @param x The x position of the sprite
      * @param y The y position of the sprite
      * @param w The width of the sprite
@@ -66,7 +66,7 @@ public:
      */
     int GetType() override;
 
-private:
+   private:
     std::string m_filename;
     unsigned int mCurrentFrame{0};
     unsigned int mLastFrame{1};

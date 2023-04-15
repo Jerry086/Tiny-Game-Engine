@@ -5,9 +5,11 @@
  */
 CollisionComponent::CollisionComponent(
     std::string objectType, std::shared_ptr<TransformComponent> transformer,
-    int width, int height) : m_objectType(objectType), m_transformer(transformer),
-                             m_height(height), m_width(width)
-{
+    int width, int height)
+    : m_objectType(objectType),
+      m_transformer(transformer),
+      m_height(height),
+      m_width(width) {
     m_controller = transformer->m_controller;
     m_behavior = transformer->m_behavior;
     if (m_objectType == "player")
@@ -29,91 +31,76 @@ CollisionComponent::~CollisionComponent() {}
 /**
  * Getter of the object type
  */
-ObjectType CollisionComponent::GetObjectType()
-{
-    return m_objectType_enum;
-}
+ObjectType CollisionComponent::GetObjectType() { return m_objectType_enum; }
 /**
  * Update the collision component
  * Check collision with other objects
  * Apply the collision response based on the object type
  */
-void CollisionComponent::Update()
-{
+void CollisionComponent::Update() {
     // player: dynamic, enemy: dynamic, wall: static, pac:static
     // ignore static objects
-    if (m_objectType_enum == wall || m_objectType_enum == interactable)
-        return;
+    if (m_objectType_enum == wall || m_objectType_enum == interactable) return;
 
     // get the list of game objects
     std::map<std::string, std::shared_ptr<GameObject>> list =
         GameObjectManager::instance().m_gameobjects;
 
     // detect collisions, O(n^2)
-    for (auto it = list.begin(); it != list.end(); it++)
-    {
-        std::shared_ptr<CollisionComponent> other =
-            std::dynamic_pointer_cast<CollisionComponent>(it->second->GetCollisionComponent());
+    for (auto it = list.begin(); it != list.end(); it++) {
+        std::vector<std::shared_ptr<CollisionComponent>> collisionComponents =
+            it->second->GetComponents<CollisionComponent>();
+        if (collisionComponents.size() == 0) continue;
+
+        std::shared_ptr<CollisionComponent> other = collisionComponents[0];
         // continue if the object is not collidable or the object is itself
         if (other == nullptr || m_objectType_enum == other->m_objectType_enum)
             continue;
-        else
-        {
-            if (m_objectType_enum == player)
-            {
-                switch (other->m_objectType_enum)
-                {
-                case wall:
-                {
-                    Vec2 penetration = CheckCollision(other);
-                    m_transformer->m_position += penetration;
-                    break;
-                }
+        else {
+            if (m_objectType_enum == player) {
+                switch (other->m_objectType_enum) {
+                    case wall: {
+                        Vec2 penetration = CheckCollision(other);
+                        m_transformer->m_position += penetration;
+                        break;
+                    }
 
-                case interactable:
-                {
-                    Vec2 penetration = CheckCollision(other);
-                    if (penetration.x != 0 || penetration.y != 0)
-                        GameObjectManager::instance().RemoveGameObject(it->first);
-                    break;
-                }
+                    case interactable: {
+                        Vec2 penetration = CheckCollision(other);
+                        if (penetration.x != 0 || penetration.y != 0)
+                            GameObjectManager::instance().RemoveGameObject(
+                                it->first);
+                        break;
+                    }
 
-                case enemy:
-                {
-                    // TODO: add player death animation
-                    GameObjectManager::instance().Shutdown();
-                    std::cout << "Game Over" << std::endl;
-                    break;
-                }
+                    case enemy: {
+                        // TODO: add player death animation
+                        GameObjectManager::instance().Shutdown();
+                        std::cout << "Game Over" << std::endl;
+                        break;
+                    }
 
-                default:
-                {
+                    default: {
+                    }
                 }
-                }
-            }
-            else
-            {
+            } else {
                 // enemy + player / enemy + wall
-                switch (other->m_objectType_enum)
-                {
-                case wall:
-                {
-                    Vec2 penetration = CheckCollision(other);
-                    m_transformer->m_position += penetration;
-                    break;
-                }
+                switch (other->m_objectType_enum) {
+                    case wall: {
+                        Vec2 penetration = CheckCollision(other);
+                        m_transformer->m_position += penetration;
+                        break;
+                    }
 
-                case player:
-                {
-                    // TODO: add player death animation
-                    GameObjectManager::instance().Shutdown();
-                    std::cout << "Game Over" << std::endl;
-                    break;
-                }
+                    case player: {
+                        // TODO: add player death animation
+                        GameObjectManager::instance().Shutdown();
+                        std::cout << "Game Over" << std::endl;
+                        break;
+                    }
 
-                default:
-                {
-                }
+                    default: {
+                    }
                 }
             }
         }
@@ -125,8 +112,7 @@ void CollisionComponent::Update()
  * Return the penetration vector
  */
 Vec2 CollisionComponent::CheckCollision(
-    std::shared_ptr<CollisionComponent> other)
-{
+    std::shared_ptr<CollisionComponent> other) {
     Vec2 penetration;
 
     // projected position of the other object
@@ -145,8 +131,7 @@ Vec2 CollisionComponent::CheckCollision(
     if (this_right <= other_left || this_left >= other_right ||
         this_bottom <= other_top || this_top >= other_bottom)
         return penetration;
-    else
-    {
+    else {
         if (m_controller->GetDirectionX() > 0)
             penetration.x = other_left - this_right;
         else if (m_controller->GetDirectionX() < 0)
@@ -163,7 +148,4 @@ Vec2 CollisionComponent::CheckCollision(
 /**
  * Getter of the component type
  */
-int CollisionComponent::GetType()
-{
-    return m_type;
-}
+int CollisionComponent::GetType() { return m_type; }

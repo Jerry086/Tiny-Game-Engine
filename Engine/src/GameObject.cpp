@@ -1,4 +1,8 @@
 #include "GameObject.hpp"
+
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+namespace py = pybind11;
 /**
  * Constructor for the GameObject class
  * The id of the game object mush be unique
@@ -15,10 +19,8 @@ void GameObject::StartUp() {}
 /**
  * ShutDown the game object by clearing the components map
  */
-void GameObject::ShutDown()
-{
-    for (auto it = m_components.begin(); it != m_components.end(); it++)
-    {
+void GameObject::ShutDown() {
+    for (auto it = m_components.begin(); it != m_components.end(); it++) {
         it->second->ShutDown();
         RemoveComponent(it->first);
     }
@@ -29,10 +31,8 @@ void GameObject::ShutDown()
  * map, with the key being the id of the component. The order to update
  * the components is important, as some components may depend
  */
-void GameObject::Update()
-{
-    for (auto it = m_components.begin(); it != m_components.end(); it++)
-    {
+void GameObject::Update() {
+    for (auto it = m_components.begin(); it != m_components.end(); it++) {
         it->second->Update();
     }
 }
@@ -42,10 +42,8 @@ void GameObject::Update()
  * map, with the key being the id of the component. The order to render
  * the components is important, as some components may depend
  */
-void GameObject::Render()
-{
-    for (auto it = m_components.begin(); it != m_components.end(); it++)
-    {
+void GameObject::Render() {
+    for (auto it = m_components.begin(); it != m_components.end(); it++) {
         it->second->Render();
     }
 }
@@ -55,10 +53,8 @@ void GameObject::Render()
  * right place for the Update and Render functions to work correctly.
  */
 void GameObject::AddComponent(std::string componentName,
-                              std::shared_ptr<Component> component)
-{
-    if (component->GetType() == CollisionComponent_TYPE)
-    {
+                              std::shared_ptr<Component> component) {
+    if (component->GetType() == CollisionComponent_TYPE) {
         m_collisionComponent = component;
     }
     m_components.emplace(componentName, component);
@@ -66,21 +62,12 @@ void GameObject::AddComponent(std::string componentName,
 /**
  * Remove a component from the game object given the component name
  */
-void GameObject::RemoveComponent(std::string componentName)
-{
+void GameObject::RemoveComponent(std::string componentName) {
     m_components.erase(componentName);
 }
 /**
  * Get a component from the game object given the component name
  */
-std::shared_ptr<Component> GameObject::GetComponent(std::string componentName)
-{
+std::shared_ptr<Component> GameObject::GetComponent(std::string componentName) {
     return m_components[componentName];
-}
-/**
- * Get the collision component of the game object
- */
-std::shared_ptr<Component> GameObject::GetCollisionComponent()
-{
-    return m_collisionComponent;
 }

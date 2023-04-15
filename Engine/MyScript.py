@@ -18,12 +18,7 @@ for go_name, player in game_objects:
     game_object_manager.AddGameObject(go_name, player)
 
 # TODO Hackyyyy
-controller_component = game_object_manager.GetGameObject("player").GetComponent("0")
-
-# TODO remove, test
-counter = game_object_manager.GetGameObject("player").GetComponent("4")
-counter.SetCounter("test counter", 0)
-
+controller_component = game_object_manager.GetGameObject('player').GetControllerComponents()[0]
 
 print("Setting up game loop")
 while not controller_component.QuitProgram():
