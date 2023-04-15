@@ -41,16 +41,39 @@
                     "value":64
                 },
                 {
-                    "arg_type": "CollisionCallbacks",
-                    "value":{
-                        "variables_set": {},
-                        "variables_increment": {
-                            "score": 10
-                        },
-                        "bools_true":{},
-                        "bools_false":{},
-                        "bools_toggle":{}
+                    "arg_type": "UnorderedMapStringInt",
+                    "description (optional)": "A map of counter names to values to set when this object collides with another object.",
+                    "value": {
+                        "test_set_var": 1
                     }
+                },
+                {
+                    "arg_type": "UnorderedMapStringInt",
+                    "description (optional)": "A map of counter names to values to increment when this object collides with another object.",
+                    "value": {
+                        "test_inc_var": 1
+                    }
+                },
+                {
+                    "arg_type": "VectorString",
+                    "description (optional)": "A list of variable names to values to set to true when this object collides with another object.",
+                    "value": [
+                        "test_bool_true"
+                    ]
+                },
+                {
+                    "arg_type": "VectorString",
+                    "description (optional)": "A list of variable names to values to set to false when this object collides with another object.",
+                    "value": [
+                        "test_bool_false"
+                    ]
+                },
+                {
+                    "arg_type": "VectorString",
+                    "description (optional)": "A list of variable names to values to toggle when this object collides with another object.",
+                    "value": [
+                        "test_bool_toggle"
+                    ]
                 }
             ]
         }

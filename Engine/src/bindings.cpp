@@ -1,4 +1,9 @@
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include <pybind11/stl_bind.h>
+
+#include <unordered_map>
+#include <vector>
 
 #include "./Components/BehaviorComponent.hpp"
 #include "./Components/CollisionComponent.hpp"
@@ -14,6 +19,9 @@
 
 namespace py = pybind11;
 
+PYBIND11_MAKE_OPAQUE(std::unordered_map<std::string, int>);
+PYBIND11_MAKE_OPAQUE(std::vector<std::string>);
+
 // Creates a macro function that will be called
 // whenever the module is imported into python
 // 'mygameengine' is what we 'import' into python.
@@ -22,6 +30,11 @@ namespace py = pybind11;
 //  The magic here is in 'template metaprogramming'
 PYBIND11_MODULE(mygameengine, m) {
     m.doc() = "our game engine as a library";
+
+    py::bind_vector<std::vector<std::string>>(m, "VectorString");
+    py::bind_map<std::unordered_map<std::string, int>>(m,
+                                                       "UnorderedMapStringInt");
+    py::class_<std::string>(m, "String").def(py::init<const char *>());
 
     py::class_<SDLGraphicsProgram>(m, "SDLGraphicsProgram")
         .def(py::init<int, int>(), py::arg("w"), py::arg("h"))
@@ -115,18 +128,18 @@ PYBIND11_MODULE(mygameengine, m) {
         .def(py::init<const std::string &,
                       const std::shared_ptr<TransformComponent> &, int, int>(),
              py::arg("objectType"), py::arg("transform"), py::arg("w"),
-             py::arg("h"));
-    // .def(py::init<const std::string &,
-    //               const std::shared_ptr<TransformComponent> &, int, int,
-    //               const std::unordered_map<std::string, int> &,
-    //               const std::unordered_map<std::string, int> &,
-    //               const std::vector<std::string> &,
-    //               const std::vector<std::string> &,
-    //               const std::vector<std::string> &>(),
-    //      py::arg("objectType"), py::arg("transform"), py::arg("w"),
-    //      py::arg("h"), py::arg("variables_set"),
-    //      py::arg("variables_increment"), py::arg("bools_true"),
-    //      py::arg("bools_false"), py::arg("bools_toggle"));
+             py::arg("h"))
+        .def(py::init<const std::string &,
+                      const std::shared_ptr<TransformComponent> &, int, int,
+                      const std::unordered_map<std::string, int> &,
+                      const std::unordered_map<std::string, int> &,
+                      const std::vector<std::string> &,
+                      const std::vector<std::string> &,
+                      const std::vector<std::string> &>(),
+             py::arg("objectType"), py::arg("transform"), py::arg("w"),
+             py::arg("h"), py::arg("counters_set"), py::arg("counters"),
+             py::arg("bools_true"), py::arg("bools_false"),
+             py::arg("bools_toggle"));
 
     py::class_<ServiceLocator>(m, "ServiceLocator")
         .def_static("Update", &ServiceLocator::Update);

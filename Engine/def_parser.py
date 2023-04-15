@@ -79,26 +79,25 @@ def create_components(go_def_json_object, transform_override=None):
                         "No matching component found for type: " + arg_type
                     )
                 typed_args.append(matching_components[0])
-            elif arg_type == "CollisionCallbacks":
-                pass
-                # collision_callbacks = raw_arg["value"]
-                # list_variables_set = collision_callbacks.get("variables_set", {})
-                # list_variables_increment = collision_callbacks.get("variables_increment", {})
-                # list_bool_true = collision_callbacks.get("bools_true", [])
-                # list_bool_false = collision_callbacks.get("bools_false", [])
-                # list_bool_toggle = collision_callbacks.get("bools_toggle", [])
-
-                # typed_args.append(list_variables_set)
-                # typed_args.append(list_variables_increment)
-                # typed_args.append(list_bool_true)
-                # typed_args.append(list_bool_false)
-                # typed_args.append(list_bool_toggle)
+            elif arg_type == "VectorString":
+                vec = mygameengine.VectorString()
+                for v in raw_arg["value"]:
+                    vec.append(v)
+                typed_args.append(vec)
+            elif arg_type == "UnorderedMapStringInt":
+                uomap = mygameengine.UnorderedMapStringInt()
+                for k, v in raw_arg["value"].items():
+                    cpp_key = mygameengine.String(k)
+                    uomap[k] = v
+                typed_args.append(uomap)
             else:
                 raise ValueError("Type not found: " + arg_type)
 
         constructor = COMPONENTS[comp_def["component_type"]]
         component = constructor(*typed_args)
         components.append(component)
+
+    print(components)
 
     return components
 

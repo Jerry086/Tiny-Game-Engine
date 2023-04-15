@@ -2,6 +2,7 @@
 
 #include "./Services/GameManager.hpp"
 #include "./Services/ServiceLocator.hpp"
+#include "./Services/VariableManager.hpp"
 
 /**
  * Constructor
@@ -30,6 +31,40 @@ CollisionComponent::CollisionComponent(
         m_objectType_enum = none;
     }
 }
+
+CollisionComponent::CollisionComponent(
+    std::string objectType, std::shared_ptr<TransformComponent> transformer,
+    int width, int height, std::unordered_map<std::string, int> counters_set,
+    std::unordered_map<std::string, int> counters_increment,
+    std::vector<std::string> bools_true, std::vector<std::string> bools_false,
+    std::vector<std::string> bools_toggle)
+    : m_objectType(objectType),
+      m_transformer(transformer),
+      m_height(height),
+      m_width(width),
+      m_counter_set(counters_set),
+      m_counters_increment(counters_increment),
+      m_bools_true(bools_true),
+      m_bools_false(bools_false),
+      m_bools_toggle(bools_toggle) {
+    m_controller = transformer->m_controller;
+    m_behavior = transformer->m_behavior;
+    if (m_objectType == "player")
+        m_objectType_enum = player;
+    else if (m_objectType == "wall")
+        m_objectType_enum = wall;
+    else if (m_objectType == "enemy")
+        m_objectType_enum = enemy;
+    else if (m_objectType == "interactable")
+        m_objectType_enum = interactable;
+    else if (m_objectType == "none")
+        m_objectType_enum = none;
+    else {
+        std::cout << "Error: Invalid object type" << std::endl;
+        m_objectType_enum = none;
+    }
+}
+
 /**
  * Destructor
  */
@@ -47,8 +82,8 @@ ObjectType CollisionComponent::GetObjectType() { return m_objectType_enum; }
 void CollisionComponent::Update() {
     // player: dynamic, enemy: dynamic, wall: static, pac:static
     // ignore static objects
-    if (m_objectType_enum == wall || m_objectType_enum == interactable ||
-        m_objectType_enum == none)
+    if (m_objectType_enum == wall || m_objectType_enum == none ||
+        m_objectType_enum == interactable)
         return;
 
     // get the list of game objects
@@ -168,3 +203,28 @@ Vec2 CollisionComponent::CheckCollision(
  * Getter of the component type
  */
 int CollisionComponent::GetType() { return m_type; }
+
+void CollisionComponent::UpdateVariables() {
+    for (auto it = m_counter_set.begin(); it != m_counter_set.end(); it++) {
+        ServiceLocator::GetService<VariableManager>().SetCounter(it->first,
+                                                                 it->second);
+    }
+
+    for (auto it = m_counters_increment.begin();
+         it != m_counters_increment.end(); it++) {
+        ServiceLocator::GetService<VariableManager>().SetCounter(it->first,
+                                                                 it->second);
+    }
+
+    for (auto it = m_bools_true.begin(); it != m_bools_true.end(); it++) {
+        ServiceLocator::GetService<VariableManager>().SetBool(*it, true);
+    }
+
+    for (auto it = m_bools_false.begin(); it != m_bools_false.end(); it++) {
+        ServiceLocator::GetService<VariableManager>().SetBool(*it, false);
+    }
+
+    for (auto it = m_bools_toggle.begin(); it != m_bools_toggle.end(); it++) {
+        ServiceLocator::GetService<VariableManager>().ToggleBool(*it);
+    }
+}
