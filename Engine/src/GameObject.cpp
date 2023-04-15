@@ -26,8 +26,7 @@ void GameObject::StartUp() {
         m_python = py::module_::import(m_pythonScriptPath.c_str());
     }
     for (auto it = m_components.begin(); it != m_components.end(); it++) {
-        if (m_pythonScriptPath != "")
-            it->second->SetPythonScriptPath(m_pythonScriptPath);
+        if (m_pythonScriptPath != "") it->second->SetPython(m_python);
         it->second->StartUp();
     }
 }
@@ -51,17 +50,8 @@ void GameObject::Update() {
         it->second->Update();
     }
 
-    if (m_pythonScriptPath != "") {
-        // Alternatively, you can load a script from a file
-        // py::eval_file(script_path.c_str(), py::globals(), py::dict());
-        // py::eval_file(m_pythonScriptPath, py::globals());
-
-        // Get the update function from the Python script
-        // py::function update_func = py::globals()["update"];
-        m_python.attr("update")();
-
-        // Call the update function
-        // update_func();
+    if (m_python && py::hasattr(m_python, "game_object_update")) {
+        m_python.attr("game_object_update")();
     }
 }
 /**

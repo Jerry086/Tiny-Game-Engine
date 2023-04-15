@@ -148,6 +148,9 @@ void CollisionComponent::Update() {
             }
         }
     }
+    if (m_python && py::hasattr(m_python, "collision_component_update")) {
+        m_python.attr("collision_component_update")();
+    }
 }
 
 /**

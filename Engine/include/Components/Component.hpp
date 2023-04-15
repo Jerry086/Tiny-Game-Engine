@@ -1,8 +1,11 @@
 #ifndef COMPONENT_HPP
 #define COMPONENT_HPP
 
+#include <pybind11/embed.h>
+
 #include <iostream>
 #include <memory>
+namespace py = pybind11;
 
 #define Component_TYPE 0
 #define ControllerComponent_TYPE 1
@@ -16,7 +19,7 @@
 /**
  * The Component class that is the base class for all components.
  */
-class Component {
+class __attribute__((visibility("default"))) Component {
    public:
     /**
      * Constructor
@@ -45,10 +48,12 @@ class Component {
      */
     virtual int GetType();
 
-    virtual void SetPythonScriptPath(std::string path);
+    virtual void SetPython(py::module_& python);
 
    protected:
     std::string m_pythonScriptPath;
+    // py::module_ m_python{py::none()};
+    py::module_ m_python;
 
    private:
     const int m_type = Component_TYPE;

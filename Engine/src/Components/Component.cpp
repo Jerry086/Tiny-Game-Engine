@@ -12,6 +12,4 @@ Component::~Component() {}
  */
 int Component::GetType() { return m_type; }
 
-void Component::SetPythonScriptPath(std::string path) {
-    m_pythonScriptPath = path;
-}
+void Component::SetPython(py::module_& python) { m_python = python; }
