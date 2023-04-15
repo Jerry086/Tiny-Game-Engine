@@ -4,5 +4,6 @@ class IService {
    public:
     virtual ~IService() = default;
     virtual void ShutDown() = 0;
+    virtual void Update(){};
 };
 #endif

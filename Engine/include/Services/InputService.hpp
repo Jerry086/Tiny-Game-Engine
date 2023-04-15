@@ -6,7 +6,7 @@ class InputService : public IService {
    public:
     static InputService &instance();
     void ShutDown() override;
-    void Update();
+    void Update() override;
 
     struct InputState {
         bool quit = false;
