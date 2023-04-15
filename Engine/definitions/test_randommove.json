@@ -33,7 +33,7 @@
             "args": [
                 {
                     "arg_type": "string",
-                    "value":"wall"
+                    "value":"enemy"
                 },
                 {
                     "arg_type": "TransformComponent"
