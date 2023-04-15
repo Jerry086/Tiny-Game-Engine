@@ -206,22 +206,29 @@ class TileMap():
             # print(filetype)
             if filetype == ".json":
                 paths = []
-                for i, pathImg in enumerate(pathtypes):
-                    if i > 0:
-                        for cmps in self.parent.ibox.loader.comps:
-                            if (os.path.abspath("../" + cmps['value']) == pathImg):
-                                paths.append(
-                                    {"id": i, "path": pathImg, "component_type": cmps['name']})
-
-                # Convert the data array to an array of arrays of integers
+                                # Convert the data array to an array of arrays of integers
                 data_array = []
                 for row in data:
                     if row:
                         data_array.append([int(num)
                                           for num in row.split(",") if num])
 
+                for i, pathImg in enumerate(pathtypes):
+                    if i > 0:
+                        for cmps in self.parent.ibox.loader.comps:
+                            if (os.path.abspath("../" + cmps['value']) == pathImg):
+                                paths.append(
+                                    {"component_type": cmps['name'], "args": [
+                                        {"arg_type": "int", "vlaue": i}, {
+                                            "arg_type": "string", "value": pathImg}
+                                    ]})
+                paths.append({"component_type": "TileMapComponent", "args": [
+                    {"arg_type": "array", "value": data_array}
+                ]})
+
                 # Create a dictionary with paths and data keys
-                output_dict = {"paths": paths, "data": data_array}
+                output_dict = {"type_name": "test_tilemap",
+                               "components": paths,  }
 
                 # Convert the dictionary to a JSON string
                 output_json = json.dumps(output_dict, indent=4)

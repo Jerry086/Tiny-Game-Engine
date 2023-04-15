@@ -113,8 +113,12 @@ class LoaderFrame(tk.Frame):
                 component_menu.update()
                 self.component_var.trace("w", self.on_component_change)
     def createGameObject(self):
+        # pass
         playerGO = def_parser.create_go('Player',self.jsonPath)
         print(playerGO)
+        fts  = [("JSON File", ".json")]
+        path = tk.filedialog.asksaveasfilename(title="Save game object",
+                                           filetypes = fts, defaultextension = fts)
 
 class ImageCanvas(tk.Canvas):
     def __init__(self, parent):
