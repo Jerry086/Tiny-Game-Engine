@@ -7,7 +7,6 @@
 #include "./Components/CounterComponent.hpp"
 #include "./Components/HealthBarComponent.hpp"
 #include "./Components/SpriteComponent.hpp"
-#include "./Components/TileMapComponent.hpp"
 #include "./Components/TransformComponent.hpp"
 #include "./Services/GameManager.hpp"
 #include "GameObject.hpp"
@@ -97,13 +96,6 @@ PYBIND11_MODULE(mygameengine, m) {
             py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
             py::arg("y"), py::arg("w"), py::arg("h"), py::arg("frames"),
             py::arg("numRows"), py::arg("numCols"));
-
-    py::class_<TileMapComponent, Component, std::shared_ptr<TileMapComponent>>(
-        m, "TileMapComponent")
-        .def(py::init<std::string &, int, int, int, int, int, int>(),
-             py::arg("tileSheetFileName"), py::arg("rows"), py::arg("cols"),
-             py::arg("_TileWidth"), py::arg("_TileHeight"), py::arg("_mapX"),
-             py::arg("_mapY"));
 
     py::class_<HealthBarComponent, Component,
                std::shared_ptr<HealthBarComponent>>(m, "HealthBarComponent")

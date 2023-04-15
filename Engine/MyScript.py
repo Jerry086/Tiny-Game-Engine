@@ -14,18 +14,15 @@ game_object_manager = mygameengine.GameObjectManager()
 
 game_objects = create_scene("./definitions/test_scene_def.json")
 
-for go_name, player in game_objects:
-    game_object_manager.AddGameObject(go_name, player)
-
-# TODO Hackyyyy
-controller_component = game_object_manager.GetGameObject('player').GetControllerComponents()[0]
+for go_name, go in game_objects:
+    game_object_manager.AddGameObject(go_name, go)
 
 print("Setting up game loop")
 while not mygameengine.GameManager.IsQuit():
-# while not controller_component.QuitProgram():
     SDL.clear()
 
     mygameengine.ServiceLocator.Update()
+
     game_object_manager.Update()
     game_object_manager.Render()
 
