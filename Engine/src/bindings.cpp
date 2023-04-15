@@ -110,23 +110,23 @@ PYBIND11_MODULE(mygameengine, m) {
             py::arg("numCols"))
         .def("SetHealth", &HealthBarComponent::SetHealth);
 
-    py::class_<CollisionComponent, std::shared_ptr<CollisionComponent>>(
-        m, "CollisionComponent")
+    py::class_<CollisionComponent, Component,
+               std::shared_ptr<CollisionComponent>>(m, "CollisionComponent")
         .def(py::init<const std::string &,
                       const std::shared_ptr<TransformComponent> &, int, int>(),
-             py::arg("objectType"), py::arg("transformer"), py::arg("w"),
-             py::arg("h"))
-        .def(py::init<const std::string &,
-                      const std::shared_ptr<TransformComponent> &, int, int,
-                      const std::unordered_map<std::string, int> &,
-                      const std::unordered_map<std::string, int> &,
-                      const std::vector<std::string> &,
-                      const std::vector<std::string> &,
-                      const std::vector<std::string> &>(),
-             py::arg("objectType"), py::arg("transformer"), py::arg("w"),
-             py::arg("h"), py::arg("variables_set"),
-             py::arg("variables_increment"), py::arg("bools_true"),
-             py::arg("bools_false"), py::arg("bools_toggle"));
+             py::arg("objectType"), py::arg("transform"), py::arg("w"),
+             py::arg("h"));
+    // .def(py::init<const std::string &,
+    //               const std::shared_ptr<TransformComponent> &, int, int,
+    //               const std::unordered_map<std::string, int> &,
+    //               const std::unordered_map<std::string, int> &,
+    //               const std::vector<std::string> &,
+    //               const std::vector<std::string> &,
+    //               const std::vector<std::string> &>(),
+    //      py::arg("objectType"), py::arg("transform"), py::arg("w"),
+    //      py::arg("h"), py::arg("variables_set"),
+    //      py::arg("variables_increment"), py::arg("bools_true"),
+    //      py::arg("bools_false"), py::arg("bools_toggle"));
 
     py::class_<ServiceLocator>(m, "ServiceLocator")
         .def_static("Update", &ServiceLocator::Update);
