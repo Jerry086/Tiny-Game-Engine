@@ -122,9 +122,9 @@ def create_go(id, json_path, transform_override=None):
     )
     go = mygameengine.GameObject(id)
 
-    if "script_path" in go_def_json_object.keys():
-        script_path = go_def_json_object["script_path"]
-        go.SetPythonScriptPath(script_path)
+    if "script_module" in go_def_json_object.keys():
+        script_module = go_def_json_object["script_module"]
+        go.SetPythonScriptModuleName(script_module)
 
     for comp_name, component in components:
         print("adding component: ", comp_name, "as", id + "_" + comp_name)

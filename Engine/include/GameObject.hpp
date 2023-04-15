@@ -66,7 +66,7 @@ class __attribute__((visibility("default"))) GameObject {
      */
     std::shared_ptr<Component> GetComponent(std::string componentName);
 
-    void SetPythonScriptPath(std::string path);
+    void SetPythonScriptModuleName(std::string name);
 
     /**
      * @brief Get a list of components of a given type
@@ -105,11 +105,12 @@ class __attribute__((visibility("default"))) GameObject {
         return result;
     }
 
-   private:
     std::string gameObject_id;
+
+   private:
     std::map<std::string, std::shared_ptr<Component>> m_components;
     std::shared_ptr<Component> m_collisionComponent = nullptr;
-    std::string m_pythonScriptPath;
+    std::string m_pythonScriptModuleName;
     py::module_ m_python;
 };
 

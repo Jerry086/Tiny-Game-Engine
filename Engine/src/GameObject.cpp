@@ -5,6 +5,8 @@
 #include <pybind11/stl.h>
 
 #include <string>
+
+#include "Component.hpp"
 namespace py = pybind11;
 /**
  * Constructor for the GameObject class
@@ -19,14 +21,14 @@ GameObject::~GameObject() {}
  * StartUp the game object
  */
 void GameObject::StartUp() {
-    if (m_pythonScriptPath != "") {
+    if (m_pythonScriptModuleName != "") {
         // Alternatively, you can load a script from a file
         // py::eval_file(script_path.c_str(), py::globals(), py::dict());
         // py::eval_file(m_pythonScriptPath, py::globals());
-        m_python = py::module_::import(m_pythonScriptPath.c_str());
+        m_python = py::module_::import(m_pythonScriptModuleName.c_str());
     }
     for (auto it = m_components.begin(); it != m_components.end(); it++) {
-        if (m_pythonScriptPath != "") it->second->SetPython(m_python);
+        if (m_pythonScriptModuleName != "") it->second->SetPython(m_python);
         it->second->StartUp();
     }
 }
@@ -76,13 +78,19 @@ void GameObject::AddComponent(std::string componentName,
         m_collisionComponent = component;
     }
     m_components.emplace(componentName, component);
+    component->SetParent(std::make_shared<GameObject>(*this));
 }
 /**
  * Remove a component from the game object given the component name
  */
 void GameObject::RemoveComponent(std::string componentName) {
     std::cout << "Removing " << componentName << std::endl;
+    auto it = m_components.find(componentName);
+    if (it != m_components.end()) {
+        it->second->SetParent(nullptr);
+    }
     m_components.erase(componentName);
+
     std::cout << "Removing complete" << componentName << std::endl;
 }
 /**
@@ -92,6 +100,6 @@ std::shared_ptr<Component> GameObject::GetComponent(std::string componentName) {
     return m_components[componentName];
 }
 
-void GameObject::SetPythonScriptPath(std::string path) {
-    m_pythonScriptPath = path;
+void GameObject::SetPythonScriptModuleName(std::string name) {
+    m_pythonScriptModuleName = name;
 }

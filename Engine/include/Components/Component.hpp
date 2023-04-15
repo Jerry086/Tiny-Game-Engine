@@ -16,6 +16,8 @@ namespace py = pybind11;
 #define HealthBarComponent_TYPE 5
 #define CounterComponent_TYPE 6
 
+class GameObject;
+
 /**
  * The Component class that is the base class for all components.
  */
@@ -50,10 +52,11 @@ class __attribute__((visibility("default"))) Component {
 
     virtual void SetPython(py::module_& python);
 
+    virtual void SetParent(std::shared_ptr<GameObject> parent);
+
    protected:
-    std::string m_pythonScriptPath;
-    // py::module_ m_python{py::none()};
     py::module_ m_python;
+    std::shared_ptr<GameObject> m_parent;
 
    private:
     const int m_type = Component_TYPE;
