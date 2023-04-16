@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['update_0',['Update',['../class_behavior_component.html#a51c8783e63d3926470f8d9624b3c01a4',1,'BehaviorComponent::Update()'],['../class_collision_component.html#a26b246d1439f1cb061a05ba0b2dd4c4a',1,'CollisionComponent::Update()'],['../class_component.html#aaf2ce6dc5752072492f790ad4c7955bb',1,'Component::Update()'],['../class_controller_component.html#a1cbfb9abe9a293d8aea2ca5ccdef672d',1,'ControllerComponent::Update()'],['../class_counter_component.html#a67b88a9cff803987a2f541ddbd5a78e4',1,'CounterComponent::Update()'],['../class_health_bar_component.html#abf630be7b7af9c39b9a716a40504211a',1,'HealthBarComponent::Update()'],['../class_sprite_component.html#a9ef55748bd7bdab2b58d4a34e426ad75',1,'SpriteComponent::Update()'],['../class_transform_component.html#a4532abc14d19b4d80853d0e5648eb433',1,'TransformComponent::Update()'],['../class_game_object.html#a1bd14aa169f501f94f1721943d716535',1,'GameObject::Update()'],['../class_game_object_manager.html#a6f053b1c655de6ca1c9a8fa9b6e118ae',1,'GameObjectManager::Update()']]]
+  ['quit_0',['quit',['../struct_input_manager_1_1_input_state.html#a5a054236386f7d8bce01d3ab0a25ac29',1,'InputManager::InputState']]],
+  ['quitprogram_1',['QuitProgram',['../class_controller_component.html#accfdebceb7c49756354c65d8c573c4b2',1,'ControllerComponent']]]
 ];

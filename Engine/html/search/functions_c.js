@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['sdlgraphicsprogram_0',['SDLGraphicsProgram',['../class_s_d_l_graphics_program.html#a976683178e086cd2a1a801fd9c501a7b',1,'SDLGraphicsProgram']]],
-  ['setcounter_1',['SetCounter',['../class_counter_component.html#aee4576e9fe8e151999ed3a086c3bd755',1,'CounterComponent']]],
-  ['setgameover_2',['SetGameOver',['../class_game_object_manager.html#a8cec1e4b9e67f89f8288965c119ffe93',1,'GameObjectManager']]],
-  ['sethealth_3',['SetHealth',['../class_health_bar_component.html#a7cbb5445e179f21a7e80c3702ddea6b3',1,'HealthBarComponent']]],
-  ['shutdown_4',['ShutDown',['../class_component.html#a7081fe7b65f74447ebd065a7164c4b63',1,'Component::ShutDown()'],['../class_health_bar_component.html#a6cf91f71e2aef1b33d329d7bd06ef40f',1,'HealthBarComponent::ShutDown()'],['../class_sprite_component.html#af14691115ed8acd1908b0bcc21013d13',1,'SpriteComponent::ShutDown()'],['../class_game_object.html#a29ffb70018174f722886b3dc5c0c5be0',1,'GameObject::ShutDown()'],['../class_game_object_manager.html#a0e9a9ea24e6224fa1fa22f4a7f3eee89',1,'GameObjectManager::ShutDown()'],['../class_resource_manager.html#a51af8fa5e35a9c48161d927079be644a',1,'ResourceManager::ShutDown()']]],
-  ['spritecomponent_5',['SpriteComponent',['../class_sprite_component.html#ad6708da262e4c9284cf80819bedf4faa',1,'SpriteComponent']]],
-  ['startup_6',['StartUp',['../class_game_object.html#a0a4e8fa6f08725109ffda77c91775fff',1,'GameObject::StartUp()'],['../class_game_object_manager.html#a4515762d1527d439436b721fdc0828fa',1,'GameObjectManager::StartUp()'],['../class_resource_manager.html#a45f2e828716c7122b1f50cb377fdc1e1',1,'ResourceManager::StartUp()']]]
+  ['read_5fjson_0',['read_json',['../namespacedef__parser.html#a80ade08ac0294f6f026be5ffebe2792e',1,'def_parser']]],
+  ['registerservice_1',['RegisterService',['../class_service_locator.html#afc9b8356ccbad291306405b924717d67',1,'ServiceLocator']]],
+  ['removecomponent_2',['RemoveComponent',['../class_game_object.html#a8ffa97493c67b7e21dfb0a5121c41822',1,'GameObject']]],
+  ['removecounter_3',['RemoveCounter',['../class_counter_component.html#a81bcfad6f912f20b0aeb415ae0f8333a',1,'CounterComponent']]],
+  ['removegameobject_4',['RemoveGameObject',['../class_game_object_manager.html#af9b837557694b251b5f3021f78c16e10',1,'GameObjectManager']]],
+  ['render_5',['Render',['../class_component.html#aa01692c6b2244621e9ab2b56ceedcf5c',1,'Component::Render()'],['../class_counter_component.html#ab429c661765cc7b7a4c50b5d07658f30',1,'CounterComponent::Render()'],['../class_health_bar_component.html#a7b8c20b321692511319f8b6b72ce5e51',1,'HealthBarComponent::Render()'],['../class_sprite_component.html#aed147a66b829847927a8735168e2e3e6',1,'SpriteComponent::Render()'],['../class_game_object.html#a554078170496d6fc31af134e76e1e1bd',1,'GameObject::Render()'],['../class_game_object_manager.html#ae75804c3f3fd0790aa6add607ec13ea7',1,'GameObjectManager::Render()']]],
+  ['resourcemanager_6',['ResourceManager',['../class_resource_manager.html#a2d9db4c26c604834c60702ded80947d8',1,'ResourceManager::ResourceManager()=default'],['../class_resource_manager.html#ab69f63d44bed2b736ac816d9a2bf84c1',1,'ResourceManager::ResourceManager(const ResourceManager &amp;)=delete']]]
 ];

@@ -5,13 +5,22 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Vancouver-Tinyengine: GameObjectManager Class Reference</title>
+<title>My Project: GameObjectManager Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -21,10 +30,21 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Vancouver-Tinyengine
+   <div id="projectname">My Project
    </div>
-   <div id="projectbrief">Building Game Engines</div>
   </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
  </tr>
  </tbody>
 </table>
@@ -36,17 +56,23 @@
 var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
-<script type="text/javascript" src="menudata.js"></script>
-<script type="text/javascript" src="menu.js"></script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function() {
-  initMenu('',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
-});
+$(document).ready(function(){initNavTree('class_game_object_manager.html',''); initResizable(); });
 /* @license-end */
 </script>
-<div id="main-nav"></div>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -68,12 +94,13 @@ $(function() {
 </div>
 </div>
 
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_game_object_manager-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">GameObjectManager Class Reference</div></div>
 </div><!--header-->
@@ -83,6 +110,14 @@ $(function() {
  <a href="class_game_object_manager.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_game_object_manager_8hpp_source.html">GameObjectManager.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Collaboration diagram for GameObjectManager:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_game_object_manager__coll__graph.png" border="0" usemap="#a_game_object_manager_coll__map" alt="Collaboration graph"/></div>
+<map name="a_game_object_manager_coll__map" id="a_game_object_manager_coll__map">
+<area shape="rect" title="The GameObjectManager class." alt="" coords="5,5,175,288"/>
+</map>
+</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -119,14 +154,110 @@ Static Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ae1fae4457871a95c9a6be61d0d2a6271"><td class="memItemLeft" align="right" valign="top"><a id="ae1fae4457871a95c9a6be61d0d2a6271" name="ae1fae4457871a95c9a6be61d0d2a6271"></a>
-std::map&lt; std::string, std::shared_ptr&lt; <a class="el" href="class_game_object.html">GameObject</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_gameobjects</b></td></tr>
+<tr class="memitem:ae1fae4457871a95c9a6be61d0d2a6271"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, std::shared_ptr&lt; <a class="el" href="class_game_object.html">GameObject</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_object_manager.html#ae1fae4457871a95c9a6be61d0d2a6271">m_gameobjects</a></td></tr>
 <tr class="separator:ae1fae4457871a95c9a6be61d0d2a6271"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a58cbaec4182cda7c6d48eef7b14885e8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_object_manager.html#a58cbaec4182cda7c6d48eef7b14885e8">GameObjectManager</a> ()</td></tr>
+<tr class="separator:a58cbaec4182cda7c6d48eef7b14885e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91d57baff47ce5090e5e4590f531051d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_object_manager.html#a91d57baff47ce5090e5e4590f531051d">~GameObjectManager</a> ()</td></tr>
+<tr class="separator:a91d57baff47ce5090e5e4590f531051d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82f3274e89d13c1463ebb6ba2fa5db79"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_object_manager.html#a82f3274e89d13c1463ebb6ba2fa5db79">GameObjectManager</a> (const <a class="el" href="class_game_object_manager.html">GameObjectManager</a> &amp;)=delete</td></tr>
+<tr class="separator:a82f3274e89d13c1463ebb6ba2fa5db79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec8da28a6f0da76621a0f72680eaf7c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_game_object_manager.html">GameObjectManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_object_manager.html#aec8da28a6f0da76621a0f72680eaf7c8">operator=</a> (const <a class="el" href="class_game_object_manager.html">GameObjectManager</a> &amp;)=delete</td></tr>
+<tr class="separator:aec8da28a6f0da76621a0f72680eaf7c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aec215f17a30b97d78aa9cc2d224e80fe"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_object_manager.html#aec215f17a30b97d78aa9cc2d224e80fe">m_gameOver</a> = false</td></tr>
+<tr class="separator:aec215f17a30b97d78aa9cc2d224e80fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ce4b01ece552d9f36e192237b726f9a"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_sprite_component.html">SpriteComponent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_object_manager.html#a4ce4b01ece552d9f36e192237b726f9a">m_sprite</a></td></tr>
+<tr class="separator:a4ce4b01ece552d9f36e192237b726f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="class_game_object_manager.html" title="The GameObjectManager class.">GameObjectManager</a> class. </p>
 <p>Singleton class that manages all game objects </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a58cbaec4182cda7c6d48eef7b14885e8" name="a58cbaec4182cda7c6d48eef7b14885e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58cbaec4182cda7c6d48eef7b14885e8">&#9670;&#160;</a></span>GameObjectManager() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GameObjectManager::GameObjectManager </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Private constructor </p>
+
+</div>
+</div>
+<a id="a91d57baff47ce5090e5e4590f531051d" name="a91d57baff47ce5090e5e4590f531051d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91d57baff47ce5090e5e4590f531051d">&#9670;&#160;</a></span>~GameObjectManager()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GameObjectManager::~GameObjectManager </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Private destructor </p>
+
+</div>
+</div>
+<a id="a82f3274e89d13c1463ebb6ba2fa5db79" name="a82f3274e89d13c1463ebb6ba2fa5db79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82f3274e89d13c1463ebb6ba2fa5db79">&#9670;&#160;</a></span>GameObjectManager() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GameObjectManager::GameObjectManager </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_game_object_manager.html">GameObjectManager</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a9f2861704d3dce30c641aa778a375d9d" name="a9f2861704d3dce30c641aa778a375d9d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9f2861704d3dce30c641aa778a375d9d">&#9670;&#160;</a></span>AddGameObject()</h2>
 
@@ -162,6 +293,15 @@ std::map&lt; std::string, std::shared_ptr&lt; <a class="el" href="class_game_obj
   </dd>
 </dl>
 <p>Add a game object to the game object manager. The objectID must be unique. </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_game_object_manager_a9f2861704d3dce30c641aa778a375d9d_icgraph.png" border="0" usemap="#aclass_game_object_manager_a9f2861704d3dce30c641aa778a375d9d_icgraph" alt=""/></div>
+<map name="aclass_game_object_manager_a9f2861704d3dce30c641aa778a375d9d_icgraph" id="aclass_game_object_manager_a9f2861704d3dce30c641aa778a375d9d_icgraph">
+<area shape="rect" title="add a game object to the game object manager" alt="" coords="204,5,357,45"/>
+<area shape="rect" href="bindings_8cpp.html#a7055eab01d08d97ed2dd849c3e02cda7" title=" " alt="" coords="5,13,156,38"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -190,6 +330,15 @@ std::map&lt; std::string, std::shared_ptr&lt; <a class="el" href="class_game_obj
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The game object</dd></dl>
 <p>Get a game object from the game object manager by its objectID </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_game_object_manager_ab79a3a9935e4d437da1851bf3e607f7e_icgraph.png" border="0" usemap="#aclass_game_object_manager_ab79a3a9935e4d437da1851bf3e607f7e_icgraph" alt=""/></div>
+<map name="aclass_game_object_manager_ab79a3a9935e4d437da1851bf3e607f7e_icgraph" id="aclass_game_object_manager_ab79a3a9935e4d437da1851bf3e607f7e_icgraph">
+<area shape="rect" title="get a game object from the game object manager" alt="" coords="204,5,357,45"/>
+<area shape="rect" href="bindings_8cpp.html#a7055eab01d08d97ed2dd849c3e02cda7" title=" " alt="" coords="5,13,156,38"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -218,6 +367,50 @@ std::map&lt; std::string, std::shared_ptr&lt; <a class="el" href="class_game_obj
 
 <p>instance of the game object manager </p>
 <p>Obtain the instance of the game object manager </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_game_object_manager_a0eaf38805b9181ee3e58100387352105_cgraph.png" border="0" usemap="#aclass_game_object_manager_a0eaf38805b9181ee3e58100387352105_cgraph" alt=""/></div>
+<map name="aclass_game_object_manager_a0eaf38805b9181ee3e58100387352105_cgraph" id="aclass_game_object_manager_a0eaf38805b9181ee3e58100387352105_cgraph">
+<area shape="rect" title="instance of the game object manager" alt="" coords="5,29,159,69"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_game_object_manager_a0eaf38805b9181ee3e58100387352105_icgraph.png" border="0" usemap="#aclass_game_object_manager_a0eaf38805b9181ee3e58100387352105_icgraph" alt=""/></div>
+<map name="aclass_game_object_manager_a0eaf38805b9181ee3e58100387352105_icgraph" id="aclass_game_object_manager_a0eaf38805b9181ee3e58100387352105_icgraph">
+<area shape="rect" title="instance of the game object manager" alt="" coords="204,29,357,69"/>
+<area shape="rect" href="bindings_8cpp.html#a7055eab01d08d97ed2dd849c3e02cda7" title=" " alt="" coords="5,7,156,33"/>
+<area shape="rect" href="class_collision_component.html#a26b246d1439f1cb061a05ba0b2dd4c4a" title="Update the component." alt="" coords="11,57,150,97"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aec8da28a6f0da76621a0f72680eaf7c8" name="aec8da28a6f0da76621a0f72680eaf7c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec8da28a6f0da76621a0f72680eaf7c8">&#9670;&#160;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_game_object_manager.html">GameObjectManager</a> &amp; GameObjectManager::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_game_object_manager.html">GameObjectManager</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -245,6 +438,16 @@ std::map&lt; std::string, std::shared_ptr&lt; <a class="el" href="class_game_obj
   </dd>
 </dl>
 <p>Remove a game object from the game object manager by its objectID </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_game_object_manager_af9b837557694b251b5f3021f78c16e10_icgraph.png" border="0" usemap="#aclass_game_object_manager_af9b837557694b251b5f3021f78c16e10_icgraph" alt=""/></div>
+<map name="aclass_game_object_manager_af9b837557694b251b5f3021f78c16e10_icgraph" id="aclass_game_object_manager_af9b837557694b251b5f3021f78c16e10_icgraph">
+<area shape="rect" title="remove a game object from the game object manager" alt="" coords="204,27,357,67"/>
+<area shape="rect" href="bindings_8cpp.html#a7055eab01d08d97ed2dd849c3e02cda7" title=" " alt="" coords="5,5,156,31"/>
+<area shape="rect" href="class_collision_component.html#a26b246d1439f1cb061a05ba0b2dd4c4a" title="Update the component." alt="" coords="11,55,150,95"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -265,6 +468,15 @@ std::map&lt; std::string, std::shared_ptr&lt; <a class="el" href="class_game_obj
 
 <p>render all game objects of the game </p>
 <p>Render all game objects of the game The order of the render is not important. </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_game_object_manager_ae75804c3f3fd0790aa6add607ec13ea7_icgraph.png" border="0" usemap="#aclass_game_object_manager_ae75804c3f3fd0790aa6add607ec13ea7_icgraph" alt=""/></div>
+<map name="aclass_game_object_manager_ae75804c3f3fd0790aa6add607ec13ea7_icgraph" id="aclass_game_object_manager_ae75804c3f3fd0790aa6add607ec13ea7_icgraph">
+<area shape="rect" title="render all game objects of the game" alt="" coords="204,5,357,45"/>
+<area shape="rect" href="bindings_8cpp.html#a7055eab01d08d97ed2dd849c3e02cda7" title=" " alt="" coords="5,13,156,38"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -292,6 +504,15 @@ std::map&lt; std::string, std::shared_ptr&lt; <a class="el" href="class_game_obj
   </dd>
 </dl>
 <p>Set the shutdown flag when game is over </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_game_object_manager_a8cec1e4b9e67f89f8288965c119ffe93_icgraph.png" border="0" usemap="#aclass_game_object_manager_a8cec1e4b9e67f89f8288965c119ffe93_icgraph" alt=""/></div>
+<map name="aclass_game_object_manager_a8cec1e4b9e67f89f8288965c119ffe93_icgraph" id="aclass_game_object_manager_a8cec1e4b9e67f89f8288965c119ffe93_icgraph">
+<area shape="rect" title="set the game over flag" alt="" coords="192,5,345,45"/>
+<area shape="rect" href="class_collision_component.html#a26b246d1439f1cb061a05ba0b2dd4c4a" title="Update the component." alt="" coords="5,5,144,45"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -312,6 +533,15 @@ std::map&lt; std::string, std::shared_ptr&lt; <a class="el" href="class_game_obj
 
 <p>shut down the game object manager </p>
 <p>Shut down the game object manager by shutting down all game objects and removing them from the game object manager </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_game_object_manager_a0e9a9ea24e6224fa1fa22f4a7f3eee89_icgraph.png" border="0" usemap="#aclass_game_object_manager_a0e9a9ea24e6224fa1fa22f4a7f3eee89_icgraph" alt=""/></div>
+<map name="aclass_game_object_manager_a0e9a9ea24e6224fa1fa22f4a7f3eee89_icgraph" id="aclass_game_object_manager_a0e9a9ea24e6224fa1fa22f4a7f3eee89_icgraph">
+<area shape="rect" title="shut down the game object manager" alt="" coords="204,5,357,45"/>
+<area shape="rect" href="bindings_8cpp.html#a7055eab01d08d97ed2dd849c3e02cda7" title=" " alt="" coords="5,13,156,38"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -332,6 +562,15 @@ std::map&lt; std::string, std::shared_ptr&lt; <a class="el" href="class_game_obj
 
 <p>start up the game object manager </p>
 <p>Start up the game object manager </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_game_object_manager_a4515762d1527d439436b721fdc0828fa_icgraph.png" border="0" usemap="#aclass_game_object_manager_a4515762d1527d439436b721fdc0828fa_icgraph" alt=""/></div>
+<map name="aclass_game_object_manager_a4515762d1527d439436b721fdc0828fa_icgraph" id="aclass_game_object_manager_a4515762d1527d439436b721fdc0828fa_icgraph">
+<area shape="rect" title="start up the game object manager" alt="" coords="204,5,357,45"/>
+<area shape="rect" href="bindings_8cpp.html#a7055eab01d08d97ed2dd849c3e02cda7" title=" " alt="" coords="5,13,156,38"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -352,17 +591,89 @@ std::map&lt; std::string, std::shared_ptr&lt; <a class="el" href="class_game_obj
 
 <p>update all game objects of the game </p>
 <p>Update all game objects of the game. The order of the update is not important. </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_game_object_manager_a6f053b1c655de6ca1c9a8fa9b6e118ae_icgraph.png" border="0" usemap="#aclass_game_object_manager_a6f053b1c655de6ca1c9a8fa9b6e118ae_icgraph" alt=""/></div>
+<map name="aclass_game_object_manager_a6f053b1c655de6ca1c9a8fa9b6e118ae_icgraph" id="aclass_game_object_manager_a6f053b1c655de6ca1c9a8fa9b6e118ae_icgraph">
+<area shape="rect" title="update all game objects of the game" alt="" coords="204,5,357,45"/>
+<area shape="rect" href="bindings_8cpp.html#a7055eab01d08d97ed2dd849c3e02cda7" title=" " alt="" coords="5,13,156,38"/>
+</map>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ae1fae4457871a95c9a6be61d0d2a6271" name="ae1fae4457871a95c9a6be61d0d2a6271"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1fae4457871a95c9a6be61d0d2a6271">&#9670;&#160;</a></span>m_gameobjects</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::map&lt;std::string, std::shared_ptr&lt;<a class="el" href="class_game_object.html">GameObject</a>&gt; &gt; GameObjectManager::m_gameobjects</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aec215f17a30b97d78aa9cc2d224e80fe" name="aec215f17a30b97d78aa9cc2d224e80fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec215f17a30b97d78aa9cc2d224e80fe">&#9670;&#160;</a></span>m_gameOver</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GameObjectManager::m_gameOver = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4ce4b01ece552d9f36e192237b726f9a" name="a4ce4b01ece552d9f36e192237b726f9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ce4b01ece552d9f36e192237b726f9a">&#9670;&#160;</a></span>m_sprite</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="class_sprite_component.html">SpriteComponent</a>&gt; GameObjectManager::m_sprite</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/<a class="el" href="_game_object_manager_8hpp_source.html">GameObjectManager.hpp</a></li>
-<li>src/GameObjectManager.cpp</li>
+<li>src/<a class="el" href="_game_object_manager_8cpp.html">GameObjectManager.cpp</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="class_game_object_manager.html">GameObjectManager</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+  </ul>
+</div>
 </body>
 </html>
