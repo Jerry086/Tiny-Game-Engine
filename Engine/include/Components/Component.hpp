@@ -56,6 +56,8 @@ class __attribute__((visibility("default"))) Component {
 
     std::string m_name;
 
+    bool m_enabled{true};
+
    protected:
     py::module_ m_python;
     std::shared_ptr<GameObject> m_parent;

@@ -5,9 +5,9 @@
 #include <unordered_map>
 #include <vector>
 
+#include "./Services/GameObjectManager.hpp"
 #include "Component.hpp"
 #include "ControllerComponent.hpp"
-#include "GameObjectManager.hpp"
 #include "TransformComponent.hpp"
 
 /**

@@ -9,5 +9,7 @@ class IService {
     virtual ~IService() = default;
     virtual void ShutDown() = 0;
     virtual void Update(){};
+    virtual void StartUp(){};
+    virtual void Render(){};
 };
 #endif

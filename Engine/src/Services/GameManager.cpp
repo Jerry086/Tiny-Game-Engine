@@ -18,8 +18,14 @@ GameManager& GameManager::instance() {
 
 void GameManager::ShutDown() {}
 
+void GameManager::StartUp() {
+    m_isQuit = false;
+    m_isGameOver = false;
+}
+
 void GameManager::Update() {
-    m_isQuit = InputManager::instance().m_inputStateThisFrame.quit;
+    m_isQuit =
+        ServiceLocator::GetService<InputManager>().m_inputStateThisFrame.quit;
 }
 
 bool GameManager::IsQuit() { return GameManager::instance().m_isQuit; }

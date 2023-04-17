@@ -44,6 +44,11 @@ class SpriteComponent : public Component {
                     std::shared_ptr<TransformComponent> transformComponent,
                     int x, int y, int w, int h, int frames, int numRows,
                     int numCols);
+
+    SpriteComponent(std::string filename,
+                    std::shared_ptr<TransformComponent> transformComponent,
+                    int x, int y, int w, int h, int frames, int numRows,
+                    int numCols, int forceScreenWidth, int forceScreenHeight);
     /**
      * Destructor
      */

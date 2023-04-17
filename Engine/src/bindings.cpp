@@ -14,14 +14,15 @@
 #include "./Components/SpriteComponent.hpp"
 #include "./Components/TransformComponent.hpp"
 #include "./Services/GameManager.hpp"
+#include "./Services/GameObjectManager.hpp"
 #include "GameObject.hpp"
-#include "GameObjectManager.hpp"
 #include "SDLGraphicsProgram.h"
 
 namespace py = pybind11;
 
 PYBIND11_MAKE_OPAQUE(std::unordered_map<std::string, int>);
 PYBIND11_MAKE_OPAQUE(std::vector<std::string>);
+PYBIND11_MAKE_OPAQUE(std::map<std::string, std::shared_ptr<GameObject>>);
 
 // Creates a macro function that will be called
 // whenever the module is imported into python
@@ -32,10 +33,9 @@ PYBIND11_MAKE_OPAQUE(std::vector<std::string>);
 PYBIND11_MODULE(mygameengine, m) {
     m.doc() = "our game engine as a library";
 
-    py::bind_vector<std::vector<std::string>>(m, "VectorString");
-    py::bind_map<std::unordered_map<std::string, int>>(m,
-                                                       "UnorderedMapStringInt");
     py::class_<std::string>(m, "String").def(py::init<const char *>());
+    py::bind_map<std::map<std::string, std::shared_ptr<GameObject>>>(
+        m, "StringGameObjectMap");
 
     py::class_<SDLGraphicsProgram>(m, "SDLGraphicsProgram")
         .def(py::init<int, int>(), py::arg("w"), py::arg("h"))
@@ -57,7 +57,9 @@ PYBIND11_MODULE(mygameengine, m) {
         .def("GetControllerComponents",
              &GameObject::GetComponentsPython<ControllerComponent>)
         .def("SetPythonScriptModuleName",
-             &GameObject::SetPythonScriptModuleName);
+             &GameObject::SetPythonScriptModuleName)
+        .def_readwrite("m_enabled", &GameObject::m_enabled)
+        .def_readwrite("m_name", &GameObject::m_name);
 
     py::class_<GameObjectManager,
                std::unique_ptr<GameObjectManager, py::nodelete>>(
@@ -73,7 +75,16 @@ PYBIND11_MODULE(mygameengine, m) {
         .def("AddGameObject", &GameObjectManager::AddGameObject)
         .def("RemoveGameObject", &GameObjectManager::RemoveGameObject)
         .def("GetGameObject", &GameObjectManager::GetGameObject)
-        .def("ShutDown", &GameObjectManager::ShutDown);
+        .def("ShutDown", &GameObjectManager::ShutDown)
+        .def_readwrite("m_gameobjects", &GameObjectManager::m_gameobjects);
+    // .def("GetAllGameObjects", [](GameObjectManager &self) {
+    //     std::vector<std::pair<std::string, std::shared_ptr<GameObject>>>
+    //         pairs;
+    //     for (const auto &pair : self.m_gameobjects) {
+    //         pairs.push_back(pair);
+    //     }
+    //     return pairs;
+    // });
 
     py::class_<Vec2>(m, "Vec2")
         .def(py::init<float, float>())
@@ -84,7 +95,9 @@ PYBIND11_MODULE(mygameengine, m) {
         .def("__mul__", &Vec2::operator*);
 
     py::class_<Component, std::shared_ptr<Component>>(m, "Component")
-        .def(py::init<>());
+        .def(py::init<>())
+        .def_readwrite("m_enabled", &Component::m_enabled)
+        .def_readwrite("m_name", &Component::m_name);
 
     py::class_<ControllerComponent, Component,
                std::shared_ptr<ControllerComponent>>(m, "ControllerComponent")
@@ -114,7 +127,14 @@ PYBIND11_MODULE(mygameengine, m) {
                      int, int, int, int, int, int, int>(),
             py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
             py::arg("y"), py::arg("w"), py::arg("h"), py::arg("frames"),
-            py::arg("numRows"), py::arg("numCols"));
+            py::arg("numRows"), py::arg("numCols"))
+        .def(
+            py::init<const std::string &, std::shared_ptr<TransformComponent> &,
+                     int, int, int, int, int, int, int, int, int>(),
+            py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
+            py::arg("y"), py::arg("w"), py::arg("h"), py::arg("frames"),
+            py::arg("numRows"), py::arg("numCols"), py::arg("forceScreenWidth"),
+            py::arg("forceScreenHeight"));
 
     py::class_<HealthBarComponent, Component,
                std::shared_ptr<HealthBarComponent>>(m, "HealthBarComponent")
@@ -145,7 +165,9 @@ PYBIND11_MODULE(mygameengine, m) {
              py::arg("bools_toggle"));
 
     py::class_<ServiceLocator>(m, "ServiceLocator")
-        .def_static("Update", &ServiceLocator::Update);
+        .def_static("Update", &ServiceLocator::Update)
+        .def_static("ResetAllServices", &ServiceLocator::ResetAllServices)
+        .def_static("Render", &ServiceLocator::Render);
 
     py::class_<GameManager>(m, "GameManager")
         .def_static("IsQuit", &GameManager::IsQuit)

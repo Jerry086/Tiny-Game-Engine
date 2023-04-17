@@ -6,7 +6,6 @@ class InputManager : public IService {
     friend class ServiceLocator;
 
    public:
-    static InputManager &instance();
     void ShutDown() override;
     void Update() override;
 
@@ -21,6 +20,7 @@ class InputManager : public IService {
     InputState m_inputStateThisFrame;
 
    private:
+    static InputManager &instance();
     InputManager() = default;
     ~InputManager() = default;
     InputManager(const InputManager &) = delete;

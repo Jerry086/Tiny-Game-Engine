@@ -23,10 +23,6 @@ class ResourceManager : public IService {
 
    public:
     /**
-     * @brief Obtain the instance of the resource manager
-     */
-    static ResourceManager &instance();
-    /**
      * @brief Load a SDL_Surface from a image file
      * @param image_filename The path to the image file
      */
@@ -64,10 +60,12 @@ class ResourceManager : public IService {
      * @param renderer The SDL_Renderer to use
      */
     int StartUp(SDL_Renderer *renderer);
+
+    void StartUp() override;
     /**
      * @brief Destroy all resources
      */
-    void ShutDown();
+    void ShutDown() override;
 
    private:
     SDL_Renderer *m_renderer;
@@ -77,6 +75,10 @@ class ResourceManager : public IService {
     ~ResourceManager();
     ResourceManager(const ResourceManager &) = delete;
     ResourceManager &operator=(const ResourceManager &) = delete;
+    /**
+     * @brief Obtain the instance of the resource manager
+     */
+    static ResourceManager &instance();
 };
 
 #endif

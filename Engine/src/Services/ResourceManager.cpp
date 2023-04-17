@@ -128,6 +128,12 @@ int ResourceManager::StartUp(SDL_Renderer *renderer) {
     m_renderer = renderer;
     return 0;
 }
+
+void ResourceManager::StartUp() {
+    if (m_renderer == nullptr) {
+        std::cerr << "Renderer not found!\n";
+    }
+}
 /**
  * Free all resources in the resource manager
  */

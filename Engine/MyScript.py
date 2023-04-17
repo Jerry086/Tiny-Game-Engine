@@ -17,13 +17,14 @@ for go_name, go in game_objects:
 game_object_manager.StartUp()
 
 print("Setting up game loop")
-while not mygameengine.GameManager.IsQuit() and not mygameengine.GameManager.IsGameOver():
+while not mygameengine.GameManager.IsQuit():
     SDL.clear()
 
     mygameengine.ServiceLocator.Update()
+    mygameengine.ServiceLocator.Render()
 
-    game_object_manager.Update()
-    game_object_manager.Render()
+    # game_object_manager.Update()
+    # game_object_manager.Render()
 
     SDL.flip()
     SDL.delay(20)

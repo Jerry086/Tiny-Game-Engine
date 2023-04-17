@@ -6,18 +6,22 @@
 #include <memory>
 #include <string>
 
-#include "./Components/SpriteComponent.hpp"
-#include "GameObject.hpp"
-#include "./Services/ResourceManager.hpp"
+#include "./Services/IService.hpp"
 
 #define GameOver "./sprites/gameOver.bmp"
+
+class ServiceLocator;
+class SpriteComponent;
+class GameObject;
 
 /**
  * @brief The GameObjectManager class
  *
  * Singleton class that manages all game objects
  */
-class GameObjectManager {
+class GameObjectManager : public IService {
+    friend class ServiceLocator;
+
    public:
     /**
      * @brief instance of the game object manager
@@ -26,19 +30,19 @@ class GameObjectManager {
     /**
      * @brief start up the game object manager
      */
-    void StartUp();
+    void StartUp() override;
     /**
      * @brief shut down the game object manager
      */
-    void ShutDown();
+    void ShutDown() override;
     /**
      * @brief update all game objects of the game
      */
-    void Update();
+    void Update() override;
     /**
      * @brief render all game objects of the game
      */
-    void Render();
+    void Render() override;
     /**
      * @brief add a game object to the game object manager
      * @param objectID The id of the game object
@@ -66,9 +70,7 @@ class GameObjectManager {
 
    private:
     bool m_gameOver = false;
-    std::shared_ptr<SpriteComponent> m_sprite;
-    GameObjectManager();
-    ~GameObjectManager();
+    GameObjectManager() = default;
     GameObjectManager(const GameObjectManager &) = delete;
     GameObjectManager &operator=(const GameObjectManager &) = delete;
 };

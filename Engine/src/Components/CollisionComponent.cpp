@@ -5,6 +5,7 @@
 #include "./Services/GameManager.hpp"
 #include "./Services/ServiceLocator.hpp"
 #include "./Services/VariableManager.hpp"
+#include "GameObject.hpp"
 
 /**
  * Constructor
@@ -95,6 +96,10 @@ void CollisionComponent::Update() {
 
     // detect collisions, O(n^2)
     for (auto it = list.begin(); it != list.end(); it++) {
+        if (!it->second->m_enabled) {
+            continue;
+        }
+
         std::vector<std::shared_ptr<CollisionComponent>> collisionComponents =
             it->second->GetComponents<CollisionComponent>();
         if (collisionComponents.size() == 0) continue;
@@ -106,43 +111,10 @@ void CollisionComponent::Update() {
 
         Vec2 penetration = CheckCollision(other);
         if (penetration.x == 0 && penetration.y == 0) continue;
-        if (m_objectType_enum == player) {
-            switch (other->m_objectType_enum) {
-                case wall: {
-                    m_transformer->m_position += penetration;
-                    break;
-                }
-
-                case interactable: {
-                    OnCollision(other);
-                    GameObjectManager::instance().RemoveGameObject(it->first);
-                    break;
-                }
-
-                case enemy: {
-                    // TODO: add player death animation
-                    GameObjectManager::instance().SetGameOver(true);
-                    break;
-                }
-
-                default: {
-                }
-            }
-        } else {
-            // enemy + wall / interactable + wall
-            switch (other->m_objectType_enum) {
-                case wall: {
-                    m_transformer->m_position += penetration;
-                    break;
-                }
-
-                default: {
-                }
-            }
+        OnCollision(other);
+        if (other->m_objectType_enum == wall) {
+            m_transformer->m_position += penetration;
         }
-    }
-    if (m_python && py::hasattr(m_python, "collision_component_update")) {
-        m_python.attr("collision_component_update")();
     }
 }
 
@@ -195,14 +167,14 @@ int CollisionComponent::GetType() { return m_type; }
 
 void CollisionComponent::OnCollision(
     std::shared_ptr<CollisionComponent> other) {
-    std::cout << "C++ CollisionComponent::OnCollision  - " << m_name
-              << std::endl;
-
     ServiceLocator::GetService<VariableManager>().SetBool(
         m_name + "_collided_this_frame", true);
 
     ServiceLocator::GetService<VariableManager>().SetDict(
         m_name + "_other_name", other->m_name);
+
+    ServiceLocator::GetService<VariableManager>().SetDict(
+        m_name + "_other_type", other->m_objectType);
 
     if (m_python && py::hasattr(m_python, "collision_component_on_collision")) {
         m_python.attr("collision_component_on_collision")();
