@@ -85,14 +85,14 @@ class SpriteComponent : public Component {
      * screen
      * @param forceScreenHeight Force the height of the sprite to be this on
      * screen
-     * @param srcXOffset The x offset of the sprite
-     * @param srcYOffset The y offset of the sprite
+     * @param rowOffset The x offset of the sprite
+     * @param colOffset The y offset of the sprite
      */
     SpriteComponent(std::string filename,
                     std::shared_ptr<TransformComponent> transformComponent,
                     int x, int y, int w, int h, int frames, int numRows,
                     int numCols, int forceScreenWidth, int forceScreenHeight,
-                    int srcXOffset, int srcYOffset);
+                    int rowOffset, int colOffset);
 
     /**
      * Destructor
@@ -131,8 +131,8 @@ class SpriteComponent : public Component {
     SDL_Texture *m_texture = nullptr;
     SDL_Rect mSrc;
     SDL_Rect mDest{0, 0, 1280, 720};
-    unsigned int m_srcXOffset{0};
-    unsigned int m_srcYOffset{0};
+    unsigned int m_rowOffset{0};
+    unsigned int m_colOffset{0};
 };
 
 #endif

@@ -17,8 +17,8 @@ SpriteComponent::SpriteComponent(
     ServiceLocator::GetService<ResourceManager>().LoadTexture(filename);
     m_texture =
         ServiceLocator::GetService<ResourceManager>().GetTexture(filename);
-    mSrc.x = x + m_srcXOffset;
-    mSrc.y = y + m_srcYOffset;
+    mSrc.x = x;
+    mSrc.y = y;
     mSrc.w = w;
     mSrc.h = h;
 
@@ -45,11 +45,11 @@ SpriteComponent::SpriteComponent(
 SpriteComponent::SpriteComponent(
     std::string filename, std::shared_ptr<TransformComponent> transformer,
     int x, int y, int w, int h, int frames, int numRows, int numCols,
-    int forceScreenWidth, int forceScreenHeight, int srcXOffset, int srcYOffset)
+    int forceScreenWidth, int forceScreenHeight, int rowOffset, int colOffset)
     : SpriteComponent(filename, transformer, x, y, w, h, frames, numRows,
                       numCols, forceScreenWidth, forceScreenHeight) {
-    m_srcXOffset = srcXOffset;
-    m_srcYOffset = srcYOffset;
+    m_rowOffset = rowOffset;
+    m_colOffset = colOffset;
 }
 
 /**
@@ -114,6 +114,10 @@ void SpriteComponent::Update() {
     mDest.y = m_transformComponent->m_position.y;
     // mDest.w = RENDER_WIDTH;
     // mDest.h = RENDER_HEIGHT;
+
+    // Row and column offset
+    mSrc.x += m_colOffset * mSrc.w;
+    mSrc.y += m_rowOffset * mSrc.h;
 }
 
 /**
