@@ -1,6 +1,5 @@
 {
     "type_name": "test_pac",
-    "script_module": "test_pac",
     "transform_signature":["position"],
     "components": [
         {

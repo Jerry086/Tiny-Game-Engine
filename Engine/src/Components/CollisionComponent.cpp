@@ -112,43 +112,8 @@ void CollisionComponent::Update() {
         Vec2 penetration = CheckCollision(other);
         if (penetration.x == 0 && penetration.y == 0) continue;
         OnCollision(other);
-        if (m_objectType_enum == player) {
-            switch (other->m_objectType_enum) {
-                case wall: {
-                    m_transformer->m_position += penetration;
-                    break;
-                }
-
-                case interactable: {
-                    // GameObjectManager::instance().RemoveGameObject(it->first);
-                    // ServiceLocator::GetService<GameObjectManager>()
-                    //     .RemoveGameObject(it->first);
-                    break;
-                }
-
-                case enemy: {
-                    ServiceLocator::GetService<VariableManager>().SetBool(
-                        "isPacmanGameOver", true);
-                    // GameObjectManager::instance().SetGameOver(true);
-                    ServiceLocator::GetService<GameObjectManager>().SetGameOver(
-                        true);
-                    break;
-                }
-
-                default: {
-                }
-            }
-        } else {
-            // enemy + wall / interactable + wall
-            switch (other->m_objectType_enum) {
-                case wall: {
-                    m_transformer->m_position += penetration;
-                    break;
-                }
-
-                default: {
-                }
-            }
+        if (other->m_objectType_enum == wall) {
+            m_transformer->m_position += penetration;
         }
     }
 }
