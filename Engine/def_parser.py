@@ -142,5 +142,7 @@ def create_scene(json_path):
             transform_override=transform_override,
             script_module=script_module
         )
+        if "start_disabled" in game_object_def and game_object_def["start_disabled"]:
+            go.m_enabled = False
         game_objects.append((game_object_def["name"], go))
     return game_objects

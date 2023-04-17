@@ -22,7 +22,6 @@ while not mygameengine.GameManager.IsQuit() and not mygameengine.GameManager.IsG
 
     mygameengine.ServiceLocator.Update()
 
-    game_object_manager.GetGameObject("enemy1").m_enabled = False
     game_object_manager.Update()
     game_object_manager.Render()
 

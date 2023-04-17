@@ -35,6 +35,7 @@
       "name": "enemy1",
       "definition_file": "./definitions/test_randommove.json",
       "script_module": "enemy1",
+      "start_disabled": true,
       "transform_override": [
         {
           "param": "direction",
