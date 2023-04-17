@@ -127,12 +127,11 @@ void CollisionComponent::Update() {
                 }
 
                 case enemy: {
-                    // GameObjectManager::instance().SetGameOver(true);
                     ServiceLocator::GetService<VariableManager>().SetBool(
                         "isPacmanGameOver", true);
+                    // GameObjectManager::instance().SetGameOver(true);
                     ServiceLocator::GetService<GameObjectManager>().SetGameOver(
                         true);
-
                     break;
                 }
 

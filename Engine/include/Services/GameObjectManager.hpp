@@ -42,7 +42,7 @@ class GameObjectManager : public IService {
     /**
      * @brief render all game objects of the game
      */
-    void Render();
+    void Render() override;
     /**
      * @brief add a game object to the game object manager
      * @param objectID The id of the game object

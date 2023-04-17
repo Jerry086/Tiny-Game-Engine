@@ -155,9 +155,7 @@ PYBIND11_MODULE(mygameengine, m) {
     py::class_<ServiceLocator>(m, "ServiceLocator")
         .def_static("Update", &ServiceLocator::Update)
         .def_static("ResetAllServices", &ServiceLocator::ResetAllServices)
-        .def_static("GetGameObjectManager",
-                    &ServiceLocator::GetService<GameObjectManager>,
-                    py::return_value_policy::reference);
+        .def_static("Render", &ServiceLocator::Render);
 
     py::class_<GameManager>(m, "GameManager")
         .def_static("IsQuit", &GameManager::IsQuit)

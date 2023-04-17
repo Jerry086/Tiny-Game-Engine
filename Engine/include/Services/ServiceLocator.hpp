@@ -5,6 +5,7 @@
 #include <string>
 #include <typeindex>
 #include <unordered_map>
+#include <vector>
 
 #include "IService.hpp"
 
@@ -15,17 +16,12 @@ class ServiceLocator {
     ServiceLocator(const ServiceLocator &) = delete;
     ServiceLocator &operator=(const ServiceLocator &) = delete;
 
-    // Singleton
-    static ServiceLocator &instance() {
-        static ServiceLocator instance;
-        return instance;
-    }
-
     // For Pybind reasons, need to be implemented in the header file
     template <typename T>
     static void RegisterService() {
         std::type_index type = typeid(T);
         ServiceLocator::instance().m_services[type] = &T::instance();
+        ServiceLocator::instance().m_orderedKeys.push_back(type);
     }
 
     // For Pybind reasons, need to be implemented in the header file
@@ -51,9 +47,18 @@ class ServiceLocator {
     }
 
     static void Update() {
-        for (auto it = ServiceLocator::instance().m_services.begin();
-             it != ServiceLocator::instance().m_services.end(); ++it) {
-            it->second->Update();
+        for (auto it = ServiceLocator::instance().m_orderedKeys.begin();
+             it != ServiceLocator::instance().m_orderedKeys.end(); ++it) {
+            auto service = ServiceLocator::instance().m_services.find(*it);
+            service->second->Update();
+        }
+    }
+
+    static void Render() {
+        for (auto it = ServiceLocator::instance().m_orderedKeys.begin();
+             it != ServiceLocator::instance().m_orderedKeys.end(); ++it) {
+            auto service = ServiceLocator::instance().m_services.find(*it);
+            service->second->Render();
         }
     }
 
@@ -83,8 +88,14 @@ class ServiceLocator {
     }
 
    private:
+    // Singleton
+    static ServiceLocator &instance() {
+        static ServiceLocator instance;
+        return instance;
+    }
     ServiceLocator() = default;
     std::unordered_map<std::type_index, IService *> m_services;
+    std::vector<std::type_index> m_orderedKeys;
 };
 
 #endif
