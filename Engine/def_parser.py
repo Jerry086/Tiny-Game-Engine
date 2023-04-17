@@ -36,62 +36,6 @@ def read_json(json_path):
 #  @param go_def_json_object The json object containing the type definition for a game object type
 # @param transform_override A list of transform parameters to override the transform component
 # @return A list of tuples of (component name, component)
-# def create_components(go_def_json_object, transform_override=None):
-#     component_defs = go_def_json_object["components"]
-#     components = []
-
-#     for comp_def in component_defs:
-#         print("makging component of type: " + comp_def["component_type"])
-#         typed_args = []
-
-#         if (
-#             comp_def["component_type"] == "TransformComponent"
-#             and transform_override
-#         ):
-#             comp_def["args"] = []
-#             for a in transform_override:
-#                 if a["param"] == "direction":
-#                     comp_def["args"].append(
-#                         {"arg_type": "Vec2", "x": int(a["x"]), "y": int(a["y"])}
-#                     )
-#                 elif a["param"] == "position":
-#                     comp_def["args"].append(
-#                         {"arg_type": "Vec2", "x": int(a["x"]), "y": int(a["y"])}
-#                     )
-#                 elif a["param"] == "controller":
-#                     comp_def["args"].append({"arg_type": "ControllerComponent"})
-#                 elif a["param"] == "behavior":
-#                     comp_def["args"].append({"arg_type": "BehaviorComponent"})
-
-#         for raw_arg in comp_def["args"]:
-#             arg_type = raw_arg["arg_type"]
-#             if arg_type in BUILT_IN:
-#                 typed_args.append(BUILT_IN[arg_type](raw_arg["value"]))
-#             elif arg_type in CUSTOM:
-#                 params = raw_arg.copy()
-#                 params.pop("arg_type")
-#                 params = list(params.values())
-#                 typed_args.append(CUSTOM[arg_type](*params))
-#             elif arg_type in COMPONENTS:
-#                 matching_components = [
-#                     c
-#                     for _, c in components
-#                     if isinstance(c, COMPONENTS[arg_type])
-#                 ]
-#                 if len(matching_components) == 0:
-#                     raise ValueError(
-#                         "No matching component found for type: " + arg_type
-#                     )
-#                 typed_args.append(matching_components[0])
-#             else:
-#                 print ("Type not found: ", arg_type, ". Skipping this argument.")
-
-#         constructor = COMPONENTS[comp_def["component_type"]]
-#         component = constructor(*typed_args)
-#         if "start_disabled" in comp_def.keys() and comp_def["start_disabled"]:
-#             component.m_enabled = False
-#         components.append((comp_def["component_type"], component))
-#     return components
 def create_components(go_def_json_object, transform_override=None):
     component_defs = go_def_json_object["components"]
     components = []
@@ -239,8 +183,6 @@ def make_component_dict(*args, **kwargs):
             res["args"].append({"arg_name": item[0], "arg_type": "string","value": item[1]})
         
     return res
-
-        
 
 if __name__ == '__main__':
     controller_comp = make_component_dict(component_type="ControllerComponent")
