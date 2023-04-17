@@ -18,10 +18,7 @@ GameManager& GameManager::instance() {
 
 void GameManager::ShutDown() {}
 
-void GameManager::StartUp() {
-    m_isQuit = false;
-    m_isGameOver = false;
-}
+void GameManager::StartUp() { m_isQuit = false; }
 
 void GameManager::Update() {
     m_isQuit =
@@ -29,12 +26,3 @@ void GameManager::Update() {
 }
 
 bool GameManager::IsQuit() { return GameManager::instance().m_isQuit; }
-
-bool GameManager::IsGameOver() { return GameManager::instance().m_isGameOver; }
-
-void GameManager::ShowGameOverPopup() {
-    SDL_Window* window = ServiceLocator::GetService<SDLWrapper>()
-                             .m_SDLGraphicsProgram->getSDLWindow();
-    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Game over!",
-                             "You lost :(", NULL);
-}

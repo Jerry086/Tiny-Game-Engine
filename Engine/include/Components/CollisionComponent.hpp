@@ -33,40 +33,34 @@ class CollisionComponent : public Component {
                        std::shared_ptr<TransformComponent> transform, int w,
                        int h);
 
-    CollisionComponent(std::string objectType,
-                       std::shared_ptr<TransformComponent> transform, int w,
-                       int h, std::unordered_map<std::string, int> counters_set,
-                       std::unordered_map<std::string, int> counters_increment,
-                       std::vector<std::string> bools_true,
-                       std::vector<std::string> bools_false,
-                       std::vector<std::string> bools_toggle);
-
     /**
      * @brief Destructor
      */
     ~CollisionComponent();
+
     /**
      * @brief Check collision with another object
      * @param other The other object
      * @return The penetration vector
      */
     Vec2 CheckCollision(std::shared_ptr<CollisionComponent> other);
+
     /**
      * @brief Update the component
      */
     void Update() override;
+
     /**
      * @brief Getter of the component type
      * @return The type of the component
      */
     int GetType() override;
+
     /**
      * @brief Getter of the object type
      * @return The type of the object
      */
     ObjectType GetObjectType();
-
-    std::shared_ptr<TransformComponent> m_transformer;
 
    private:
     int m_height;
@@ -82,6 +76,7 @@ class CollisionComponent : public Component {
     std::vector<std::string> m_bools_false;
     std::vector<std::string> m_bools_toggle;
     void OnCollision(std::shared_ptr<CollisionComponent> other);
+    std::shared_ptr<TransformComponent> m_transformer;
 };
 
 #endif

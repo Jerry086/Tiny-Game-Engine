@@ -101,8 +101,7 @@ PYBIND11_MODULE(mygameengine, m) {
 
     py::class_<ControllerComponent, Component,
                std::shared_ptr<ControllerComponent>>(m, "ControllerComponent")
-        .def(py::init<>())
-        .def("QuitProgram", &ControllerComponent::QuitProgram);
+        .def(py::init<>());
 
     py::class_<BehaviorComponent, Component,
                std::shared_ptr<BehaviorComponent>>(m, "BehaviorComponent")
@@ -159,9 +158,7 @@ PYBIND11_MODULE(mygameengine, m) {
         .def_static("Render", &ServiceLocator::Render);
 
     py::class_<GameManager>(m, "GameManager")
-        .def_static("IsQuit", &GameManager::IsQuit)
-        .def_static("IsGameOver", &GameManager::IsGameOver)
-        .def_static("ShowGameOverPopup", &GameManager::ShowGameOverPopup);
+        .def_static("IsQuit", &GameManager::IsQuit);
 
     py::class_<VariableManager>(m, "VariableManager")
         .def_static("GetBool", &VariableManager::GetBool)

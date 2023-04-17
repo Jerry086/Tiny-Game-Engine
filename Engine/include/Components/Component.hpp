@@ -50,12 +50,31 @@ class __attribute__((visibility("default"))) Component {
      */
     virtual int GetType();
 
+    /**
+     * @brief Set the Python module of the component
+     *
+     * @param python The python module
+     */
     virtual void SetPython(py::module_& python);
 
+    /**
+     * @brief Set the Parent object
+     *
+     * @param parent The parent object
+     */
     virtual void SetParent(std::shared_ptr<GameObject> parent);
 
+    /**
+     * @brief Name of the component
+     * @details If properly created, in the format of
+     * <The name of parent game object, in any format>_ComponentName
+     */
     std::string m_name;
 
+    /**
+     * @brief If the component is enabled.
+     *
+     */
     bool m_enabled{true};
 
    protected:

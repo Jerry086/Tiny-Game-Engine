@@ -69,6 +69,10 @@ class SDLGraphicsProgram {
      */
     void DrawPoint(int x, int y);
 
+    /**
+     * @brief Shut down the SDL graphics program
+     *
+     */
     void ShutDown();
 
    private:

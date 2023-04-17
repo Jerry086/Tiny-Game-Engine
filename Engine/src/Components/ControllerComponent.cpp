@@ -43,7 +43,3 @@ int8_t ControllerComponent::GetDirectionY() { return m_direction_y; }
  * Getter of the component type
  */
 int ControllerComponent::GetType() { return m_type; }
-/**
- * Getter of quit flag
- */
-bool ControllerComponent::QuitProgram() { return m_quit; }

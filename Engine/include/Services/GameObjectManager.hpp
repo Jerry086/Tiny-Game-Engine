@@ -66,6 +66,10 @@ class GameObjectManager : public IService {
      */
     void SetGameOver(bool gameOver);
 
+    /**
+     * @brief The map of all game objects that the manager manages
+     *
+     */
     std::map<std::string, std::shared_ptr<GameObject>> m_gameobjects;
 
    private:
