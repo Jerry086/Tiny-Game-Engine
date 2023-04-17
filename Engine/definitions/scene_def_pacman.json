@@ -83,5 +83,6 @@
       "name": "pacman_gameover_screen",
       "definition_file": "./definitions/pacman_gameover_screen.json"
     }
-  ]
+  ],
+  "tilemap_definition": "./definitions/tilemap_def_1.json"
 }
