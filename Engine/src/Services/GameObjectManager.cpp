@@ -1,4 +1,4 @@
-#include "GameObjectManager.hpp"
+#include "./Services/GameObjectManager.hpp"
 
 #include <pybind11/embed.h>
 
