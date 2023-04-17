@@ -67,6 +67,33 @@ class SpriteComponent : public Component {
                     std::shared_ptr<TransformComponent> transformComponent,
                     int x, int y, int w, int h, int frames, int numRows,
                     int numCols, int forceScreenWidth, int forceScreenHeight);
+
+    /**
+     * @brief Constructor
+     *
+     * @param filename The filename of the sprite
+     * @param transformComponent The transform component that defines the
+     * position
+     * @param x The x position of the sprite
+     * @param y The y position of the sprite
+     * @param w The width of the sprite
+     * @param h The height of the sprite
+     * @param frames The number of frames in the sprite
+     * @param numRows The number of rows in the sprite
+     * @param numCols The number of columns in the sprite
+     * @param forceScreenWidth Force the width of the sprite to be this on
+     * screen
+     * @param forceScreenHeight Force the height of the sprite to be this on
+     * screen
+     * @param srcXOffset The x offset of the sprite
+     * @param srcYOffset The y offset of the sprite
+     */
+    SpriteComponent(std::string filename,
+                    std::shared_ptr<TransformComponent> transformComponent,
+                    int x, int y, int w, int h, int frames, int numRows,
+                    int numCols, int forceScreenWidth, int forceScreenHeight,
+                    int srcXOffset, int srcYOffset);
+
     /**
      * Destructor
      */
@@ -104,6 +131,8 @@ class SpriteComponent : public Component {
     SDL_Texture *m_texture = nullptr;
     SDL_Rect mSrc;
     SDL_Rect mDest{0, 0, 1280, 720};
+    unsigned int m_srcXOffset{0};
+    unsigned int m_srcYOffset{0};
 };
 
 #endif

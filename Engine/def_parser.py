@@ -64,7 +64,6 @@ def create_components(go_def_json_object, transform_override=None):
                     comp_def["args"].append({"arg_name": "controllerComponent", "arg_type": "BehaviorComponent"})
 
         for raw_arg in comp_def["args"]:
-            print(raw_arg)
             arg_type = raw_arg["arg_type"]
             arg_name = raw_arg["arg_name"]
             if arg_type in BUILT_IN:
@@ -172,7 +171,6 @@ def make_component_dict(*args, **kwargs):
         elif item[0] in ["filename"]:
             res["args"].append({"arg_name": item[0], "arg_type": "string", "value": item[1]})
         elif key_as_comp_name in COMPONENTS.keys():
-            print("in inner")
             res["args"].append({"arg_name": item[0], "arg_type": item[0][0].upper() + item[0][1:]})
             continue
         elif isinstance(item[1], float):

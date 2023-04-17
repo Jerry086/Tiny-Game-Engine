@@ -133,7 +133,15 @@ PYBIND11_MODULE(mygameengine, m) {
             py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
             py::arg("y"), py::arg("w"), py::arg("h"), py::arg("frames"),
             py::arg("numRows"), py::arg("numCols"), py::arg("forceScreenWidth"),
-            py::arg("forceScreenHeight"));
+            py::arg("forceScreenHeight"))
+        .def(
+            py::init<const std::string &, std::shared_ptr<TransformComponent> &,
+                     int, int, int, int, int, int, int, int, int, int, int>(),
+            py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
+            py::arg("y"), py::arg("w"), py::arg("h"), py::arg("frames"),
+            py::arg("numRows"), py::arg("numCols"), py::arg("forceScreenWidth"),
+            py::arg("forceScreenHeight"), py::arg("srcXOffset"),
+            py::arg("srcYOffset"));
 
     py::class_<HealthBarComponent, Component,
                std::shared_ptr<HealthBarComponent>>(m, "HealthBarComponent")
