@@ -22,6 +22,7 @@ namespace py = pybind11;
 
 PYBIND11_MAKE_OPAQUE(std::unordered_map<std::string, int>);
 PYBIND11_MAKE_OPAQUE(std::vector<std::string>);
+PYBIND11_MAKE_OPAQUE(std::map<std::string, std::shared_ptr<GameObject>>);
 
 // Creates a macro function that will be called
 // whenever the module is imported into python
@@ -33,6 +34,8 @@ PYBIND11_MODULE(mygameengine, m) {
     m.doc() = "our game engine as a library";
 
     py::class_<std::string>(m, "String").def(py::init<const char *>());
+    py::bind_map<std::map<std::string, std::shared_ptr<GameObject>>>(
+        m, "StringGameObjectMap");
 
     py::class_<SDLGraphicsProgram>(m, "SDLGraphicsProgram")
         .def(py::init<int, int>(), py::arg("w"), py::arg("h"))
@@ -72,7 +75,16 @@ PYBIND11_MODULE(mygameengine, m) {
         .def("AddGameObject", &GameObjectManager::AddGameObject)
         .def("RemoveGameObject", &GameObjectManager::RemoveGameObject)
         .def("GetGameObject", &GameObjectManager::GetGameObject)
-        .def("ShutDown", &GameObjectManager::ShutDown);
+        .def("ShutDown", &GameObjectManager::ShutDown)
+        .def_readwrite("m_gameobjects", &GameObjectManager::m_gameobjects);
+    // .def("GetAllGameObjects", [](GameObjectManager &self) {
+    //     std::vector<std::pair<std::string, std::shared_ptr<GameObject>>>
+    //         pairs;
+    //     for (const auto &pair : self.m_gameobjects) {
+    //         pairs.push_back(pair);
+    //     }
+    //     return pairs;
+    // });
 
     py::class_<Vec2>(m, "Vec2")
         .def(py::init<float, float>())
