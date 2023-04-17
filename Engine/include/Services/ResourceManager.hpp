@@ -64,10 +64,12 @@ class ResourceManager : public IService {
      * @param renderer The SDL_Renderer to use
      */
     int StartUp(SDL_Renderer *renderer);
+
+    void StartUp() override;
     /**
      * @brief Destroy all resources
      */
-    void ShutDown();
+    void ShutDown() override;
 
    private:
     SDL_Renderer *m_renderer;

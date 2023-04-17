@@ -145,7 +145,7 @@ def create_scene(json_path):
             game_object_def["name"],
             game_object_def["definition_file"],
             transform_override=transform_override,
-            script_module=go_script_module
+            go_script_module=go_script_module
         )
         if "start_disabled" in game_object_def and game_object_def["start_disabled"]:
             go.m_enabled = False

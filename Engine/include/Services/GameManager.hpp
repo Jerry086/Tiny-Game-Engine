@@ -22,6 +22,8 @@ class GameManager : public IService {
      */
     void ShutDown() override;
 
+    void StartUp() override;
+
     /**
      * @brief Update the GameManager
      *

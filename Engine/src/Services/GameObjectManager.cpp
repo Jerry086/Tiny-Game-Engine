@@ -6,14 +6,6 @@
 namespace py = pybind11;
 
 /**
- * Private constructor
- */
-GameObjectManager::GameObjectManager() {}
-/**
- * Private destructor
- */
-GameObjectManager::~GameObjectManager() {}
-/**
  * Obtain the instance of the game object manager
  */
 GameObjectManager &GameObjectManager::instance() {

@@ -7,8 +7,9 @@
 #include <string>
 
 #include "./Components/SpriteComponent.hpp"
-#include "GameObject.hpp"
+#include "./Services/IService.hpp"
 #include "./Services/ResourceManager.hpp"
+#include "GameObject.hpp"
 
 #define GameOver "./sprites/gameOver.bmp"
 
@@ -17,7 +18,7 @@
  *
  * Singleton class that manages all game objects
  */
-class GameObjectManager {
+class GameObjectManager : public IService {
    public:
     /**
      * @brief instance of the game object manager
@@ -26,15 +27,15 @@ class GameObjectManager {
     /**
      * @brief start up the game object manager
      */
-    void StartUp();
+    void StartUp() override;
     /**
      * @brief shut down the game object manager
      */
-    void ShutDown();
+    void ShutDown() override;
     /**
      * @brief update all game objects of the game
      */
-    void Update();
+    void Update() override;
     /**
      * @brief render all game objects of the game
      */
@@ -67,8 +68,7 @@ class GameObjectManager {
    private:
     bool m_gameOver = false;
     std::shared_ptr<SpriteComponent> m_sprite;
-    GameObjectManager();
-    ~GameObjectManager();
+    GameObjectManager() = default;
     GameObjectManager(const GameObjectManager &) = delete;
     GameObjectManager &operator=(const GameObjectManager &) = delete;
 };

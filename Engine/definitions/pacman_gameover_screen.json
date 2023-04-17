@@ -1,0 +1,50 @@
+{
+    "type_name": "pacman_gameover_screen",
+    "script_module": "pacman_gameover_screen",
+    "transform_signature":["position"],
+    "components": [
+        {
+            "component_type":"TransformComponent",
+            "args":[
+                {"arg_type":"Vec2", "x":0, "y":0}
+            ]
+        },
+        {
+            "component_type":"SpriteComponent",
+            "args":[
+                {"arg_type":"string", "value":"./sprites/gameOver.bmp"},
+                {"arg_type":"TransformComponent"},
+                {"arg_type":"int", "value":0},
+                {"arg_type":"int", "value":0},
+                {"arg_type":"int", "value":1400},
+                {"arg_type":"int", "value":815},
+                {"arg_type":"int", "value":1},
+                {"arg_type":"int", "value":1},
+                {"arg_type":"int", "value":1},
+                {"arg_type":"int", "value":1280},
+                {"arg_type":"int", "value":720}
+            ]
+        },
+        {
+            "component_type":"CollisionComponent",
+            "args":[
+                {
+                    "arg_type":"string",
+                    "value":"none"
+                },
+                {
+                    "arg_type":"TransformComponent"
+                },
+                {
+                    "arg_type":"int",
+                    "value":0
+                },
+                {
+                    "arg_type":"int",
+                    "value":0
+                }
+            ]
+        }
+
+    ]
+}

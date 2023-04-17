@@ -1,4 +1,5 @@
 import mygameengine
 
 def game_object_update():
-    print("enemy1")
+    # print("enemy1")
+    pass

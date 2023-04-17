@@ -57,6 +57,31 @@ class ServiceLocator {
         }
     }
 
+    template <typename T>
+    static void ResetService() {
+        std::type_index type = typeid(T);
+        auto it = ServiceLocator::instance().m_services.find(type);
+        if (it == ServiceLocator::instance().m_services.end()) {
+            std::cerr
+                << "ServiceLocator::ResetService: Service not found for type "
+                << typeid(T).name() << ". Creating a new one." << std::endl;
+            RegisterService<T>();
+            auto it2 = ServiceLocator::instance().m_services.find(type);
+            it2->second->StartUp();
+        } else {
+            it->second->ShutDown();
+            it->second->StartUp();
+        }
+    }
+
+    static void ResetAllServices() {
+        for (auto it = ServiceLocator::instance().m_services.begin();
+             it != ServiceLocator::instance().m_services.end(); ++it) {
+            it->second->ShutDown();
+            it->second->StartUp();
+        }
+    }
+
    private:
     ServiceLocator() = default;
     std::unordered_map<std::type_index, IService *> m_services;

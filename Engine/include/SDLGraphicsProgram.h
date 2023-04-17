@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "./Services/GameManager.hpp"
+#include "./Services/GameObjectManager.hpp"
 #include "./Services/InputManager.hpp"
 #include "./Services/ResourceManager.hpp"
 #include "./Services/SDLWrapper.hpp"

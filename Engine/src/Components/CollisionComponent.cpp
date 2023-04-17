@@ -110,6 +110,7 @@ void CollisionComponent::Update() {
 
         Vec2 penetration = CheckCollision(other);
         if (penetration.x == 0 && penetration.y == 0) continue;
+        OnCollision(other);
         if (m_objectType_enum == player) {
             switch (other->m_objectType_enum) {
                 case wall: {
@@ -118,15 +119,16 @@ void CollisionComponent::Update() {
                 }
 
                 case interactable: {
-                    OnCollision(other);
-                    GameObjectManager::instance().RemoveGameObject(it->first);
+                    // GameObjectManager::instance().RemoveGameObject(it->first);
+                    ServiceLocator::GetService<GameObjectManager>()
+                        .RemoveGameObject(it->first);
                     break;
                 }
 
                 case enemy: {
-                    // TODO: add player death animation
-                    OnCollision(other);
-                    GameObjectManager::instance().SetGameOver(true);
+                    // GameObjectManager::instance().SetGameOver(true);
+                    ServiceLocator::GetService<GameObjectManager>().SetGameOver(
+                        true);
                     break;
                 }
 
@@ -200,14 +202,18 @@ int CollisionComponent::GetType() { return m_type; }
 
 void CollisionComponent::OnCollision(
     std::shared_ptr<CollisionComponent> other) {
-    std::cout << "C++ CollisionComponent::OnCollision  - " << m_name
-              << std::endl;
+    // std::cout << "C++ CollisionComponent::OnCollision  - " << m_name << "
+    // with "
+    //           << other->m_name << std::endl;
 
     ServiceLocator::GetService<VariableManager>().SetBool(
         m_name + "_collided_this_frame", true);
 
     ServiceLocator::GetService<VariableManager>().SetDict(
         m_name + "_other_name", other->m_name);
+
+    ServiceLocator::GetService<VariableManager>().SetDict(
+        m_name + "_other_type", other->m_objectType);
 
     if (m_python && py::hasattr(m_python, "collision_component_on_collision")) {
         m_python.attr("collision_component_on_collision")();

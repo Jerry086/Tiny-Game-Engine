@@ -14,8 +14,8 @@
 #include "./Components/SpriteComponent.hpp"
 #include "./Components/TransformComponent.hpp"
 #include "./Services/GameManager.hpp"
+#include "./Services/GameObjectManager.hpp"
 #include "GameObject.hpp"
-#include "GameObjectManager.hpp"
 #include "SDLGraphicsProgram.h"
 
 namespace py = pybind11;
@@ -115,7 +115,14 @@ PYBIND11_MODULE(mygameengine, m) {
                      int, int, int, int, int, int, int>(),
             py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
             py::arg("y"), py::arg("w"), py::arg("h"), py::arg("frames"),
-            py::arg("numRows"), py::arg("numCols"));
+            py::arg("numRows"), py::arg("numCols"))
+        .def(
+            py::init<const std::string &, std::shared_ptr<TransformComponent> &,
+                     int, int, int, int, int, int, int, int, int>(),
+            py::arg("filename"), py::arg("transformComponent"), py::arg("x"),
+            py::arg("y"), py::arg("w"), py::arg("h"), py::arg("frames"),
+            py::arg("numRows"), py::arg("numCols"), py::arg("forceScreenWidth"),
+            py::arg("forceScreenHeight"));
 
     py::class_<HealthBarComponent, Component,
                std::shared_ptr<HealthBarComponent>>(m, "HealthBarComponent")
@@ -146,7 +153,8 @@ PYBIND11_MODULE(mygameengine, m) {
              py::arg("bools_toggle"));
 
     py::class_<ServiceLocator>(m, "ServiceLocator")
-        .def_static("Update", &ServiceLocator::Update);
+        .def_static("Update", &ServiceLocator::Update)
+        .def_static("ResetAllServices", &ServiceLocator::ResetAllServices);
 
     py::class_<GameManager>(m, "GameManager")
         .def_static("IsQuit", &GameManager::IsQuit)

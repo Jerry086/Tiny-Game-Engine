@@ -18,6 +18,11 @@ GameManager& GameManager::instance() {
 
 void GameManager::ShutDown() {}
 
+void GameManager::StartUp() {
+    m_isQuit = false;
+    m_isGameOver = false;
+}
+
 void GameManager::Update() {
     m_isQuit = InputManager::instance().m_inputStateThisFrame.quit;
 }
