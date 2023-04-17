@@ -7,7 +7,7 @@ WINDOW_HEIGHT = 720
 
 SDL = mygameengine.SDLGraphicsProgram(WINDOW_WIDTH, WINDOW_HEIGHT)
 
-game_object_manager = mygameengine.GameObjectManager()
+game_object_manager = mygameengine.ServiceLocator.GetGameObjectManager()
 
 game_objects = create_scene("./definitions/test_scene_def.json")
 

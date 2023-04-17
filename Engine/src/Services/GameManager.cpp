@@ -24,7 +24,8 @@ void GameManager::StartUp() {
 }
 
 void GameManager::Update() {
-    m_isQuit = InputManager::instance().m_inputStateThisFrame.quit;
+    m_isQuit =
+        ServiceLocator::GetService<InputManager>().m_inputStateThisFrame.quit;
 }
 
 bool GameManager::IsQuit() { return GameManager::instance().m_isQuit; }

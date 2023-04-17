@@ -114,6 +114,7 @@ class __attribute__((visibility("default"))) GameObject {
     std::shared_ptr<Component> m_collisionComponent = nullptr;
     std::string m_pythonScriptModuleName;
     py::module_ m_python;
+    std::string ConvertToPythonName(std::string name);
 };
 
 #endif

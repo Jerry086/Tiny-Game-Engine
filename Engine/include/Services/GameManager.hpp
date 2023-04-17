@@ -10,13 +10,6 @@ class GameManager : public IService {
 
    public:
     /**
-     * @brief Obtain the instance of the GameManager
-     *
-     * @return GameManager& instance
-     */
-    static GameManager &instance();
-
-    /**
      * @brief Shutdown the GameManager
      *
      */
@@ -39,6 +32,12 @@ class GameManager : public IService {
     bool m_isGameOver = false;
 
    private:
+    /**
+     * @brief Obtain the instance of the GameManager
+     *
+     * @return GameManager& instance
+     */
+    static GameManager &instance();
     GameManager() = default;
     // ~GameManager() = default;
     GameManager(const GameManager &) = delete;

@@ -6,4 +6,4 @@ def game_object_update():
 
 def collision_component_on_collision():
     other_name = mygameengine.VariableManager.GetDict("player_CollisionComponent_other_name")
-    print("Collision with: ", other_name)
+    print("player collision with: ", other_name)

@@ -5,6 +5,7 @@
 #include "./Services/GameManager.hpp"
 #include "./Services/ServiceLocator.hpp"
 #include "./Services/VariableManager.hpp"
+#include "GameObject.hpp"
 
 /**
  * Constructor
@@ -127,8 +128,11 @@ void CollisionComponent::Update() {
 
                 case enemy: {
                     // GameObjectManager::instance().SetGameOver(true);
+                    ServiceLocator::GetService<VariableManager>().SetBool(
+                        "isPacmanGameOver", true);
                     ServiceLocator::GetService<GameObjectManager>().SetGameOver(
                         true);
+
                     break;
                 }
 
@@ -147,9 +151,6 @@ void CollisionComponent::Update() {
                 }
             }
         }
-    }
-    if (m_python && py::hasattr(m_python, "collision_component_update")) {
-        m_python.attr("collision_component_update")();
     }
 }
 

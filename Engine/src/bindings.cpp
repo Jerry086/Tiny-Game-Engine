@@ -32,9 +32,6 @@ PYBIND11_MAKE_OPAQUE(std::vector<std::string>);
 PYBIND11_MODULE(mygameengine, m) {
     m.doc() = "our game engine as a library";
 
-    py::bind_vector<std::vector<std::string>>(m, "VectorString");
-    py::bind_map<std::unordered_map<std::string, int>>(m,
-                                                       "UnorderedMapStringInt");
     py::class_<std::string>(m, "String").def(py::init<const char *>());
 
     py::class_<SDLGraphicsProgram>(m, "SDLGraphicsProgram")
@@ -85,7 +82,8 @@ PYBIND11_MODULE(mygameengine, m) {
         .def("__mul__", &Vec2::operator*);
 
     py::class_<Component, std::shared_ptr<Component>>(m, "Component")
-        .def(py::init<>());
+        .def(py::init<>())
+        .def_readwrite("m_enabled", &Component::m_enabled);
 
     py::class_<ControllerComponent, Component,
                std::shared_ptr<ControllerComponent>>(m, "ControllerComponent")
@@ -154,7 +152,10 @@ PYBIND11_MODULE(mygameengine, m) {
 
     py::class_<ServiceLocator>(m, "ServiceLocator")
         .def_static("Update", &ServiceLocator::Update)
-        .def_static("ResetAllServices", &ServiceLocator::ResetAllServices);
+        .def_static("ResetAllServices", &ServiceLocator::ResetAllServices)
+        .def_static("GetGameObjectManager",
+                    &ServiceLocator::GetService<GameObjectManager>,
+                    py::return_value_policy::reference);
 
     py::class_<GameManager>(m, "GameManager")
         .def_static("IsQuit", &GameManager::IsQuit)

@@ -6,12 +6,13 @@
 #include <memory>
 #include <string>
 
-#include "./Components/SpriteComponent.hpp"
 #include "./Services/IService.hpp"
-#include "./Services/ResourceManager.hpp"
-#include "GameObject.hpp"
 
 #define GameOver "./sprites/gameOver.bmp"
+
+class ServiceLocator;
+class SpriteComponent;
+class GameObject;
 
 /**
  * @brief The GameObjectManager class
@@ -19,6 +20,8 @@
  * Singleton class that manages all game objects
  */
 class GameObjectManager : public IService {
+    friend class ServiceLocator;
+
    public:
     /**
      * @brief instance of the game object manager

@@ -83,8 +83,7 @@
     },
     {
       "name": "pacman_gameover_screen",
-      "definition_file": "./definitions/pacman_gameover_screen.json",
-      "start_disabled": true
+      "definition_file": "./definitions/pacman_gameover_screen.json"
     }
   ]
 }

@@ -11,10 +11,12 @@ SpriteComponent::SpriteComponent(
       mLastFrame(frames),
       mNumRows(numRows),
       mNumCols(numCols) {
-    ResourceManager::instance().LoadSurface(filename);
-    m_spriteSheet = ResourceManager::instance().GetSurface(filename);
-    ResourceManager::instance().LoadTexture(filename);
-    m_texture = ResourceManager::instance().GetTexture(filename);
+    ServiceLocator::GetService<ResourceManager>().LoadSurface(filename);
+    m_spriteSheet =
+        ServiceLocator::GetService<ResourceManager>().GetSurface(filename);
+    ServiceLocator::GetService<ResourceManager>().LoadTexture(filename);
+    m_texture =
+        ServiceLocator::GetService<ResourceManager>().GetTexture(filename);
     mSrc.x = x;
     mSrc.y = y;
     mSrc.w = w;
@@ -53,9 +55,9 @@ SpriteComponent::~SpriteComponent() {}
  * Free the surface and texture by ResourceManager
  */
 void SpriteComponent::ShutDown() {
-    ResourceManager::instance().FreeSurface(m_filename);
+    ServiceLocator::GetService<ResourceManager>().FreeSurface(m_filename);
     m_spriteSheet = nullptr;
-    ResourceManager::instance().DestroyTexture(m_filename);
+    ServiceLocator::GetService<ResourceManager>().DestroyTexture(m_filename);
     m_texture = nullptr;
 }
 
@@ -111,7 +113,8 @@ void SpriteComponent::Update() {
  * Render the sprite to the screen
  */
 void SpriteComponent::Render() {
-    SDL_Renderer *ren = ResourceManager::instance().GetRenderer();
+    SDL_Renderer *ren =
+        ServiceLocator::GetService<ResourceManager>().GetRenderer();
     SDL_RenderCopy(ren, m_texture, &mSrc, &mDest);
 }
 

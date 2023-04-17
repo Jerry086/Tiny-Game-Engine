@@ -50,7 +50,13 @@ void GameObject::ShutDown() {
 void GameObject::Update() {
     if (!m_enabled) return;
     for (auto it = m_components.begin(); it != m_components.end(); it++) {
+        if (!it->second->m_enabled) continue;
         it->second->Update();
+
+        std::string pythonCompName = ConvertToPythonName(it->first) + "_update";
+        if (m_python && py::hasattr(m_python, pythonCompName.c_str())) {
+            m_python.attr(pythonCompName.c_str())();
+        }
     }
 
     if (m_python && py::hasattr(m_python, "game_object_update")) {
@@ -64,7 +70,9 @@ void GameObject::Update() {
  * the components is important, as some components may depend
  */
 void GameObject::Render() {
+    if (!m_enabled) return;
     for (auto it = m_components.begin(); it != m_components.end(); it++) {
+        if (!it->second->m_enabled) continue;
         it->second->Render();
     }
 }
@@ -104,4 +112,23 @@ std::shared_ptr<Component> GameObject::GetComponent(std::string componentName) {
 
 void GameObject::SetPythonScriptModuleName(std::string name) {
     m_pythonScriptModuleName = name;
+}
+
+std::string GameObject::ConvertToPythonName(std::string name) {
+    size_t pos = name.find_last_of('_');
+    if (pos == std::string::npos) {
+        return "";
+    }
+
+    std::string result = name.substr(pos + 1);
+    for (size_t i = 0; i < result.size(); ++i) {
+        if (isupper(result[i])) {
+            result[i] = tolower(result[i]);
+            if (i > 0) {
+                result.insert(i, "_");
+                ++i;
+            }
+        }
+    }
+    return result;
 }

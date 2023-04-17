@@ -23,10 +23,6 @@ class ResourceManager : public IService {
 
    public:
     /**
-     * @brief Obtain the instance of the resource manager
-     */
-    static ResourceManager &instance();
-    /**
      * @brief Load a SDL_Surface from a image file
      * @param image_filename The path to the image file
      */
@@ -79,6 +75,10 @@ class ResourceManager : public IService {
     ~ResourceManager();
     ResourceManager(const ResourceManager &) = delete;
     ResourceManager &operator=(const ResourceManager &) = delete;
+    /**
+     * @brief Obtain the instance of the resource manager
+     */
+    static ResourceManager &instance();
 };
 
 #endif

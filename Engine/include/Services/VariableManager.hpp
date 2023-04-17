@@ -7,11 +7,6 @@ class VariableManager : public IService {
     friend class ServiceLocator;
 
    public:
-    static VariableManager &instance() {
-        static VariableManager instance;
-        return instance;
-    }
-
     void ShutDown() override;
     void Update() override{};
 
@@ -29,7 +24,7 @@ class VariableManager : public IService {
     static std::string GetDict(std::string name);
     static void SetDict(std::string name, std::string value);
 
-private:
+   private:
     std::unordered_map<std::string, int> m_counters;
     std::unordered_map<std::string, bool> m_booleans;
     std::unordered_map<std::string, std::string> m_dict;
@@ -37,4 +32,9 @@ private:
     // ~VariableManager() = default;
     VariableManager(const VariableManager &) = delete;
     VariableManager &operator=(const VariableManager &) = delete;
+
+    static VariableManager &instance() {
+        static VariableManager instance;
+        return instance;
+    }
 };

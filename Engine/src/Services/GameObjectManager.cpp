@@ -3,6 +3,11 @@
 #include <pybind11/embed.h>
 
 #include <iterator>
+
+#include "./Components/SpriteComponent.hpp"
+#include "./Services/ResourceManager.hpp"
+#include "GameObject.hpp"
+
 namespace py = pybind11;
 
 /**

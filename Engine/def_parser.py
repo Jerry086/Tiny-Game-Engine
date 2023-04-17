@@ -85,14 +85,11 @@ def create_components(go_def_json_object, transform_override=None):
                     )
                 typed_args.append(matching_components[0])
             else:
-                raise ValueError("Type not found: " + arg_type)
+                print ("Type not found: ", arg_type, ". Skipping this argument.")
 
         constructor = COMPONENTS[comp_def["component_type"]]
         component = constructor(*typed_args)
         components.append((comp_def["component_type"], component))
-
-    print(components)
-
     return components
 
 
@@ -106,7 +103,7 @@ def create_go(id, json_path, transform_override=None, go_script_module=None):
     with open(json_path) as json_data_file:
         go_def_json_object = json.load(json_data_file)
     type_name = go_def_json_object["type_name"]
-    print("Creating game object of type: " + type_name)
+    print("Creating game object of type: " + type_name, "with id: " + id)
     components = create_components(
         go_def_json_object, transform_override=transform_override
     )
