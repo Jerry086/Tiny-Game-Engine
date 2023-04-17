@@ -29,6 +29,6 @@ bool GameManager::IsGameOver() { return GameManager::instance().m_isGameOver; }
 void GameManager::ShowGameOverPopup() {
     SDL_Window* window = ServiceLocator::GetService<SDLWrapper>()
                              .m_SDLGraphicsProgram->getSDLWindow();
-    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Title", "Message",
-                             NULL);
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Game over!",
+                             "You lost :(", NULL);
 }

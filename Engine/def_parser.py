@@ -9,7 +9,6 @@ COMPONENTS = {
     "HealthBarComponent": mygameengine.HealthBarComponent,
     "CollisionComponent": mygameengine.CollisionComponent,
     "BehaviorComponent": mygameengine.BehaviorComponent,
-    "CounterComponent": mygameengine.CounterComponent,
 }
 
 ## @brief A dictionary of built in types name strings to their respective classes
@@ -37,7 +36,7 @@ def read_json(json_path):
 ## @brief Creates a list of components for a game object from a type definition json object
 #  @param go_def_json_object The json object containing the type definition for a game object type
 # @param transform_override A list of transform parameters to override the transform component
-# @return A list of components
+# @return A list of tuples of (component name, component)
 def create_components(go_def_json_object, transform_override=None):
     component_defs = go_def_json_object["components"]
     components = []
@@ -46,7 +45,10 @@ def create_components(go_def_json_object, transform_override=None):
         print("makging component of type: " + comp_def["component_type"])
         typed_args = []
 
-        if comp_def["component_type"] == "TransformComponent" and transform_override:
+        if (
+            comp_def["component_type"] == "TransformComponent"
+            and transform_override
+        ):
             comp_def["args"] = []
             for a in transform_override:
                 if a["param"] == "direction":
@@ -73,19 +75,33 @@ def create_components(go_def_json_object, transform_override=None):
                 typed_args.append(CUSTOM[arg_type](*params))
             elif arg_type in COMPONENTS:
                 matching_components = [
-                    c for c in components if isinstance(c, COMPONENTS[arg_type])
+                    c
+                    for _, c in components
+                    if isinstance(c, COMPONENTS[arg_type])
                 ]
                 if len(matching_components) == 0:
                     raise ValueError(
                         "No matching component found for type: " + arg_type
                     )
                 typed_args.append(matching_components[0])
+            elif arg_type == "VectorString":
+                vec = mygameengine.VectorString()
+                for v in raw_arg["value"]:
+                    vec.append(v)
+                typed_args.append(vec)
+            elif arg_type == "UnorderedMapStringInt":
+                uomap = mygameengine.UnorderedMapStringInt()
+                for k, v in raw_arg["value"].items():
+                    uomap[k] = v
+                typed_args.append(uomap)
             else:
                 raise ValueError("Type not found: " + arg_type)
 
         constructor = COMPONENTS[comp_def["component_type"]]
         component = constructor(*typed_args)
-        components.append(component)
+        components.append((comp_def["component_type"], component))
+
+    print(components)
 
     return components
 
@@ -105,10 +121,14 @@ def create_go(id, json_path, transform_override=None):
         go_def_json_object, transform_override=transform_override
     )
     go = mygameengine.GameObject(id)
-    for i in range(len(components)):
-        print("adding component: ", components[i])
-        # NOTE: component id using index for now is the correct way, even though hacky
-        go.AddComponent(str(i), components[i])
+
+    if "script_module" in go_def_json_object.keys():
+        script_module = go_def_json_object["script_module"]
+        go.SetPythonScriptModuleName(script_module)
+
+    for comp_name, component in components:
+        print("adding component: ", comp_name, "as", id + "_" + comp_name)
+        go.AddComponent(id + "_" + comp_name, component)
     return go
 
 

@@ -1,8 +1,11 @@
 #ifndef COMPONENT_HPP
 #define COMPONENT_HPP
 
+#include <pybind11/embed.h>
+
 #include <iostream>
 #include <memory>
+namespace py = pybind11;
 
 #define Component_TYPE 0
 #define ControllerComponent_TYPE 1
@@ -13,10 +16,12 @@
 #define HealthBarComponent_TYPE 5
 #define CounterComponent_TYPE 6
 
+class GameObject;
+
 /**
  * The Component class that is the base class for all components.
  */
-class Component {
+class __attribute__((visibility("default"))) Component {
    public:
     /**
      * Constructor
@@ -26,6 +31,7 @@ class Component {
      * Destructor
      */
     virtual ~Component();
+    virtual void StartUp(){};
     /**
      * ShutDown the component
      */
@@ -43,6 +49,16 @@ class Component {
      * @return The type of the component
      */
     virtual int GetType();
+
+    virtual void SetPython(py::module_& python);
+
+    virtual void SetParent(std::shared_ptr<GameObject> parent);
+
+    std::string m_name;
+
+   protected:
+    py::module_ m_python;
+    std::shared_ptr<GameObject> m_parent;
 
    private:
     const int m_type = Component_TYPE;

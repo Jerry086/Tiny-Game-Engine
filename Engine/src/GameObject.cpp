@@ -1,7 +1,11 @@
 #include "GameObject.hpp"
 
+#include <pybind11/embed.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+
+#include <string>
+
 namespace py = pybind11;
 /**
  * Constructor for the GameObject class
@@ -15,7 +19,18 @@ GameObject::~GameObject() {}
 /**
  * StartUp the game object
  */
-void GameObject::StartUp() {}
+void GameObject::StartUp() {
+    if (m_pythonScriptModuleName != "") {
+        // Alternatively, you can load a script from a file
+        // py::eval_file(script_path.c_str(), py::globals(), py::dict());
+        // py::eval_file(m_pythonScriptPath, py::globals());
+        m_python = py::module_::import(m_pythonScriptModuleName.c_str());
+    }
+    for (auto it = m_components.begin(); it != m_components.end(); it++) {
+        if (m_pythonScriptModuleName != "") it->second->SetPython(m_python);
+        it->second->StartUp();
+    }
+}
 /**
  * ShutDown the game object by clearing the components map
  */
@@ -34,6 +49,10 @@ void GameObject::ShutDown() {
 void GameObject::Update() {
     for (auto it = m_components.begin(); it != m_components.end(); it++) {
         it->second->Update();
+    }
+
+    if (m_python && py::hasattr(m_python, "game_object_update")) {
+        m_python.attr("game_object_update")();
     }
 }
 /**
@@ -58,13 +77,20 @@ void GameObject::AddComponent(std::string componentName,
         m_collisionComponent = component;
     }
     m_components.emplace(componentName, component);
+    component->m_name = componentName;
+    component->SetParent(std::make_shared<GameObject>(*this));
 }
 /**
  * Remove a component from the game object given the component name
  */
 void GameObject::RemoveComponent(std::string componentName) {
     std::cout << "Removing " << componentName << std::endl;
+    auto it = m_components.find(componentName);
+    if (it != m_components.end()) {
+        it->second->SetParent(nullptr);
+    }
     m_components.erase(componentName);
+
     std::cout << "Removing complete" << componentName << std::endl;
 }
 /**
@@ -72,4 +98,8 @@ void GameObject::RemoveComponent(std::string componentName) {
  */
 std::shared_ptr<Component> GameObject::GetComponent(std::string componentName) {
     return m_components[componentName];
+}
+
+void GameObject::SetPythonScriptModuleName(std::string name) {
+    m_pythonScriptModuleName = name;
 }

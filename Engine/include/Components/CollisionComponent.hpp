@@ -1,6 +1,10 @@
 #ifndef COLLISIONCOMPONENT_HPP
 #define COLLISIONCOMPONENT_HPP
 
+#include <string>
+#include <unordered_map>
+#include <vector>
+
 #include "Component.hpp"
 #include "ControllerComponent.hpp"
 #include "GameObjectManager.hpp"
@@ -26,8 +30,17 @@ class CollisionComponent : public Component {
      * @param h The height of the object
      */
     CollisionComponent(std::string objectType,
-                       std::shared_ptr<TransformComponent> transformer, int w,
+                       std::shared_ptr<TransformComponent> transform, int w,
                        int h);
+
+    CollisionComponent(std::string objectType,
+                       std::shared_ptr<TransformComponent> transform, int w,
+                       int h, std::unordered_map<std::string, int> counters_set,
+                       std::unordered_map<std::string, int> counters_increment,
+                       std::vector<std::string> bools_true,
+                       std::vector<std::string> bools_false,
+                       std::vector<std::string> bools_toggle);
+
     /**
      * @brief Destructor
      */
@@ -63,6 +76,12 @@ class CollisionComponent : public Component {
     ObjectType m_objectType_enum;
     std::shared_ptr<ControllerComponent> m_controller = nullptr;
     std::shared_ptr<BehaviorComponent> m_behavior = nullptr;
+    std::unordered_map<std::string, int> m_counter_set;
+    std::unordered_map<std::string, int> m_counters_increment;
+    std::vector<std::string> m_bools_true;
+    std::vector<std::string> m_bools_false;
+    std::vector<std::string> m_bools_toggle;
+    void OnCollision(std::shared_ptr<CollisionComponent> other);
 };
 
 #endif

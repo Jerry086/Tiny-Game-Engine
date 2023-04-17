@@ -1,10 +1,15 @@
+#include <pybind11/embed.h>
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include <pybind11/stl_bind.h>
+
+#include <unordered_map>
+#include <vector>
 
 #include "./Components/BehaviorComponent.hpp"
 #include "./Components/CollisionComponent.hpp"
 #include "./Components/Component.hpp"
 #include "./Components/ControllerComponent.hpp"
-#include "./Components/CounterComponent.hpp"
 #include "./Components/HealthBarComponent.hpp"
 #include "./Components/SpriteComponent.hpp"
 #include "./Components/TransformComponent.hpp"
@@ -15,6 +20,9 @@
 
 namespace py = pybind11;
 
+PYBIND11_MAKE_OPAQUE(std::unordered_map<std::string, int>);
+PYBIND11_MAKE_OPAQUE(std::vector<std::string>);
+
 // Creates a macro function that will be called
 // whenever the module is imported into python
 // 'mygameengine' is what we 'import' into python.
@@ -23,6 +31,11 @@ namespace py = pybind11;
 //  The magic here is in 'template metaprogramming'
 PYBIND11_MODULE(mygameengine, m) {
     m.doc() = "our game engine as a library";
+
+    py::bind_vector<std::vector<std::string>>(m, "VectorString");
+    py::bind_map<std::unordered_map<std::string, int>>(m,
+                                                       "UnorderedMapStringInt");
+    py::class_<std::string>(m, "String").def(py::init<const char *>());
 
     py::class_<SDLGraphicsProgram>(m, "SDLGraphicsProgram")
         .def(py::init<int, int>(), py::arg("w"), py::arg("h"))
@@ -42,7 +55,9 @@ PYBIND11_MODULE(mygameengine, m) {
         .def("AddComponent", &GameObject::AddComponent)
         .def("GetComponent", &GameObject::GetComponent)
         .def("GetControllerComponents",
-             &GameObject::GetComponentsPython<ControllerComponent>);
+             &GameObject::GetComponentsPython<ControllerComponent>)
+        .def("SetPythonScriptModuleName",
+             &GameObject::SetPythonScriptModuleName);
 
     py::class_<GameObjectManager,
                std::unique_ptr<GameObjectManager, py::nodelete>>(
@@ -114,16 +129,20 @@ PYBIND11_MODULE(mygameengine, m) {
     py::class_<CollisionComponent, Component,
                std::shared_ptr<CollisionComponent>>(m, "CollisionComponent")
         .def(py::init<const std::string &,
-                      std::shared_ptr<TransformComponent> &, int, int>(),
-             py::arg("objectType"), py::arg("transformComponent"), py::arg("w"),
-             py::arg("h"));
-
-    py::class_<CounterComponent, Component, std::shared_ptr<CounterComponent>>(
-        m, "CounterComponent")
-        .def(py::init<>())
-        .def("SetCounter", &CounterComponent::SetCounter)
-        .def("GetCounter", &CounterComponent::GetCounter)
-        .def("RemoveCounter", &CounterComponent::RemoveCounter);
+                      const std::shared_ptr<TransformComponent> &, int, int>(),
+             py::arg("objectType"), py::arg("transform"), py::arg("w"),
+             py::arg("h"))
+        .def(py::init<const std::string &,
+                      const std::shared_ptr<TransformComponent> &, int, int,
+                      const std::unordered_map<std::string, int> &,
+                      const std::unordered_map<std::string, int> &,
+                      const std::vector<std::string> &,
+                      const std::vector<std::string> &,
+                      const std::vector<std::string> &>(),
+             py::arg("objectType"), py::arg("transform"), py::arg("w"),
+             py::arg("h"), py::arg("counters_set"), py::arg("counters"),
+             py::arg("bools_true"), py::arg("bools_false"),
+             py::arg("bools_toggle"));
 
     py::class_<ServiceLocator>(m, "ServiceLocator")
         .def_static("Update", &ServiceLocator::Update);
@@ -132,4 +151,14 @@ PYBIND11_MODULE(mygameengine, m) {
         .def_static("IsQuit", &GameManager::IsQuit)
         .def_static("IsGameOver", &GameManager::IsGameOver)
         .def_static("ShowGameOverPopup", &GameManager::ShowGameOverPopup);
+
+    py::class_<VariableManager>(m, "VariableManager")
+        .def_static("GetBool", &VariableManager::GetBool)
+        .def_static("GetCounter", &VariableManager::GetCounter)
+        .def_static("SetBool", &VariableManager::SetBool)
+        .def_static("SetCounter", &VariableManager::SetCounter)
+        .def_static("IncrementCounter", &VariableManager::IncrementCounter)
+        .def_static("ToggleBool", &VariableManager::ToggleBool)
+        .def_static("GetDict", &VariableManager::GetDict)
+        .def_static("SetDict", &VariableManager::SetDict);
 }

@@ -1,5 +1,6 @@
 {
     "type_name": "test_player",
+    "script_module": "test_player",
     "transform_signature":["direction", "position", "controller"],
     "components": [
         {
@@ -47,10 +48,6 @@
                     "value": 87
                 }
             ]
-        },
-        {
-            "component_type": "CounterComponent",
-            "args": []
         }
     ]
 }
