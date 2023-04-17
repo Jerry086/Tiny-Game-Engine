@@ -63,6 +63,7 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h)
     ServiceLocator::RegisterService<InputManager>();
     ServiceLocator::RegisterService<GameManager>();
     ServiceLocator::RegisterService<VariableManager>();
+    ServiceLocator::RegisterService<GameObjectManager>();
 }
 /**
  * Destructor

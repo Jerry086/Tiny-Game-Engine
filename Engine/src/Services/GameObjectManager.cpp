@@ -1,18 +1,15 @@
-#include "GameObjectManager.hpp"
+#include "./Services/GameObjectManager.hpp"
 
 #include <pybind11/embed.h>
 
 #include <iterator>
+
+#include "./Components/SpriteComponent.hpp"
+#include "./Services/ResourceManager.hpp"
+#include "GameObject.hpp"
+
 namespace py = pybind11;
 
-/**
- * Private constructor
- */
-GameObjectManager::GameObjectManager() {}
-/**
- * Private destructor
- */
-GameObjectManager::~GameObjectManager() {}
 /**
  * Obtain the instance of the game object manager
  */
@@ -29,10 +26,6 @@ void GameObjectManager::StartUp() {
     auto path = sys.attr("path");
     path.attr("insert")(0, "./scripts");
 
-    std::shared_ptr<TransformComponent> transform =
-        std::make_shared<TransformComponent>(Vec2(0, 0));
-    m_sprite = std::make_shared<SpriteComponent>(GameOver, transform, 0, 0,
-                                                 1400, 815, 1, 1, 1);
     for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++) {
         it->second->StartUp();
     }
@@ -46,7 +39,6 @@ void GameObjectManager::ShutDown() {
         it->second->ShutDown();
     }
     m_gameobjects.clear();
-    m_sprite->ShutDown();
 }
 /**
  * Update all game objects of the game.
@@ -54,6 +46,9 @@ void GameObjectManager::ShutDown() {
  */
 void GameObjectManager::Update() {
     for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++) {
+        if (!it->second->m_enabled) {
+            continue;
+        }
         it->second->Update();
     }
 }
@@ -62,11 +57,10 @@ void GameObjectManager::Update() {
  * The order of the render is not important.
  */
 void GameObjectManager::Render() {
-    if (m_gameOver) {
-        m_sprite->Render();
-        return;
-    }
     for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++) {
+        if (!it->second->m_enabled) {
+            continue;
+        }
         it->second->Render();
     }
 }
