@@ -206,7 +206,7 @@ class TileMap():
             # print(filetype)
             if filetype == ".json":
                 paths = []
-                                # Convert the data array to an array of arrays of integers
+                # Convert the data array to an array of arrays of integers
                 data_array = []
                 for row in data:
                     if row:
@@ -216,19 +216,27 @@ class TileMap():
                 for i, pathImg in enumerate(pathtypes):
                     if i > 0:
                         for cmps in self.parent.ibox.loader.comps:
+                            keys_to_remove = ['filename',
+                                              'transformComponent', 'frames']
                             if (os.path.abspath("../" + cmps['value']) == pathImg):
+                                args = [
+                                    {"arg_name": "id", "arg_type": "int", "value": i}, {
+                                        "arg_name": "path", "arg_type": "string", "value": pathImg}
+                                ]
+                                for rarg in cmps['restArgs']:
+                                    if rarg['arg_name'] not in keys_to_remove:
+                                        args.append(rarg)
+                                print(cmps['restArgs'])
                                 paths.append(
-                                    {"component_type": cmps['name'], "args": [
-                                        {"arg_type": "int", "vlaue": i}, {
-                                            "arg_type": "string", "value": pathImg}
-                                    ]})
+                                    {"component_type": cmps['name'], "args": args})
+
                 paths.append({"component_type": "TileMapComponent", "args": [
                     {"arg_type": "array", "value": data_array}
                 ]})
 
                 # Create a dictionary with paths and data keys
                 output_dict = {"type_name": "test_tilemap",
-                               "components": paths,  }
+                               "components": paths, }
 
                 # Convert the dictionary to a JSON string
                 output_json = json.dumps(output_dict, indent=4)
