@@ -14,3 +14,4 @@ Editor/__pycache__
 Editor/.DS_Store
 Editor/mods/__pycache__
 */*.pyc
+Engine/scripts/__pycache__/test_player.cpython-38.pyc
