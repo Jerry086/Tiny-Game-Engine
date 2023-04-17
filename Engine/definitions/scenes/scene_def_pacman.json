@@ -2,7 +2,7 @@
   "game_objects": [
     {
       "name": "player",
-      "definition_file": "./definitions/pacman_player.json",
+      "definition_file": "./definitions/game_objects/game_objects/pacman_player.json",
       "transform_override": [
         {
           "param": "direction",
@@ -21,7 +21,7 @@
     },
     {
       "name": "tile1",
-      "definition_file": "./definitions/tile1.json",
+      "definition_file": "./definitions/game_objects/tile1.json",
       "transform_override": [
         {
           "param": "position",
@@ -32,7 +32,7 @@
     },
     {
       "name": "enemy1",
-      "definition_file": "./definitions/enemy2.json",
+      "definition_file": "./definitions/game_objects/enemy2.json",
       "transform_override": [
         {
           "param": "direction",
@@ -51,7 +51,7 @@
     },
     {
       "name": "enemy2",
-      "definition_file": "./definitions/enemy2.json",
+      "definition_file": "./definitions/game_objects/enemy2.json",
       "transform_override": [
         {
           "param": "direction",
@@ -70,7 +70,7 @@
     },
     {
       "name": "pac",
-      "definition_file": "./definitions/pac.json",
+      "definition_file": "./definitions/game_objects/pac.json",
       "transform_override": [
         {
           "param": "position",
@@ -81,8 +81,8 @@
     },
     {
       "name": "pacman_gameover_screen",
-      "definition_file": "./definitions/pacman_gameover_screen.json"
+      "definition_file": "./definitions/game_objects/pacman_gameover_screen.json"
     }
   ],
-  "tilemap_definition": "./definitions/tilemap_def_1.json"
+  "tilemap_definition": "./definitions/tilemaps/tilemap_def_1.json"
 }

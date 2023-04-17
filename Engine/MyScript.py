@@ -9,7 +9,7 @@ SDL = mygameengine.SDLGraphicsProgram(WINDOW_WIDTH, WINDOW_HEIGHT)
 
 game_object_manager = mygameengine.GameObjectManager()
 
-game_objects = create_scene("./definitions/scene_def_pacman.json")
+game_objects = create_scene("./definitions/scenes/scene_def_pacman.json")
 
 for go_name, go in game_objects:
     game_object_manager.AddGameObject(go_name, go)
