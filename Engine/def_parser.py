@@ -102,7 +102,7 @@ def create_components(go_def_json_object, transform_override=None):
 # @param json_path The path to the json type definition file
 # @param transform_override A list of transform parameters to override the transform component
 # @return A game object
-def create_go(id, json_path, transform_override=None, script_module=None):
+def create_go(id, json_path, transform_override=None, go_script_module=None):
     with open(json_path) as json_data_file:
         go_def_json_object = json.load(json_data_file)
     type_name = go_def_json_object["type_name"]
@@ -111,8 +111,13 @@ def create_go(id, json_path, transform_override=None, script_module=None):
         go_def_json_object, transform_override=transform_override
     )
     go = mygameengine.GameObject(id)
-    if script_module:
-        go.SetPythonScriptModuleName(script_module)
+
+    if "script_module" in go_def_json_object.keys():
+        type_script_module = go_def_json_object["script_module"]
+        go.SetPythonScriptModuleName(type_script_module)
+
+    if go_script_module:
+        go.SetPythonScriptModuleName(go_script_module)
 
     for comp_name, component in components:
         print("adding component: ", comp_name, "as", id + "_" + comp_name)
@@ -131,16 +136,16 @@ def create_scene(json_path):
     game_objects = []
     game_object_defs = scene_def_json_object["game_objects"]
     for game_object_def in game_object_defs:
-        transform_override, script_module = None, None
+        transform_override, go_script_module = None, None
         if "transform_override" in game_object_def:
             transform_override = game_object_def["transform_override"]
         if "script_module" in game_object_def:
-            script_module = game_object_def["script_module"]
+            go_script_module = game_object_def["script_module"]
         go = create_go(
             game_object_def["name"],
             game_object_def["definition_file"],
             transform_override=transform_override,
-            script_module=script_module
+            script_module=go_script_module
         )
         if "start_disabled" in game_object_def and game_object_def["start_disabled"]:
             go.m_enabled = False
