@@ -48,6 +48,7 @@ void GameObject::ShutDown() {
  * the components is important, as some components may depend
  */
 void GameObject::Update() {
+    if (!m_enabled) return;
     for (auto it = m_components.begin(); it != m_components.end(); it++) {
         it->second->Update();
     }

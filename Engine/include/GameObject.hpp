@@ -107,6 +107,8 @@ class __attribute__((visibility("default"))) GameObject {
 
     std::string gameObject_id;
 
+    bool m_enabled{true};
+
    private:
     std::map<std::string, std::shared_ptr<Component>> m_components;
     std::shared_ptr<Component> m_collisionComponent = nullptr;

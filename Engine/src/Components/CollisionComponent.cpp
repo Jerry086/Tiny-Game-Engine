@@ -95,6 +95,10 @@ void CollisionComponent::Update() {
 
     // detect collisions, O(n^2)
     for (auto it = list.begin(); it != list.end(); it++) {
+        if (!it->second->m_enabled) {
+            continue;
+        }
+
         std::vector<std::shared_ptr<CollisionComponent>> collisionComponents =
             it->second->GetComponents<CollisionComponent>();
         if (collisionComponents.size() == 0) continue;
@@ -121,6 +125,7 @@ void CollisionComponent::Update() {
 
                 case enemy: {
                     // TODO: add player death animation
+                    OnCollision(other);
                     GameObjectManager::instance().SetGameOver(true);
                     break;
                 }

@@ -54,6 +54,9 @@ void GameObjectManager::ShutDown() {
  */
 void GameObjectManager::Update() {
     for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++) {
+        if (!it->second->m_enabled) {
+            continue;
+        }
         it->second->Update();
     }
 }
@@ -67,6 +70,9 @@ void GameObjectManager::Render() {
         return;
     }
     for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++) {
+        if (!it->second->m_enabled) {
+            continue;
+        }
         it->second->Render();
     }
 }
