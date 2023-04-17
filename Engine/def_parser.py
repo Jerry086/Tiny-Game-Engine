@@ -6,7 +6,6 @@ COMPONENTS = {
     "ControllerComponent": mygameengine.ControllerComponent,
     "TransformComponent": mygameengine.TransformComponent,
     "SpriteComponent": mygameengine.SpriteComponent,
-    "HealthBarComponent": mygameengine.HealthBarComponent,
     "CollisionComponent": mygameengine.CollisionComponent,
     "BehaviorComponent": mygameengine.BehaviorComponent,
 }
@@ -121,6 +120,7 @@ def create_components(go_def_json_object, transform_override=None):
                     comp_def["args"].append({"arg_name": "controllerComponent", "arg_type": "BehaviorComponent"})
 
         for raw_arg in comp_def["args"]:
+            print(raw_arg)
             arg_type = raw_arg["arg_type"]
             arg_name = raw_arg["arg_name"]
             if arg_type in BUILT_IN:
@@ -222,11 +222,22 @@ def make_component_dict(*args, **kwargs):
     }
     kwargs.pop("component_type")
     for item in kwargs.items():
-        print(item)
+        key_as_comp_name = item[0][0].upper() + item[0][1:]
         if item[0] in ["position", "direction"]:
             res["args"].append({"arg_name": item[0], "arg_type": "Vec2", "x": item[1][0], "y": item[1][1]})
+        elif item[0] in ["filename"]:
+            res["args"].append({"arg_name": item[0], "arg_type": "string", "value": item[1]})
+        elif key_as_comp_name in COMPONENTS.keys():
+            print("in inner")
+            res["args"].append({"arg_name": item[0], "arg_type": item[0][0].upper() + item[0][1:]})
+            continue
+        elif isinstance(item[1], float):
+            res["args"].append({"arg_name": item[0], "arg_type": "float","value": item[1]})
+        elif isinstance(item[1], int):
+            res["args"].append({"arg_name": item[0], "arg_type": "int","value": item[1]})
         else:
-            res["args"].append(item)
+            res["args"].append({"arg_name": item[0], "arg_type": "string","value": item[1]})
+        
     return res
 
         
@@ -238,9 +249,32 @@ if __name__ == '__main__':
         "component_type": "TransformComponent",
         "position": (0, 0),
         "direction": (1, 0),
-        "controllerComponent": {}
+        "controllerComponent": "ControllerComponent"
     }
     transform_comp = make_component_dict(**param_dict)
-    go_def = {"components":[controller_comp, transform_comp]}
+
+    sprite_dict = {
+        "filename": "./sprites/gameOver.png",
+        "component_type": "SpriteComponent",
+        "x": 0,
+        "y": 0,
+        "w": 654,
+        "h": 432,
+        "transformComponent": "",
+        "numRows": 1,
+        "numCols": 1,
+        "frames":10
+    }
+    collision_param = {
+        "component_type": "CollisionComponent",
+        "objectType": "player",
+        "transformComponent": "",
+        "w": 10,
+        "h": 10
+    }
+    sprite_comp = make_component_dict(**sprite_dict)
+    collision_comp = make_component_dict(**collision_param)
+    go_def = {"components":[controller_comp, transform_comp, sprite_comp, collision_comp]}
+    print(go_def)
     components = create_components(go_def)
     print(components)
