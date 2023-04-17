@@ -84,16 +84,6 @@ def create_components(go_def_json_object, transform_override=None):
                         "No matching component found for type: " + arg_type
                     )
                 typed_args.append(matching_components[0])
-            elif arg_type == "VectorString":
-                vec = mygameengine.VectorString()
-                for v in raw_arg["value"]:
-                    vec.append(v)
-                typed_args.append(vec)
-            elif arg_type == "UnorderedMapStringInt":
-                uomap = mygameengine.UnorderedMapStringInt()
-                for k, v in raw_arg["value"].items():
-                    uomap[k] = v
-                typed_args.append(uomap)
             else:
                 raise ValueError("Type not found: " + arg_type)
 
@@ -112,7 +102,7 @@ def create_components(go_def_json_object, transform_override=None):
 # @param json_path The path to the json type definition file
 # @param transform_override A list of transform parameters to override the transform component
 # @return A game object
-def create_go(id, json_path, transform_override=None):
+def create_go(id, json_path, transform_override=None, script_module=None):
     with open(json_path) as json_data_file:
         go_def_json_object = json.load(json_data_file)
     type_name = go_def_json_object["type_name"]
@@ -121,9 +111,7 @@ def create_go(id, json_path, transform_override=None):
         go_def_json_object, transform_override=transform_override
     )
     go = mygameengine.GameObject(id)
-
-    if "script_module" in go_def_json_object.keys():
-        script_module = go_def_json_object["script_module"]
+    if script_module:
         go.SetPythonScriptModuleName(script_module)
 
     for comp_name, component in components:
@@ -143,13 +131,16 @@ def create_scene(json_path):
     game_objects = []
     game_object_defs = scene_def_json_object["game_objects"]
     for game_object_def in game_object_defs:
-        transform_override = None
+        transform_override, script_module = None, None
         if "transform_override" in game_object_def:
             transform_override = game_object_def["transform_override"]
+        if "script_module" in game_object_def:
+            script_module = game_object_def["script_module"]
         go = create_go(
             game_object_def["name"],
             game_object_def["definition_file"],
             transform_override=transform_override,
+            script_module=script_module
         )
         game_objects.append((game_object_def["name"], go))
     return game_objects
