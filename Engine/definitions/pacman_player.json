@@ -1,7 +1,6 @@
 {
     "type_name": "pacman_player",
     "script_module": "pacman_player",
-    "transform_signature":["direction", "position", "controller"],
     "components": [
         {
             "component_type":"ControllerComponent",

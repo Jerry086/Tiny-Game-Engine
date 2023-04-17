@@ -1,7 +1,6 @@
 {
   "type_name": "pacman_gameover_screen",
   "script_module": "pacman_gameover_screen",
-  "transform_signature": ["position"],
   "components": [
     {
       "component_type": "TransformComponent",

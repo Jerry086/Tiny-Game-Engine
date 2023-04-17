@@ -222,21 +222,25 @@ def make_component_dict(*args, **kwargs):
     }
     kwargs.pop("component_type")
     for item in kwargs.items():
-        res["args"].append(item)
+        print(item)
+        if item[0] in ["position", "direction"]:
+            res["args"].append({"arg_name": item[0], "arg_type": "Vec2", "x": item[1][0], "y": item[1][1]})
+        else:
+            res["args"].append(item)
     return res
 
         
 
-# if __name__ == '__main__':
-#     controller_comp = make_component_dict(component_type="ControllerComponent")
+if __name__ == '__main__':
+    controller_comp = make_component_dict(component_type="ControllerComponent")
 
-#     param_dict = {
-#         "component_type": "TransformComponent",
-#         "position": (0, 0),
-#         "direction": (1, 0),
-#         "controllerComponent": {}
-#     }
-#     transform_comp = make_component_dict(**param_dict)
-#     go_def = {"components":[controller_comp, transform_comp]}
-#     components = create_components(go_def)
-#     print(components)
+    param_dict = {
+        "component_type": "TransformComponent",
+        "position": (0, 0),
+        "direction": (1, 0),
+        "controllerComponent": {}
+    }
+    transform_comp = make_component_dict(**param_dict)
+    go_def = {"components":[controller_comp, transform_comp]}
+    components = create_components(go_def)
+    print(components)

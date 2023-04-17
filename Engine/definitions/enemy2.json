@@ -1,6 +1,5 @@
 {
   "type_name": "enemy2",
-  "transform_signature": ["direction", "position", "behavior"],
   "components": [
     {
       "component_type": "BehaviorComponent",

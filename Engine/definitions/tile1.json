@@ -1,6 +1,5 @@
 {
     "type_name": "test_tile1",
-    "transform_signature":["position"],
     "components": [
         {
             "component_type":"TransformComponent",
