@@ -6,7 +6,6 @@
 
 #include <string>
 
-#include "Component.hpp"
 namespace py = pybind11;
 /**
  * Constructor for the GameObject class
