@@ -70,7 +70,6 @@ class GameObjectManager : public IService {
 
    private:
     bool m_gameOver = false;
-    std::shared_ptr<SpriteComponent> m_sprite;
     GameObjectManager() = default;
     GameObjectManager(const GameObjectManager &) = delete;
     GameObjectManager &operator=(const GameObjectManager &) = delete;

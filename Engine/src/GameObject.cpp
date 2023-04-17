@@ -12,7 +12,7 @@ namespace py = pybind11;
  * Constructor for the GameObject class
  * The id of the game object mush be unique
  */
-GameObject::GameObject(std::string id) : gameObject_id(id) {}
+GameObject::GameObject(std::string id) : m_name(id) {}
 /**
  * Destructor for the GameObject class
  */

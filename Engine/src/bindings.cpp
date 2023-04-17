@@ -55,7 +55,8 @@ PYBIND11_MODULE(mygameengine, m) {
              &GameObject::GetComponentsPython<ControllerComponent>)
         .def("SetPythonScriptModuleName",
              &GameObject::SetPythonScriptModuleName)
-        .def_readwrite("m_enabled", &GameObject::m_enabled);
+        .def_readwrite("m_enabled", &GameObject::m_enabled)
+        .def_readwrite("m_name", &GameObject::m_name);
 
     py::class_<GameObjectManager,
                std::unique_ptr<GameObjectManager, py::nodelete>>(
@@ -83,7 +84,8 @@ PYBIND11_MODULE(mygameengine, m) {
 
     py::class_<Component, std::shared_ptr<Component>>(m, "Component")
         .def(py::init<>())
-        .def_readwrite("m_enabled", &Component::m_enabled);
+        .def_readwrite("m_enabled", &Component::m_enabled)
+        .def_readwrite("m_name", &Component::m_name);
 
     py::class_<ControllerComponent, Component,
                std::shared_ptr<ControllerComponent>>(m, "ControllerComponent")

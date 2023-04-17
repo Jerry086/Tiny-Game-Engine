@@ -40,9 +40,6 @@ SpriteComponent::SpriteComponent(
                       numCols) {
     mDest.w = forceScreenWidth;
     mDest.h = forceScreenHeight;
-    std::cout << m_name << std::endl;
-    std::cout << m_spriteSheet << std::endl;
-    std::cout << m_texture << std::endl;
 }
 
 /**
@@ -107,6 +104,10 @@ void SpriteComponent::Update() {
     mDest.y = m_transformComponent->m_position.y;
     // mDest.w = RENDER_WIDTH;
     // mDest.h = RENDER_HEIGHT;
+    if (m_name == "pacman_gameover_screen_SpriteComponent")
+        std::cout << "SpriteComponent::Update() " << m_name << " " << mDest.x
+                  << " " << mDest.y << " " << mDest.w << " " << mDest.h
+                  << std::endl;
 }
 
 /**

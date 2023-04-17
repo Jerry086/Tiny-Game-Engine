@@ -89,6 +89,8 @@ def create_components(go_def_json_object, transform_override=None):
 
         constructor = COMPONENTS[comp_def["component_type"]]
         component = constructor(*typed_args)
+        if "start_disabled" in comp_def.keys() and comp_def["start_disabled"]:
+            component.m_enabled = False
         components.append((comp_def["component_type"], component))
     return components
 
@@ -99,15 +101,15 @@ def create_components(go_def_json_object, transform_override=None):
 # @param json_path The path to the json type definition file
 # @param transform_override A list of transform parameters to override the transform component
 # @return A game object
-def create_go(id, json_path, transform_override=None, go_script_module=None):
+def create_go(name, json_path, transform_override=None, go_script_module=None):
     with open(json_path) as json_data_file:
         go_def_json_object = json.load(json_data_file)
     type_name = go_def_json_object["type_name"]
-    print("Creating game object of type: " + type_name, "with id: " + id)
+    print("Creating game object of type: " + type_name, "with name: " + name)
     components = create_components(
         go_def_json_object, transform_override=transform_override
     )
-    go = mygameengine.GameObject(id)
+    go = mygameengine.GameObject(name)
 
     if "script_module" in go_def_json_object.keys():
         type_script_module = go_def_json_object["script_module"]
@@ -117,8 +119,9 @@ def create_go(id, json_path, transform_override=None, go_script_module=None):
         go.SetPythonScriptModuleName(go_script_module)
 
     for comp_name, component in components:
-        print("adding component: ", comp_name, "as", id + "_" + comp_name)
-        go.AddComponent(id + "_" + comp_name, component)
+        print("adding component: ", comp_name, "as", name + "_" + comp_name)
+        component.m_name = comp_name
+        go.AddComponent(name + "_" + comp_name, component)
     return go
 
 

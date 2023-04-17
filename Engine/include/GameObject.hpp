@@ -105,7 +105,7 @@ class __attribute__((visibility("default"))) GameObject {
         return result;
     }
 
-    std::string gameObject_id;
+    std::string m_name;
 
     bool m_enabled{true};
 
