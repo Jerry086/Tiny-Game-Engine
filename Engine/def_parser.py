@@ -216,38 +216,27 @@ def make_component_dict(*args, **kwargs):
     component_type = kwargs["component_type"]
     if component_type not in COMPONENTS.keys():
         raise ValueError("component_type not found in COMPONENTS")
-    
     res = {
         "component_type": kwargs["component_type"],
         "args": []
     }
-    if component_type == "TransformComponent":
-        if "position" not in kwargs.keys():
-            raise ValueError("position not found in kwargs")
+    kwargs.pop("component_type")
+    for item in kwargs.items():
+        res["args"].append(item)
+    return res
 
-        if "controller" in kwargs.keys() and "behavior" in kwargs.keys():
-            raise ValueError("controller and behavior cannot be used together")
-        if "position" in kwargs.keys() and "direction" in kwargs.keys():
-            res["args"].append({"arg_type": "Vec2", "x": kwargs["direction"][0], "y": kwargs["direction"][1]})
-            res["args"].append({"arg_type": "Vec2", "x": kwargs["position"][0], "y": kwargs["position"][1]})
-        elif "position" in kwargs.keys() and "direction" not in kwargs.keys():
-            res["args"].append({"arg_type": "Vec2", "x": kwargs["position"][0], "y": kwargs["position"][1]})
-        if "controller" in kwargs.keys():
-            res["args"].append({"arg_type": "ControllerComponent"})
-        if "behavior" in kwargs.keys():
-            res["args"].append({"arg_type": "BehaviorComponent"})
-        return res
-    elif component_type == "ControllerComponent":
-        return res
-    elif component_type == "BehaviorComponent":
-        return res
-    elif component_type ==  "SpriteComponent":
-        return res
         
 
 # if __name__ == '__main__':
 #     controller_comp = make_component_dict(component_type="ControllerComponent")
-#     transform_comp = make_component_dict(component_type="TransformComponent", position=(0, 0), direction=(1, 0), controller={})
+
+#     param_dict = {
+#         "component_type": "TransformComponent",
+#         "position": (0, 0),
+#         "direction": (1, 0),
+#         "controllerComponent": {}
+#     }
+#     transform_comp = make_component_dict(**param_dict)
 #     go_def = {"components":[controller_comp, transform_comp]}
 #     components = create_components(go_def)
 #     print(components)

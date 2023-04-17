@@ -1,5 +1,5 @@
 {
-  "type_name": "test_enemy2",
+  "type_name": "enemy2",
   "transform_signature": ["direction", "position", "behavior"],
   "components": [
     {
