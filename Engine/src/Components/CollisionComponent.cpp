@@ -121,8 +121,8 @@ void CollisionComponent::Update() {
 
                 case interactable: {
                     // GameObjectManager::instance().RemoveGameObject(it->first);
-                    ServiceLocator::GetService<GameObjectManager>()
-                        .RemoveGameObject(it->first);
+                    // ServiceLocator::GetService<GameObjectManager>()
+                    //     .RemoveGameObject(it->first);
                     break;
                 }
 
@@ -202,10 +202,6 @@ int CollisionComponent::GetType() { return m_type; }
 
 void CollisionComponent::OnCollision(
     std::shared_ptr<CollisionComponent> other) {
-    // std::cout << "C++ CollisionComponent::OnCollision  - " << m_name << "
-    // with "
-    //           << other->m_name << std::endl;
-
     ServiceLocator::GetService<VariableManager>().SetBool(
         m_name + "_collided_this_frame", true);
 

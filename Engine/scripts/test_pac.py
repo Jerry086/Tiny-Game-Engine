@@ -1,5 +1,7 @@
 import mygameengine
-def collision_component_update():
-    # is_collided = mygameengine.VariableManager.GetBool("test_pac_collision_component_is_collided")
-    # print("collision bool", is_collided)
-    pass
+
+def collision_component_on_collision():
+    other_name = mygameengine.VariableManager.GetString("pac_CollisionComponent_other_name")
+    other_type = mygameengine.VariableManager.GetString("pac_CollisionComponent_other_type")
+    print("collision with", other_name, other_type)
+    mygameengine.GameObjectManager().GetGameObject("pac").m_enabled = False
