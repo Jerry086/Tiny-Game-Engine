@@ -1,3 +1,4 @@
+# import def_parser
 import tkinter as tk
 import tkinter.filedialog
 from tkinter import RIDGE, FLAT, NSEW
@@ -5,8 +6,8 @@ import os
 from .filehandle import *
 import json
 import sys
-sys.path.insert(0,  os.path.abspath('../'))
-import def_parser
+# sys.path.insert(0,  os.path.abspath('../'))
+
 
 class ImageFrame(tk.Frame):
     def __init__(self, parent):
@@ -47,8 +48,8 @@ class LoaderFrame(tk.Frame):
         # Create and place the "Load File" button next to the frame
         self.load_button = tk.Button(
             self, text="Load File", command=self.load_file)
-        self.load_button.grid(column=2, row=0, padx=20, pady=10, )     
-        
+        self.load_button.grid(column=2, row=0, padx=20, pady=10, )
+
         self.load_button = tk.Button(
             self, text="Create GameObject", command=self.createGameObject)
         self.load_button.grid(column=3, row=0, padx=20, pady=10, )
@@ -85,7 +86,7 @@ class LoaderFrame(tk.Frame):
         # Code to load JSON file and fill the dropdown list
         path = tk.filedialog.askopenfilename(title="Open Def File", filetypes=[
                                              ("Json File(.json)", ".json")])
-        print(str(path))
+        # print(str(path))
         self.jsonPath = path
         if (path):
             with open(path, "r") as file:
@@ -96,7 +97,7 @@ class LoaderFrame(tk.Frame):
                         for arg in component['args']:
                             if arg["arg_type"] == "string" and ".bmp" in arg["value"]:
                                 self.comps.append(
-                                    {"name": component["component_type"], "value": arg["value"]})
+                                    {"name": component["component_type"], "value": arg["value"], "restArgs": component['args']})
                                 if component["component_type"] not in self.compNames:
                                     self.compNames.append(
                                         component["component_type"])
@@ -112,13 +113,15 @@ class LoaderFrame(tk.Frame):
                         self.component_var, option))
                 component_menu.update()
                 self.component_var.trace("w", self.on_component_change)
+
     def createGameObject(self):
         # pass
-        playerGO = def_parser.create_go('Player',self.jsonPath)
+        playerGO = def_parser.create_go('Player', self.jsonPath)
         print(playerGO)
-        fts  = [("JSON File", ".json")]
+        fts = [("JSON File", ".json")]
         path = tk.filedialog.asksaveasfilename(title="Save game object",
-                                           filetypes = fts, defaultextension = fts)
+                                               filetypes=fts, defaultextension=fts)
+
 
 class ImageCanvas(tk.Canvas):
     def __init__(self, parent):
