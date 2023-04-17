@@ -87,7 +87,7 @@ PYBIND11_MODULE(mygameengine, m) {
     // });
 
     py::class_<Vec2>(m, "Vec2")
-        .def(py::init<float, float>())
+        .def(py::init<float, float>(), py::arg("x"), py::arg("y"))
         .def_readwrite("x", &Vec2::x)
         .def_readwrite("y", &Vec2::y)
         .def("__add__", &Vec2::operator+)
@@ -110,13 +110,13 @@ PYBIND11_MODULE(mygameengine, m) {
 
     py::class_<TransformComponent, Component,
                std::shared_ptr<TransformComponent>>(m, "TransformComponent")
-        .def(py::init<Vec2 &>(), py::arg("new_position"))
+        .def(py::init<Vec2 &>(), py::arg("position"))
         .def(py::init<Vec2 &, Vec2 &, std::shared_ptr<ControllerComponent> &>(),
-             py::arg("direction"), py::arg("new_position"),
-             py::arg("controller"))
+             py::arg("direction"), py::arg("position"),
+             py::arg("controllerComponent"))
         .def(py::init<Vec2 &, Vec2 &, std::shared_ptr<BehaviorComponent> &>(),
-             py::arg("direction"), py::arg("new_position"),
-             py::arg("controller"))
+             py::arg("direction"), py::arg("position"),
+             py::arg("controllerComponent"))
         .def_readwrite("m_position", &TransformComponent::m_position)
         .def_readwrite("m_speed", &TransformComponent::m_speed);
 
@@ -150,19 +150,8 @@ PYBIND11_MODULE(mygameengine, m) {
                std::shared_ptr<CollisionComponent>>(m, "CollisionComponent")
         .def(py::init<const std::string &,
                       const std::shared_ptr<TransformComponent> &, int, int>(),
-             py::arg("objectType"), py::arg("transform"), py::arg("w"),
-             py::arg("h"))
-        .def(py::init<const std::string &,
-                      const std::shared_ptr<TransformComponent> &, int, int,
-                      const std::unordered_map<std::string, int> &,
-                      const std::unordered_map<std::string, int> &,
-                      const std::vector<std::string> &,
-                      const std::vector<std::string> &,
-                      const std::vector<std::string> &>(),
-             py::arg("objectType"), py::arg("transform"), py::arg("w"),
-             py::arg("h"), py::arg("counters_set"), py::arg("counters"),
-             py::arg("bools_true"), py::arg("bools_false"),
-             py::arg("bools_toggle"));
+             py::arg("objectType"), py::arg("transformComponent"), py::arg("w"),
+             py::arg("h"));
 
     py::class_<ServiceLocator>(m, "ServiceLocator")
         .def_static("Update", &ServiceLocator::Update)
