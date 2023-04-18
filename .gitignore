@@ -17,3 +17,6 @@ Editor/mods/__pycache__
 Engine/scripts/__pycache__/test_player.cpython-38.pyc
 core.*
 scripts/__pycache__
+testbinary
+output
+*.spec
