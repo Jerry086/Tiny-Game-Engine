@@ -49,7 +49,12 @@ You need to have a compiled binary of your game for your operating system (Eithe
 ## Step 3 - Post mortem
 A post mortem in games is a look back at what could be improved. Write a brief (2-3 paragraphs) on what could be improved if you had an additional 8 weeks to work on this project. Where would you allocate time, what tools would you build, would you use any different tools, etc.
 
-*Edit here a draft of your post mortem here if you like--the final copy goes in your 1-page .html website. Think of this section as a good 'reflection' for what you can improve on your next project you complete.*
+- To make games more challenging, we could add a variety of interesting components, such as different types of AI random movement functions.
+- We should embed runtime loaded Python Script earlier. A lot of time was spent on refactoring component code into Python scripts. One feature we did not gave time to implement but would like to is making Python runtime scripts have access to information about the game object they are attached to. This means you can use `this.GetComponent<T>()` instead of hard-coding names and string keys like `GameObjectManager.GetGameObject('some name').GetComponent('component name')`.
+- We need to spend more time on the tilemap editor to implement additional functionalities such as run-time animation and real-time gameplay. Additionally, we should make the GUI more user-friendly.
+- To reduce the time complexity in the `CheckCollision` function of `CollisionComponent`, we can utilize spatial partitioning. Currently, we are using a nested for loop to check collisions between two objects, which has a time complexity of O(n^2). Although it is okay for smaller games like Pacman, it can hinder performance for games with larger scale.
+- We need to improve on our debugging strategies to minimize time spent on bug fixing.
+- We should establish clear responsibilities and roles in the team to avoid confusion and improve efficiency.
 
 ## Step 4 - Website
 

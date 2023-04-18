@@ -10,37 +10,21 @@ The **key** components for your project are:
 
 The following are requirements of your game engine. There is significant freedom in how you achieve them, but I would like you to apply these techniques in your engine.
 
-- [ ] Implement a resource manager
-- [ ] Implement a GUI-based editor/environment for building your game (i.e. An extension of the tilemap editor)
-- [ ] Your engine must be data-driven
-  - [ ] Scripts should be loaded for the gameplay logic
-  - [ ] Other configuration files (e.g. levels) should be loaded at run-time.
-- [ ] Your engine should be component-based **or** use some other logical pattern for organizing game objects (At a minimum you should have a gameobject class).
-- [ ] Something **extra** that gives your engine a 'wow' factor to show off to the TA's and instructors. Highlight this in your video (could be engineering, could be a gameplay mechanic that you designed your engine around, the goal is that it is something non-trivial)
+- [x] Implement a resource manager
+- [x] Implement a GUI-based editor/environment for building your game (i.e. An extension of the tilemap editor)
+- [x] Your engine must be data-driven
+  - [x] Scripts should be loaded for the gameplay logic
+  - [x] Other configuration files (e.g. levels) should be loaded at run-time.
+- [x] Your engine should be component-based **or** use some other logical pattern for organizing game objects (At a minimum you should have a gameobject class).
+- [x] Something **extra** that gives your engine a 'wow' factor to show off to the TA's and instructors. Highlight this in your video (could be engineering, could be a gameplay mechanic that you designed your engine around, the goal is that it is something non-trivial)
 
 ## Gameplan
 
 Given the above requirements, you may use this space to write some notes in. I suggest coming up with a timeline with your team members.
-
-For example:
-
-1. Week 1 - Form groups and agree on project, start dividing some responsibilities
-2. Week 2 - Gather resources,  from previous assignments and start planning
-3. Week 3 - 5 Implementation of Editor and main components of engine
-4. Week 6 - Continue iterating on engine, and build prototype of game.
-5. Week 7 - Put together website and polish off bugs
-
 ### Timeline
-
-*edit if you like*
-
-1. *week 1 goals, and who will work on what*
-2. *week 2 goals, and who will work on what*
-3. *week 3 goals, and who will work on what*
-4. *week 4 goals, and who will work on what*
-5. *week 5 goals, and who will work on what*
-6. *week 6 goals, and who will work on what*
-7. *week 7 goals, and who will work on what*
+week 1: design meeting (next Tuesday after class) + start implement
+week 2: implement game engine +  documentation
+week 3: build the escaping game
 
 
 ## Inspiration!
