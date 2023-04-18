@@ -14,20 +14,23 @@ namespace py = pybind11;
 /**
  * Obtain the instance of the game object manager
  */
-GameObjectManager &GameObjectManager::instance() {
+GameObjectManager &GameObjectManager::instance()
+{
     static GameObjectManager instance;
     return instance;
 }
 /**
  * Start up the game object manager
  */
-void GameObjectManager::StartUp() {
+void GameObjectManager::StartUp()
+{
     // import script directory
     auto sys = py::module_::import("sys");
     auto path = sys.attr("path");
     path.attr("insert")(0, "./scripts");
 
-    for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++) {
+    for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++)
+    {
         it->second->StartUp();
     }
 }
@@ -35,8 +38,10 @@ void GameObjectManager::StartUp() {
  * Shut down the game object manager by shutting down all game objects
  * and removing them from the game object manager
  */
-void GameObjectManager::ShutDown() {
-    for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++) {
+void GameObjectManager::ShutDown()
+{
+    for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++)
+    {
         it->second->ShutDown();
     }
     m_gameobjects.clear();
@@ -45,9 +50,12 @@ void GameObjectManager::ShutDown() {
  * Update all game objects of the game.
  * The order of the update is not important.
  */
-void GameObjectManager::Update() {
-    for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++) {
-        if (!it->second->m_enabled) {
+void GameObjectManager::Update()
+{
+    for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++)
+    {
+        if (!it->second->m_enabled)
+        {
             continue;
         }
         it->second->Update();
@@ -56,39 +64,48 @@ void GameObjectManager::Update() {
 /**
  * Render all game objects of the game
  */
-void GameObjectManager::Render() {
+void GameObjectManager::Render()
+{
     // renders none first
-    for (auto it = m_gameobjects.rbegin(); it != m_gameobjects.rend(); it++) {
-        if (!it->second->m_enabled) {
+    for (auto it = m_gameobjects.rbegin(); it != m_gameobjects.rend(); it++)
+    {
+        if (!it->second->m_enabled)
+        {
             continue;
         }
 
         if (it->second->GetComponents<CollisionComponent>().empty() ||
-            !it->second->GetComponents<CollisionComponent>()[0]
-                    ->GetObjectType() == ObjectType::none) {
+            it->second->GetComponents<CollisionComponent>()[0]
+                    ->GetObjectType() != ObjectType::none)
+        {
             continue;
         }
         it->second->Render();
     }
 
     // then wall
-    for (auto it = m_gameobjects.rbegin(); it != m_gameobjects.rend(); it++) {
-        if (!it->second->m_enabled) {
+    for (auto it = m_gameobjects.rbegin(); it != m_gameobjects.rend(); it++)
+    {
+        if (!it->second->m_enabled)
+        {
             continue;
         }
 
         // renders none first
         if (it->second->GetComponents<CollisionComponent>().empty() ||
-            !it->second->GetComponents<CollisionComponent>()[0]
-                    ->GetObjectType() == ObjectType::wall) {
+            it->second->GetComponents<CollisionComponent>()[0]
+                    ->GetObjectType() != ObjectType::wall)
+        {
             continue;
         }
         it->second->Render();
     }
 
     // then active objects
-    for (auto it = m_gameobjects.rbegin(); it != m_gameobjects.rend(); it++) {
-        if (!it->second->m_enabled) {
+    for (auto it = m_gameobjects.rbegin(); it != m_gameobjects.rend(); it++)
+    {
+        if (!it->second->m_enabled)
+        {
             continue;
         }
 
@@ -97,7 +114,8 @@ void GameObjectManager::Render() {
             it->second->GetComponents<CollisionComponent>()[0]
                     ->GetObjectType() == ObjectType::wall ||
             it->second->GetComponents<CollisionComponent>()[0]
-                    ->GetObjectType() == ObjectType::none) {
+                    ->GetObjectType() == ObjectType::none)
+        {
             continue;
         }
         it->second->Render();
@@ -108,20 +126,23 @@ void GameObjectManager::Render() {
  * be unique.
  */
 void GameObjectManager::AddGameObject(std::string objectID,
-                                      std::shared_ptr<GameObject> go) {
+                                      std::shared_ptr<GameObject> go)
+{
     m_gameobjects.emplace(objectID, go);
 }
 /**
  * Remove a game object from the game object manager by its objectID
  */
-void GameObjectManager::RemoveGameObject(std::string objectID) {
+void GameObjectManager::RemoveGameObject(std::string objectID)
+{
     m_gameobjects.erase(objectID);
 }
 /**
  * Get a game object from the game object manager by its objectID
  */
 std::shared_ptr<GameObject> GameObjectManager::GetGameObject(
-    std::string objectID) {
+    std::string objectID)
+{
     return m_gameobjects[objectID];
 }
 /**
