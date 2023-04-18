@@ -1,7 +1,11 @@
 ## Add any additional notes here
 
 To compile from source, please install pyinstaller first using `pip install pyinstaller`.
-Detailed documentations and guides on compiltation, running the game, ***making your own game*** can be found in the [project website](https://www.notion.so/overainy/66c87ddd2bf046b28e13c338e87ba776?v=7da32e3a48734b65bf7ae694c18acb38&pvs=4). Scroll down for more pages. Make sure to check it out!
+Detailed documentations and guides on compiltation, running the game, ***making your own game*** can be found in the [project website](https://www.notion.so/overainy/66c87ddd2bf046b28e13c338e87ba776?v=7da32e3a48734b65bf7ae694c18acb38&pvs=4). 
+
+Scroll down for more pages like our [wow factors](https://www.notion.so/overainy/Wow-factors-afa7e5f248264b19ab669d2159680b1b?pvs=4), [trailer video](https://www.notion.so/overainy/Video-9c22c9b9c9384066bcfbfb7c9f8608f4?pvs=4), [tutorial on how to make a game with the engine](https://www.notion.so/overainy/Make-your-first-edit-57460899d1654fb7a7011e005b7ca336?pvs=4), and so much more!
+
+Make sure to check them out!
 
 ## Game/Engine Publicity
 
