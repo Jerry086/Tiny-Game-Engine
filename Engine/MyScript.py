@@ -31,9 +31,10 @@ SDL = mygameengine.SDLGraphicsProgram(WINDOW_WIDTH, WINDOW_HEIGHT)
 
 game_object_manager = mygameengine.GameObjectManager()
 
-game_objects = create_scene("./definitions/scenes/scene_def_pacman.json")
-# scene_def_path = os.path.join(script_dir, 'definitions', 'scenes', 'scene_def_pacman.json')
-# game_objects = create_scene(scene_def_path)
+scene_def_path = "./definitions/scenes/scene_def_pacman.json"
+if len(sys.argv) > 1:
+    scene_def_path = sys.argv[1]
+game_objects = create_scene(scene_def_path)
 
 for go_name, go in game_objects:
     game_object_manager.AddGameObject(go_name, go)
