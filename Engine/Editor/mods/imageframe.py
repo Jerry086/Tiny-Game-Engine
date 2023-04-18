@@ -79,8 +79,23 @@ class LoaderFrame(tk.Frame):
             self.parent.imgcanv.newbtnpos = (0, 0)
         for sc in self.comps:
             if (sc['name'] == selected_component):
-                self.parent.imgcanv.MakeButton(
-                    (os.path.abspath("../" + sc["value"]),))
+                x, y, w, h, rowOffset, colOffset = None, None, None, None, None, None
+                for arg in sc['restArgs']:
+                    if arg["arg_name"] == 'w':
+                        w = int(arg["value"])
+                    elif arg["arg_name"] == 'h':
+                        h = int(arg["value"])
+                    elif arg["arg_name"] == 'rowOffset':
+                        rowOffset = int(arg["value"])
+                    elif arg["arg_name"] == 'colOffset':
+                        colOffset = int(arg["value"])
+                if w and h and rowOffset != None and colOffset != None:
+                        x = int(w) * int(colOffset)
+                        y = int(h) * int(rowOffset)
+                abs_path = os.path.abspath("../" + sc["value"])
+                print('abs path', abs_path)
+                print('x', x, 'y', y, 'w', w, 'h', h, 'rowOffset', rowOffset, 'colOffset', colOffset)
+                self.parent.imgcanv.MakeButton((os.path.abspath("../" + sc["value"]),), x=x, y=y, w=w, h=h)
 
     def load_file(self):
         # Code to load JSON file and fill the dropdown list
@@ -140,7 +155,7 @@ class ImageCanvas(tk.Canvas):
         self["yscrollcommand"] = self.parent.ybar.set
         self.grid()
 
-    def OpenImage(self):
+    def OpenImage(self, x=None, y=None, w=None, h=None):
         if self.lastDir == '':
             # access user's home dir and go to the pictures folder
             self.lastDir = os.path.expanduser("~") + "/Pictures"
@@ -148,13 +163,13 @@ class ImageCanvas(tk.Canvas):
         paths = tk.filedialog.askopenfilenames(title="Open Image", initialdir=self.lastDir,
                                                filetypes=[("Images Files", ".png .jpg .jpeg .bmp")])
         self.lastDir = paths  # path to last opened file
-        self.MakeButton(paths)
+        self.MakeButton(paths, x=x, y=y, w=w, h=h)
 
-    def MakeButton(self, paths):
+    def MakeButton(self, paths, x=None, y=None, w=None, h=None):
         # print(paths)
         for p in paths:  # for each file in the selected files
             # add a corresponding button
-            self.buttons.append(TileButton(self, p, self.newbtnpos))
+            self.buttons.append(TileButton(self, p, self.newbtnpos, x=x, y=y, w=w, h=h))
             # make the next button over from the last
             self.newbtnpos = (
                 self.newbtnpos[0] + self.tilesize+2, self.newbtnpos[1])
@@ -174,7 +189,7 @@ class ImageCanvas(tk.Canvas):
 
 
 class TileButton(tk.Button):
-    def __init__(self, parent, path, plc):
+    def __init__(self, parent, path, plc, x=None, y=None, w=None, h=None):
         tk.Button.__init__(self, parent, relief=FLAT)
         self.parent = parent
         self.plc = plc
@@ -184,7 +199,8 @@ class TileButton(tk.Button):
         self.parent.create_window(
             self.plc[0], self.plc[1], window=self, anchor=tk.NW)
         # load the tile our button will represent
-        self.tile = Tile(self.path, self.parent.tilesize)
+        print('tile button init path', path)
+        self.tile = Tile(self.path, self.parent.tilesize, x=x, y=y, w=w, h=h)
         # make the button display the image of the tile it represents
         self["image"] = self.tile.image
         self["command"] = lambda i = len(parent.buttons): parent.selectTile(

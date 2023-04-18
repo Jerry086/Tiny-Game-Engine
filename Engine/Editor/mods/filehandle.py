@@ -6,11 +6,16 @@ import json
 
 
 class Tile():  # class structure to hold images
-    def __init__(self, path, size):
+    def __init__(self, path, size, x=None, y=None, w=None, h=None):
         self.size = size
         self.path = path
         # open a regular PIL image
+        print('Tile init path', path)
         self.image = PIL.Image.open(open(path, 'rb'))
+        # Crop the image based on x, y, w, h
+        print('Tile init', 'x', x, 'y', y, 'w', w, 'h', h, 'path', path)
+        if x != None and y != None and w != None and h != None:
+            self.image = self.image.crop((x, y, x + w, y + h))
         # resize the image to size we want tiles
         self.image = self.image.resize((self.size, self.size))
         # convert image to a tk displayable image

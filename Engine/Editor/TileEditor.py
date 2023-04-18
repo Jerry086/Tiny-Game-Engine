@@ -12,7 +12,7 @@ class MainApp(tk.Tk):
         self.ibox = ImageFrame(self) #creates the box that holds our tiles
         self.tbox = ToolFrame(self) #creates a box that holds our tools
         self.tbar = TopBar(self) #creates the window's topbar
-        self.cframe = CanvasFrame(self, self.title)
+        self.cframe = CanvasFrame(self, self.title) # tilemap edit area
         self.protocol("WM_DELETE_WINDOW", self.Quit) #changes what the window does when we click to close it
         self.mainloop()
         # while True:
