@@ -23,30 +23,31 @@ class FileMenu(tk.Menu):
         self.parent.add_cascade(label = "File", menu=self) #add file menu cascade to the file menu option
 
     def SaveProgress(self,args=None):
-        option = tk.IntVar() # create a holder for the save options
-        self.dialog = tk.Toplevel(self.parent.parent) # create a dialog to hold the radio   
-        self.dialog.title("Choose Save Method")
-        rb1 = tk.Radiobutton(self.dialog, text = "Save only section of map containing tiles (better for using in a game)", variable = option, value = 1)
-        rb1.pack(anchor = tk.W) # add a radio button to dialog box for option 1
-        rb1.select()
-        rb2 = tk.Radiobutton(self.dialog, text = "Save whole tile map with empty sections (better for an intermediate save)", variable = option, value = 2)
-        rb2.pack(anchor = tk.W) # add a radio button to dialog box for option 2
-        btn = tk.Button(self.dialog, text = "Ok", width = 5, command = lambda i = option: self.Save(i))
-        btn.pack() # add a button the user can click when the user has made his/her decision
+        self.Save(0)
+        # option = tk.IntVar() # create a holder for the save options
+        # self.dialog = tk.Toplevel(self.parent.parent) # create a dialog to hold the radio   
+        # self.dialog.title("Choose Save Method")
+        # rb1 = tk.Radiobutton(self.dialog, text = "Save only section of map containing tiles (better for using in a game)", variable = option, value = 1)
+        # rb1.pack(anchor = tk.W) # add a radio button to dialog box for option 1
+        # rb1.select()
+        # rb2 = tk.Radiobutton(self.dialog, text = "Save whole tile map with empty sections (better for an intermediate save)", variable = option, value = 2)
+        # rb2.pack(anchor = tk.W) # add a radio button to dialog box for option 2
+        # btn = tk.Button(self.dialog, text = "Ok", width = 5, command = lambda i = option: self.Save(i))
+        # btn.pack() # add a button the user can click when the user has made his/her decision
 
     def Save(self, var):
-        self.dialog.destroy() #close the dialog window
+        # self.dialog.destroy() #close the dialog window
         self.parent.parent.saved = True # let program know that the user has saved progress.
-        if var.get() ==  1: # get the user's chosen save method
-            c = "part"
-        else:
-            c = "whole"
+        # if var.get() ==  1: # get the user's chosen save method
+        #     c = "part"
+        # else:
+        #     c = "whole"
         
         # make a dialog box with which the user can choose a save location. ,("Python File", ".py .pyw")
         fts  = [("JSON File", ".json"), ("Comma Seperated", ".csv")]
         path = tk.filedialog.asksaveasfilename(title="Save Tile Map",
                                            filetypes = fts, defaultextension = fts)
-        self.parent.parent.tmap.SaveMap(path, c) # save the map to specified file.
+        self.parent.parent.tmap.SaveMap(path, "whole") # save the map to specified file.
 
     def OpenMap(self):
         path = '' # make a dialog box with which the user can specify a file to open.
