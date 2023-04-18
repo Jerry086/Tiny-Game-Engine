@@ -20,10 +20,10 @@ Team Name: *Edit this to something cool here*
 *TODO*:
 Update your Team member Names here (Up to 4).
 
-1. *my name is...*
-2. *my name is...*
-3. *my name is...*
-4. *my name is...*
+1. Zhongyu Wei	
+2. Sze Ka Tse
+3. Arghavan Ayoughi
+4. Yuhan
 
 ## Assignment Milestones
 
