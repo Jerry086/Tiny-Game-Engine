@@ -185,49 +185,132 @@ def create_go(
     return go
 
 
+# def create_tilemap(tilemap_json_object):
+#     if (
+#         "TileMapComponent"
+#         not in tilemap_json_object["components"][-1]["component_type"]
+#     ):
+#         raise ValueError(
+#             "TileMapComponent must be the last component in the tilemap definition file"
+#         )
+#     tilemap_game_objects = []
+#     tilemap_comp_json = tilemap_json_object["components"].pop()
+#     array2D = tilemap_comp_json["args"][0]["value"]
+#     tile_index_to_bad_sprite_jsonarg_dict = {}
+#     sprite_jsonarg_template = {
+#         "component_type": "SpriteComponent",
+#         "args": [
+#             {
+#                 "arg_name": "filename",
+#                 "arg_type": "string",
+#                 "value": "./sprites/Tiles1.bmp",
+#             },
+#             {
+#                 "arg_name": "transformComponent",
+#                 "arg_type": "TransformComponent",
+#             },
+#             {"arg_name": "x", "arg_type": "int", "value": 0},
+#             {"arg_name": "y", "arg_type": "int", "value": 0},
+#             {"arg_name": "w", "arg_type": "int", "value": 64},
+#             {"arg_name": "h", "arg_type": "int", "value": 64},
+#             {"arg_name": "frames", "arg_type": "int", "value": 1},
+#             {"arg_name": "numRows", "arg_type": "int", "value": 8},
+#             {"arg_name": "numCols", "arg_type": "int", "value": 8},
+#             {"arg_name": "forceScreenWidth", "arg_type": "int", "value": 64},
+#             {"arg_name": "forceScreenHeight", "arg_type": "int", "value": 64},
+#             {"arg_name": "rowOffset", "arg_type": "int", "value": 0},
+#             {"arg_name": "colOffset", "arg_type": "int", "value": 0},
+#         ],
+#     }
+#     transform_jsonarg_template = {
+#         "component_type": "TransformComponent",
+#         "args": [
+#             {"arg_name": "position", "arg_type": "Vec2", "x": 300, "y": 500}
+#         ],
+#     }
+#     collision_jsonarg_template = {
+#         "component_type": "CollisionComponent",
+#         "args": [
+#             {"arg_name": "objectType", "arg_type": "string", "value": "wall"},
+#             {
+#                 "arg_name": "transformComponent",
+#                 "arg_type": "TransformComponent",
+#             },
+#             {"arg_name": "w", "arg_type": "int", "value": 64},
+#             {"arg_name": "h", "arg_type": "int", "value": 64},
+#         ],
+#     }
+#     for i in range(len(tilemap_json_object["components"])):
+#         args = tilemap_json_object["components"][i]["args"]
+#         print("tilemap arg", tilemap_json_object["components"][i])
+#         if (
+#             "SpriteComponent"
+#             not in tilemap_json_object["components"][i]["component_type"]
+#         ):
+#             raise ValueError(
+#                 "Tilemap definition file cannot contain components other than SpriteComponent and TileMapComponent"
+#             )
+#         tile_index_to_bad_sprite_jsonarg_dict[i] = tilemap_json_object[
+#             "components"
+#         ][i]
+#     print('size of tile_index_to_bad_sprite_jsonarg_dict',len( tile_index_to_bad_sprite_jsonarg_dict))
+#     for i in range(len(array2D)):
+#         for j in range(len(array2D[i])):
+#             tile_index = array2D[i][j] - 1
+#             print("making go for tile at row col", i, j, "with index", tile_index)
+#             if tile_index < 0 or tile_index >= len(tile_index_to_bad_sprite_jsonarg_dict):
+#                 continue
+#             sprite_bad_jsonarg = tile_index_to_bad_sprite_jsonarg_dict[tile_index]
+#             sprite_jsonarg = sprite_jsonarg_template.copy()
+#             for argname, argtype, argvalue in sprite_bad_jsonarg["args"]:
+#                 if argname == "transformComponent" or argname == "objectType" or argname == 'id':
+#                     continue
+#                 if argname == "path":
+#                     sprite_jsonarg["args"][0]["value"] = argvalue
+#                     continue
+#                 for arg in sprite_jsonarg["args"]:
+#                     if arg["arg_name"] == argname:
+#                         arg["value"] = argvalue
+#             print("sprite_jsonarg", sprite_jsonarg)
+#             w, h = 0, 0
+#             for arg in sprite_jsonarg["args"]:
+#                 if arg["arg_name"] == "w":
+#                     w = arg["value"]
+#                 elif arg["arg_name"] == "h":
+#                     h = arg["value"]
+#             # rowOffset = sprite_kwargs['rowOffset'] if 'rowOffset' in sprite_kwargs.keys() else 0
+#             # colOffset = sprite_kwargs['colOffset'] if 'colOffset' in sprite_kwargs.keys() else 0
+#             x, y = j * GRID_SIZE , i * GRID_SIZE
+#             print("x", x, "y", y, "w", w, "h", h)
+#             collision_jsonarg = collision_jsonarg_template.copy()
+#             collision_jsonarg["args"][2]["value"] = w
+#             collision_jsonarg["args"][3]["value"] = h
+#             transform_jsonarg = transform_jsonarg_template.copy()
+#             transform_jsonarg["args"][0]["x"] = x
+#             transform_jsonarg["args"][0]["y"] = y
+#             go_name = "tile_" + str(i) + "_" + str(j)
+#             go_json_obj = {}
+#             go_json_obj["type_name"] = go_name
+#             go_json_obj["components"] = [
+#                 transform_jsonarg,
+#                 sprite_jsonarg,
+#                 collision_jsonarg,
+#             ]
+#             tilemap_game_objects.append(
+#                 (go_name, create_go(go_name, json_obj=go_json_obj))
+#             )
+#     return tilemap_game_objects
+
+
 def create_tilemap(tilemap_json_object):
-    if (
-        "TileMapComponent"
-        not in tilemap_json_object["components"][-1]["component_type"]
-    ):
-        raise ValueError(
-            "TileMapComponent must be the last component in the tilemap definition file"
-        )
-    tilemap_game_objects = []
-    tilemap_comp_json = tilemap_json_object["components"].pop()
-    array2D = tilemap_comp_json["args"][0]["value"]
-    tile_index_to_bad_sprite_jsonarg_dict = {}
-    sprite_jsonarg_template = {
-        "component_type": "SpriteComponent",
-        "args": [
-            {
-                "arg_name": "filename",
-                "arg_type": "string",
-                "value": "./sprites/Tiles1.bmp",
-            },
-            {
-                "arg_name": "transformComponent",
-                "arg_type": "TransformComponent",
-            },
-            {"arg_name": "x", "arg_type": "int", "value": 0},
-            {"arg_name": "y", "arg_type": "int", "value": 0},
-            {"arg_name": "w", "arg_type": "int", "value": 64},
-            {"arg_name": "h", "arg_type": "int", "value": 64},
-            {"arg_name": "frames", "arg_type": "int", "value": 1},
-            {"arg_name": "numRows", "arg_type": "int", "value": 8},
-            {"arg_name": "numCols", "arg_type": "int", "value": 8},
-            {"arg_name": "forceScreenWidth", "arg_type": "int", "value": 64},
-            {"arg_name": "forceScreenHeight", "arg_type": "int", "value": 64},
-            {"arg_name": "rowOffset", "arg_type": "int", "value": 0},
-            {"arg_name": "colOffset", "arg_type": "int", "value": 0},
-        ],
-    }
+
     transform_jsonarg_template = {
         "component_type": "TransformComponent",
         "args": [
-            {"arg_name": "position", "arg_type": "Vec2", "x": 300, "y": 500}
+            {"arg_name": "position", "arg_type": "Vec2", "x": 0, "y": 0}
         ],
     }
+
     collision_jsonarg_template = {
         "component_type": "CollisionComponent",
         "args": [
@@ -236,70 +319,38 @@ def create_tilemap(tilemap_json_object):
                 "arg_name": "transformComponent",
                 "arg_type": "TransformComponent",
             },
-            {"arg_name": "w", "arg_type": "int", "value": 64},
-            {"arg_name": "h", "arg_type": "int", "value": 64},
+            {"arg_name": "w", "arg_type": "int", "value": GRID_SIZE},
+            {"arg_name": "h", "arg_type": "int", "value": GRID_SIZE},
         ],
     }
-    for i in range(len(tilemap_json_object["components"])):
-        args = tilemap_json_object["components"][i]["args"]
-        print("tilemap arg", tilemap_json_object["components"][i])
-        if (
-            "SpriteComponent"
-            not in tilemap_json_object["components"][i]["component_type"]
-        ):
-            raise ValueError(
-                "Tilemap definition file cannot contain components other than SpriteComponent and TileMapComponent"
-            )
-        tile_index_to_bad_sprite_jsonarg_dict[i] = tilemap_json_object[
-            "components"
-        ][i]
-    print('size of tile_index_to_bad_sprite_jsonarg_dict',len( tile_index_to_bad_sprite_jsonarg_dict))
-    for i in range(len(array2D)):
-        for j in range(len(array2D[i])):
-            tile_index = array2D[i][j] - 1
-            print("making go for tile at row col", i, j, "with index", tile_index)
-            if tile_index < 0 or tile_index >= len(tile_index_to_bad_sprite_jsonarg_dict):
+    gos = []
+    for i in range(len(tilemap_json_object["tile_array"])):
+        for j in range(len(tilemap_json_object["tile_array"][i])):
+            tile_index = tilemap_json_object["tile_array"][i][j] - 1
+            if tile_index < 0 or tile_index >= len(tilemap_json_object["tile_jsons"]):
                 continue
-            sprite_bad_jsonarg = tile_index_to_bad_sprite_jsonarg_dict[tile_index]
-            sprite_jsonarg = sprite_jsonarg_template.copy()
-            for argname, argtype, argvalue in sprite_bad_jsonarg["args"]:
-                if argname == "transformComponent" or argname == "objectType" or argname == 'id':
+            tile_json_path = tilemap_json_object["tile_jsons"][tile_index]
+            tile_json_obj = read_json(tile_json_path)
+            print('tile_json_obj', tile_json_obj)
+            tile_json_obj["type_name"] = tile_json_obj["type_name"] + "_" + str(i) + "_" + str(j)
+            go_name = tile_json_obj["type_name"]
+            if "CollisionComponent" not in [comp["component_type"] for comp in tile_json_obj["components"]]:
+                tile_json_obj["components"].insert(0, collision_jsonarg_template)
+            if "TransformComponent" not in [comp["component_type"] for comp in tile_json_obj["components"]]:
+                tile_json_obj["components"].insert(0, transform_jsonarg_template)
+            for comp in tile_json_obj["components"]:
+                if "TransformComponent" not in comp["component_type"]:
                     continue
-                if argname == "path":
-                    sprite_jsonarg["args"][0]["value"] = argvalue
-                    continue
-                for arg in sprite_jsonarg["args"]:
-                    if arg["arg_name"] == argname:
-                        arg["value"] = argvalue
-            print("sprite_jsonarg", sprite_jsonarg)
-            w, h = 0, 0
-            for arg in sprite_jsonarg["args"]:
-                if arg["arg_name"] == "w":
-                    w = arg["value"]
-                elif arg["arg_name"] == "h":
-                    h = arg["value"]
-            # rowOffset = sprite_kwargs['rowOffset'] if 'rowOffset' in sprite_kwargs.keys() else 0
-            # colOffset = sprite_kwargs['colOffset'] if 'colOffset' in sprite_kwargs.keys() else 0
-            x, y = j * GRID_SIZE , i * GRID_SIZE
-            print("x", x, "y", y, "w", w, "h", h)
-            collision_jsonarg = collision_jsonarg_template.copy()
-            collision_jsonarg["args"][2]["value"] = w
-            collision_jsonarg["args"][3]["value"] = h
-            transform_jsonarg = transform_jsonarg_template.copy()
-            transform_jsonarg["args"][0]["x"] = x
-            transform_jsonarg["args"][0]["y"] = y
-            go_name = "tile_" + str(i) + "_" + str(j)
-            go_json_obj = {}
-            go_json_obj["type_name"] = go_name
-            go_json_obj["components"] = [
-                transform_jsonarg,
-                sprite_jsonarg,
-                collision_jsonarg,
-            ]
-            tilemap_game_objects.append(
-                (go_name, create_go(go_name, json_obj=go_json_obj))
-            )
-    return tilemap_game_objects
+                for arg in comp["args"]:
+                    if "position" not in arg["arg_name"]:
+                        continue
+                    arg["x"] = j * GRID_SIZE
+                    arg["y"] = i * GRID_SIZE
+            go = create_go(go_name, json_obj=tile_json_obj)
+            gos.append((go_name, go))
+    return gos
+            
+            
 
 
 # @brief Creates a scene from a json scene definition file
