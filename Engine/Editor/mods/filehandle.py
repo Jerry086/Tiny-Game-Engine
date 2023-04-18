@@ -241,7 +241,7 @@ class TileMap():
                 #                     {"component_type": cmps['name'], "args": args})
             
 
-                paths["tile_jsons"] = self.parent.tmap.jsons
+                paths["tile_jsons"] = self.parent.tmap.jsons[::-1]
                 paths["tile_array"] = data_array
 
                 # Create a dictionary with paths and data keys

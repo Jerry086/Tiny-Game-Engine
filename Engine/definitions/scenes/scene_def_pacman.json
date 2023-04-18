@@ -11,8 +11,8 @@
         },
         {
           "param": "position",
-          "x": 100,
-          "y": 100
+          "x": 640,
+          "y": 360
         },
         {
           "param": "controller"
@@ -49,8 +49,8 @@
         },
         {
           "param": "position",
-          "x": 500,
-          "y": 100
+          "x": 200,
+          "y": 128
         },
         {
           "param": "behavior"
@@ -73,6 +73,7 @@
       "definition_file": "./definitions/game_objects/pacman_gameover_screen.json"
     }
   ],
-  "wall_definition": "./definitions/tilemaps/pacman-wall.json"
+  "wall_definition": "./definitions/tilemaps/pacman-wall.json",
+  "ground_definition": "./definitions/tilemaps/pacman-ground.json"
 
 }
