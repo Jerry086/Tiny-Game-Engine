@@ -21,6 +21,8 @@ spec.loader.exec_module(mygameengine)
 
 # import mygameengine
 
+import sys
+sys.path.append('./Assets/utils')
 from def_parser import create_scene
 import time
 

@@ -50,7 +50,7 @@ if __name__ == '__main__':
             os.rename("tmp/dist/TinyEngineGame", "bin/TinyEngineGame")
             os.rename("mygameengine.so", "bin/mygameengine.so")
             shutil.rmtree("tmp")
-        ignore=lambda src,names: exclude_directories(src, names, ["buildscripts", "utils"])
+        ignore=lambda src,names: exclude_directories(src, names, ["buildscripts"])
         print("Build finished. Run the game with the following command:")
         print("    ./bin/TinyEngineGame <optional:override scene definition file>")
 
