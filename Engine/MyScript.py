@@ -26,6 +26,8 @@ import time
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 768
+SCREEN_FPS = 30
+SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS
 
 SDL = mygameengine.SDLGraphicsProgram(WINDOW_WIDTH, WINDOW_HEIGHT)
 
@@ -43,6 +45,8 @@ game_object_manager.StartUp()
 
 print("Setting up game loop")
 while not mygameengine.GameManager.IsQuit():
+    start_time = time.time()
+
     SDL.clear()
 
     mygameengine.ServiceLocator.Update()
@@ -52,7 +56,12 @@ while not mygameengine.GameManager.IsQuit():
     # game_object_manager.Render()
 
     SDL.flip()
-    SDL.delay(50)
+
+    end_time = time.time()
+    dt = end_time - start_time
+    if dt < SCREEN_TICKS_PER_FRAME:
+        SDL.delay(int((SCREEN_TICKS_PER_FRAME - dt)))
+
 game_object_manager.ShutDown()
 # mygameengine.GameManager.ShowGameOverPopup()
 SDL.ShutDown()

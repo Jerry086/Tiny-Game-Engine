@@ -12,7 +12,7 @@
         {
           "param": "position",
           "x": 640,
-          "y": 360
+          "y": 200
         },
         {
           "param": "controller"
@@ -63,7 +63,7 @@
       "transform_override": [
         {
           "param": "position",
-          "x": 300,
+          "x": 250,
           "y": 500
         }
       ]
