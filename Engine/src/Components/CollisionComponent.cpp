@@ -73,7 +73,8 @@ void CollisionComponent::Update() {
 
         std::shared_ptr<CollisionComponent> other = collisionComponents[0];
         // continue if the object is not collidable or the object is itself
-        if (other == nullptr || m_objectType_enum == other->m_objectType_enum)
+        if (other == nullptr || m_objectType_enum == other->m_objectType_enum ||
+            other->m_objectType_enum == none)
             continue;
 
         Vec2 penetration = CheckCollision(other);
@@ -81,6 +82,11 @@ void CollisionComponent::Update() {
         OnCollision(other);
         if (other->m_objectType_enum == wall) {
             m_transformer->m_position += penetration;
+            // if (other->m_parent->GetComponents<BehaviorComponent>().size() >
+            //     0) {
+            //     other->m_parent->GetComponents<BehaviorComponent>()[0]
+            //         ->m_position += penetration;
+            // }
         }
     }
 }

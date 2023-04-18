@@ -193,22 +193,34 @@ class TileMap():
             # if the user does not want to compress output, use the entire map.
             arraydata = self.tilearray
         print(arraydata)
-        for row in arraydata:
-            for tile in row:
-                # print(tile)
-                found = False
-                count = 0
-                for p in pathtypes:  # finds each image path and assigns it a number...
-                    if tile == p:
-                        found = True
-                        break
-                    else:
-                        count += 1
-                if found == False and tile != " " and tile != "":
-                    pathtypes.append(tile)
-                # ...the numbers are added to the output
-                output += str(count) + ","
-            output += "\n"
+        
+        jsons = self.parent.tmap.jsons[::-1]
+        # for row in arraydata:
+        #     for tile in row:
+        #         # print(tile)
+        #         found = False
+        #         count = 0
+        #         for p in pathtypes:  # finds each image path and assigns it a number...
+        #             if tile == p:
+        #                 found = True
+        #                 break
+        #             else:
+        #                 count += 1
+        #         if found == False and tile != " " and tile != "":
+        #             pathtypes.append(tile)
+        #         # ...the numbers are added to the output
+        #         output += str(count) + ","
+        #     output += "\n"
+
+        arraydata = []
+        for row in self.tilearray:
+            rowarray = []
+            for tile_json_path in row:
+                index = jsons.index(tile_json_path)+1 if tile_json_path in jsons else -1
+                rowarray.append(index)
+            arraydata.append(rowarray)
+
+                
         try:  # use error handling in case file cannot be written to.
             # print(self.parent.ibox.loader.comps)
             data = output.split("\n")
@@ -216,13 +228,15 @@ class TileMap():
             if filetype == ".json":
                 # paths = []
                 paths = {}
+                paths["tile_jsons"] = jsons
                 # Convert the data array to an array of arrays of integers
-                data_array = []
-                for row in data:
-                    if row:
-                        data_array.append([int(num)
-                                          for num in row.split(",") if num])
+                # data_array = []
+                # for row in data:
+                #     if row:
+                #         data_array.append([int(num)
+                #                           for num in row.split(",") if num])
 
+                paths["tile_array"] = arraydata
                 # for i, pathImg in enumerate(pathtypes):
                 #     if i > 0:
                 #         for cmps in self.parent.ibox.loader.comps:
@@ -241,8 +255,6 @@ class TileMap():
                 #                     {"component_type": cmps['name'], "args": args})
             
 
-                paths["tile_jsons"] = self.parent.tmap.jsons[::-1]
-                paths["tile_array"] = data_array
 
                 # Create a dictionary with paths and data keys
                 # output_dict = {"type_name": "test_tilemap",
