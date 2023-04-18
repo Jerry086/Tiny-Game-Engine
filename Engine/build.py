@@ -4,8 +4,8 @@ import argparse
 import shutil
 
 ENGINE_BUILD_FILE = {
-    "MAC": "macbuild.py",
-    "LINUX": "linuxbuild.py",
+    "MAC": "./Assets/buildscripts/macbuild.py",
+    "LINUX": "./Assets/buildscripts/linuxbuild.py",
 }
 
 if __name__ == '__main__':
@@ -23,14 +23,14 @@ if __name__ == '__main__':
         os.makedirs("bin", exist_ok=True)
         if args.game_only:
             print(f"Building game only for platform {args.platform}")
-            os.system("pyinstaller --onefile --additional-hooks-dir=. --distpath=tmp/dist --workpath=tmp/build -n TinyEngineGame MyScript.py")
+            os.system("pyinstaller --onefile --additional-hooks-dir=./buildscripts --distpath=tmp/dist --workpath=tmp/build -n TinyEngineGame MyScript.py")
         elif args.engine_only:
             print(f"Building engine only for platform {args.platform}")
             os.system(f"python {ENGINE_BUILD_FILE[args.platform]}")
         else:
             print(f"Building everything for platform {args.platform}")
             os.system(f"python {ENGINE_BUILD_FILE[args.platform]}")
-            os.system("pyinstaller --onefile --additional-hooks-dir=. --distpath=tmp/dist --workpath=tmp/build -n TinyEngineGame MyScript.py")
+            os.system("pyinstaller --onefile --additional-hooks-dir=./buildscripts --distpath=tmp/dist --workpath=tmp/build -n TinyEngineGame MyScript.py")
         
 
     except Exception as e:
@@ -51,5 +51,5 @@ if __name__ == '__main__':
         shutil.copytree("scripts", "bin/scripts", dirs_exist_ok=True)
         shutil.copytree("sprites", "bin/sprites", dirs_exist_ok=True)
         print("Build finished. Run the game with the following command:")
-        print("    ./TinyEngineGame <optional:override scene definition file>")
+        print("    ./bin/TinyEngineGame <optional:override scene definition file>")
 
