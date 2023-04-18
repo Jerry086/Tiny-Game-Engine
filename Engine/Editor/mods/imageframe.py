@@ -142,7 +142,7 @@ class LoaderFrame(tk.Frame):
                     #         self.component_var, option))
                     # component_menu.update()
                     # self.component_var.trace("w", self.on_component_change)
-                    self.on_component_change()
+        self.on_component_change()
 
     def createGameObject(self):
         pass
