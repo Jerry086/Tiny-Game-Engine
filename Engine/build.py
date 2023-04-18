@@ -4,8 +4,8 @@ import argparse
 import shutil
 
 ENGINE_BUILD_FILE = {
-    "MAC": "macbuild.py",
-    "LINUX": "linuxbuild.py",
+    "MAC": "Assets/buildscripts/macbuild.py",
+    "LINUX": "Assets/buildscripts/linuxbuild.py",
 }
 
 def exclude_directories(src, names, excluded_dirs):
