@@ -54,6 +54,18 @@ if __name__ == '__main__':
         shutil.copytree("Assets/sprites", "bin/Assets/sprites", dirs_exist_ok=True)
         print("Build finished. Run the game with the following command:")
         print("    ./bin/TinyEngineGame <optional:override scene definition file>")
-        # print("Note that you will need an Asset folder for the game to run.")
-        # print("File structure:")
+        print("Note that you will need an Asset folder for the game to run.")
+        print("A sample asset folder is provided in the bin folder for you.")
+        print("File structure:")
+        print("""
+            .
+            └── Assets
+                ├── definitions
+                │   ├── game_objects
+                │   ├── scenes
+                │   ├── tilemaps
+                │   └── tiles
+                ├── scripts
+                └── sprites
+            └── TinyEngineGame""")
 
