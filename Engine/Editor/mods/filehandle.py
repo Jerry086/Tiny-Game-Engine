@@ -31,6 +31,7 @@ class TileMap():
         # create a tilemap matrix and a canvas object matrix of specified mapsize
         self.tilearray = []
         self.jsons = []
+        self.relative_jsons = []
         for i in range(self.mapsizeY):
             row = []
             for j in range(self.mapsizeX):
@@ -195,6 +196,7 @@ class TileMap():
         print(arraydata)
         
         jsons = self.parent.tmap.jsons[::-1]
+        relative_jsons = self.parent.tmap.relative_jsons[::-1]
         # for row in arraydata:
         #     for tile in row:
         #         # print(tile)
@@ -216,7 +218,7 @@ class TileMap():
         for row in self.tilearray:
             rowarray = []
             for tile_json_path in row:
-                index = jsons.index(tile_json_path)+1 if tile_json_path in jsons else -1
+                index = jsons.index(tile_json_path)+1 if tile_json_path in jsons else 0
                 rowarray.append(index)
             arraydata.append(rowarray)
 
@@ -228,7 +230,7 @@ class TileMap():
             if filetype == ".json":
                 # paths = []
                 paths = {}
-                paths["tile_jsons"] = jsons
+                paths["tile_jsons"] = relative_jsons
                 # Convert the data array to an array of arrays of integers
                 # data_array = []
                 # for row in data:
