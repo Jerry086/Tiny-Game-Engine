@@ -21,26 +21,10 @@ The following are requirements of your game engine. There is significant freedom
 ## Gameplan
 
 Given the above requirements, you may use this space to write some notes in. I suggest coming up with a timeline with your team members.
-
-For example:
-
-1. Week 1 - Form groups and agree on project, start dividing some responsibilities
-2. Week 2 - Gather resources,  from previous assignments and start planning
-3. Week 3 - 5 Implementation of Editor and main components of engine
-4. Week 6 - Continue iterating on engine, and build prototype of game.
-5. Week 7 - Put together website and polish off bugs
-
 ### Timeline
-
-*edit if you like*
-
-1. *week 1 goals, and who will work on what*
-2. *week 2 goals, and who will work on what*
-3. *week 3 goals, and who will work on what*
-4. *week 4 goals, and who will work on what*
-5. *week 5 goals, and who will work on what*
-6. *week 6 goals, and who will work on what*
-7. *week 7 goals, and who will work on what*
+week 1: design meeting (next Tuesday after class) + start implement
+week 2: implement game engine +  documentation
+week 3: build the escaping game
 
 
 ## Inspiration!
