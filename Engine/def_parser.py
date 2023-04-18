@@ -1,6 +1,8 @@
 import mygameengine
 import json
 
+GRID_SIZE = 64
+
 ## @brief A dictionary of component name strings to their respective classes
 COMPONENTS = {
     "ControllerComponent": mygameengine.ControllerComponent,
@@ -251,13 +253,14 @@ def create_tilemap(tilemap_json_object):
         tile_index_to_bad_sprite_jsonarg_dict[i] = tilemap_json_object[
             "components"
         ][i]
+    print('size of tile_index_to_bad_sprite_jsonarg_dict',len( tile_index_to_bad_sprite_jsonarg_dict))
     for i in range(len(array2D)):
         for j in range(len(array2D[i])):
-            index = array2D[i][j] - 1
-            if index < 0 or index >= len(tile_index_to_bad_sprite_jsonarg_dict):
+            tile_index = array2D[i][j] - 1
+            print("making go for tile at row col", i, j, "with index", tile_index)
+            if tile_index < 0 or tile_index >= len(tile_index_to_bad_sprite_jsonarg_dict):
                 continue
-            print("making go for tile at row col", i, j, "with index", index)
-            sprite_bad_jsonarg = tile_index_to_bad_sprite_jsonarg_dict[index]
+            sprite_bad_jsonarg = tile_index_to_bad_sprite_jsonarg_dict[tile_index]
             sprite_jsonarg = sprite_jsonarg_template.copy()
             for argname, argtype, argvalue in sprite_bad_jsonarg["args"]:
                 if argname == "transformComponent" or argname == "objectType" or argname == 'id':
@@ -268,7 +271,7 @@ def create_tilemap(tilemap_json_object):
                 for arg in sprite_jsonarg["args"]:
                     if arg["arg_name"] == argname:
                         arg["value"] = argvalue
-            print("sprite json arg", sprite_jsonarg)
+            print("sprite_jsonarg", sprite_jsonarg)
             w, h = 0, 0
             for arg in sprite_jsonarg["args"]:
                 if arg["arg_name"] == "w":
@@ -277,7 +280,7 @@ def create_tilemap(tilemap_json_object):
                     h = arg["value"]
             # rowOffset = sprite_kwargs['rowOffset'] if 'rowOffset' in sprite_kwargs.keys() else 0
             # colOffset = sprite_kwargs['colOffset'] if 'colOffset' in sprite_kwargs.keys() else 0
-            x, y = j * w, i * h
+            x, y = j * GRID_SIZE , i * GRID_SIZE
             print("x", x, "y", y, "w", w, "h", h)
             collision_jsonarg = collision_jsonarg_template.copy()
             collision_jsonarg["args"][2]["value"] = w

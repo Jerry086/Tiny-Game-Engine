@@ -101,7 +101,8 @@ class CanvasMap(tk.Canvas):
         if self.parent.parent.tbox.tool == "click":
             # easy reference to the current selected image
             img = self.parent.parent.ibox.currentImage
-            path = self.parent.parent.ibox.currentImagePath
+            # path = self.parent.parent.ibox.currentImagePath
+            path = self.parent.parent.ibox.currentJsonPath
             cmpType = self.parent.parent.ibox.currentComponent
             # if len(img) == 0:
             #     return messagebox.showwarning(title="Error",message="Please select image first")
@@ -175,7 +176,8 @@ class CanvasMap(tk.Canvas):
         tm = self.parent.parent.tmap  # easy reference to the entire tilemap array
         # easy reference to the current selected image
         img = self.parent.parent.ibox.currentImage
-        path = self.parent.parent.ibox.currentImagePath  # find the image location
+        # path = self.parent.parent.ibox.currentImagePath  # find the image location
+        path = self.parent.parent.ibox.currentJsonPath  # find the image location
         # if a tile is already in the specified position
         if tm.canvasarray[j + pos2][i + pos1] != " ":
             self.delete(tm.canvasarray[j + pos2][i + pos1])  # erase tile

@@ -30,6 +30,7 @@ class TileMap():
         self.parent = parent
         # create a tilemap matrix and a canvas object matrix of specified mapsize
         self.tilearray = []
+        self.jsons = []
         for i in range(self.mapsizeY):
             row = []
             for j in range(self.mapsizeX):
@@ -190,7 +191,7 @@ class TileMap():
         else:
             # if the user does not want to compress output, use the entire map.
             arraydata = self.tilearray
-        # print(arraydata)
+        print(arraydata)
         for row in arraydata:
             for tile in row:
                 # print(tile)
