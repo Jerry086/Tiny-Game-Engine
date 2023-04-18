@@ -1,16 +1,22 @@
 ## Add any additional notes here
 
-Please install pyinstaller first using `pip install pyinstaller `
+To compile from source, please install pyinstaller first using `pip install pyinstaller`.
+Detailed documentations and guides on compiltation, running the game, ***making your own game*** can be found in the [project website](https://www.notion.so/overainy/66c87ddd2bf046b28e13c338e87ba776?v=7da32e3a48734b65bf7ae694c18acb38&pvs=4). Scroll down for more pages. Make sure to check it out!
 
 ## Game/Engine Publicity
 
 **Project Website**: https://overainy.notion.site/66c87ddd2bf046b28e13c338e87ba776?v=7da32e3a48734b65bf7ae694c18acb38
 
 ## Compilation Instructions
+See [this page](https://www.notion.so/overainy/How-to-Compile-248225d8e1dd4c77815eb094d2d9d972?pvs=4) in project website for detailed compilation instructions.
 
-For compiling binary files for MAC users, please run `python build.py --platform=MAC --all` under `Engine` directory. Then please run `./TinyEngineGame` inside `bin` folder.
+For compiling binary files for MAC users, please run `python build.py --platform=MAC --all` under `Engine` directory. 
 
-For other platform users, please run corresbonding building files (`python linuxbuild.py` for linux user etc.) and the run `python MyScript.py` to start the game.
+For Linux users, run `python build.py --platform=LINUX --all` under `Engine` directory.
+
+Then to start Pacman, please run `./TinyEngineGame` inside `bin` folder. You may also refer to [this page](https://www.notion.so/overainy/How-to-run-Pacman-0694044136dd4efdb7117d69134b1ab2?pvs=4) for further instructions.
+
+No support for Windows as of now.
 
 
 ## Project Hieararchy
