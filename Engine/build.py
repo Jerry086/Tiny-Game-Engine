@@ -26,14 +26,14 @@ if __name__ == '__main__':
         os.makedirs("bin", exist_ok=True)
         if args.game_only:
             print(f"Building game only for platform {args.platform}")
-            os.system("pyinstaller --onefile --additional-hooks-dir=./buildscripts --distpath=tmp/dist --workpath=tmp/build -n TinyEngineGame MyScript.py")
+            os.system("pyinstaller --onefile --additional-hooks-dir=./buildscripts --distpath=tmp/dist --workpath=tmp/build -n TinyEnginePacman pacman_game.py")
         elif args.engine_only:
             print(f"Building engine only for platform {args.platform}")
             os.system(f"python {ENGINE_BUILD_FILE[args.platform]}")
         else:
             print(f"Building everything for platform {args.platform}")
             os.system(f"python {ENGINE_BUILD_FILE[args.platform]}")
-            os.system("pyinstaller --onefile --additional-hooks-dir=./buildscripts --distpath=tmp/dist --workpath=tmp/build -n TinyEngineGame MyScript.py")
+            os.system("pyinstaller --onefile --additional-hooks-dir=./buildscripts --distpath=tmp/dist --workpath=tmp/build -n TinyEnginePacman pacman_game.py")
         
 
     except Exception as e:
@@ -42,15 +42,16 @@ if __name__ == '__main__':
         exit(-1)
     finally: 
         if args.game_only:
-            os.rename("tmp/dist/TinyEngineGame", "bin/TinyEngineGame")
+            os.rename("tmp/dist/TinyEnginePacman", "bin/TinyEnginePacman")
             shutil.rmtree("tmp")
         elif args.engine_only:
             os.rename("mygameengine.so", "bin/mygameengine.so")
         else:
-            os.rename("tmp/dist/TinyEngineGame", "bin/TinyEngineGame")
-            os.rename("mygameengine.so", "bin/mygameengine.so")
+            os.rename("tmp/dist/TinyEnginePacman", "bin/TinyEnginePacman")
+            os.remove("mygameengine.so")
             shutil.rmtree("tmp")
-        ignore=lambda src,names: exclude_directories(src, names, ["buildscripts"])
+        shutil.rmtree("bin/Assets")
+        shutil.copytree("Assets", "bin/Assets", ignore=lambda src,names: exclude_directories(src, names, ["buildscripts"]))
         print("Build finished. Run the game with the following command:")
-        print("    ./bin/TinyEngineGame <optional:override scene definition file>")
+        print("    ./bin/TinyEnginePacman <optional:override scene definition file>")
 

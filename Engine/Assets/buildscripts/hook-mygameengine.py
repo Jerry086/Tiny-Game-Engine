@@ -10,3 +10,5 @@ datas += collect_data_files('./Assets/definitions', include_py_files=False, subd
 datas += collect_data_files('./Assets/sprites', include_py_files=False, subdir='./Assets/sprites')
 
 # Add more directories as needed
+
+print("Pyinstaller additional hooks")
