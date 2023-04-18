@@ -73,5 +73,7 @@
       "definition_file": "./definitions/game_objects/pacman_gameover_screen.json"
     }
   ],
-  "tilemap_definition": "./definitions/tilemaps/1.json"
+  "wall_definition": "./definitions/tilemaps/1.json",
+  "ground_definition": "./definitions/tilemaps/9.json"
+
 }

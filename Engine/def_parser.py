@@ -302,7 +302,7 @@ def create_go(
 #     return tilemap_game_objects
 
 
-def create_tilemap(tilemap_json_object):
+def create_tilemap(tilemap_json_object, isGround=False):
 
     transform_jsonarg_template = {
         "component_type": "TransformComponent",
@@ -323,6 +323,8 @@ def create_tilemap(tilemap_json_object):
             {"arg_name": "h", "arg_type": "int", "value": GRID_SIZE},
         ],
     }
+    if isGround:
+        collision_jsonarg_template["args"][0]["value"] = "none"
     gos = []
     for i in range(len(tilemap_json_object["tile_array"])):
         for j in range(len(tilemap_json_object["tile_array"][i])):
@@ -361,9 +363,13 @@ def create_scene(scene_def_json_path):
     with open(scene_def_json_path) as scene_def_json_file:
         scene_def_json_object = json.load(scene_def_json_file)
 
-    tilemap_path = scene_def_json_object["tilemap_definition"]
-    with open(tilemap_path) as tilemap_json_file:
-        tilemap_json_object = json.load(tilemap_json_file)
+    wall_def_json_object, ground_def_json_object = None, None
+    if "wall_definition" in scene_def_json_object.keys():
+        wall_def_path = scene_def_json_object["wall_definition"]
+        wall_def_json_object = read_json(wall_def_path)
+    if "ground_definition" in scene_def_json_object.keys():
+        ground_def_path = scene_def_json_object["ground_definition"]
+        ground_def_json_object = read_json(ground_def_path)
 
     game_objects = []
     game_object_defs = scene_def_json_object["game_objects"]
@@ -385,8 +391,12 @@ def create_scene(scene_def_json_path):
         ):
             go.m_enabled = False
         game_objects.append((game_object_def["name"], go))
-    tilemap_game_objects = create_tilemap(tilemap_json_object)
-    game_objects.extend(tilemap_game_objects)
+    if wall_def_json_object:
+        wall_game_objects = create_tilemap(wall_def_json_object)
+        game_objects.extend(wall_game_objects)
+    if ground_def_json_object:
+        ground_game_objects = create_tilemap(ground_def_json_object, isGround=True)
+        game_objects.extend(ground_game_objects)
     return game_objects
 
 
