@@ -16,7 +16,8 @@ CollisionComponent::CollisionComponent(
     : m_objectType(objectType),
       m_transformer(transformer),
       m_height(height),
-      m_width(width) {
+      m_width(width)
+{
     m_controller = transformer->m_controller;
     m_behavior = transformer->m_behavior;
     if (m_objectType == "player")
@@ -29,7 +30,8 @@ CollisionComponent::CollisionComponent(
         m_objectType_enum = interactable;
     else if (m_objectType == "none")
         m_objectType_enum = none;
-    else {
+    else
+    {
         std::cout << "Error: Invalid object type" << std::endl;
         m_objectType_enum = none;
     }
@@ -49,10 +51,12 @@ ObjectType CollisionComponent::GetObjectType() { return m_objectType_enum; }
  * Check collision with other objects
  * Apply the collision response based on the object type
  */
-void CollisionComponent::Update() {
+void CollisionComponent::Update()
+{
     // player: dynamic, enemy: dynamic, wall: static, pac:static
     // ignore static objects
-    if (m_objectType_enum == wall || m_objectType_enum == none) return;
+    if (m_objectType_enum == wall || m_objectType_enum == none)
+        return;
 
     // get the list of game objects
     std::map<std::string, std::shared_ptr<GameObject>> list =
@@ -62,14 +66,17 @@ void CollisionComponent::Update() {
         m_name + "_collided_this_frame", false);
 
     // detect collisions, O(n^2)
-    for (auto it = list.begin(); it != list.end(); it++) {
-        if (!it->second->m_enabled) {
+    for (auto it = list.begin(); it != list.end(); it++)
+    {
+        if (!it->second->m_enabled)
+        {
             continue;
         }
 
         std::vector<std::shared_ptr<CollisionComponent>> collisionComponents =
             it->second->GetComponents<CollisionComponent>();
-        if (collisionComponents.size() == 0) continue;
+        if (collisionComponents.size() == 0)
+            continue;
 
         std::shared_ptr<CollisionComponent> other = collisionComponents[0];
         // continue if the object is not collidable or the object is itself
@@ -78,9 +85,11 @@ void CollisionComponent::Update() {
             continue;
 
         Vec2 penetration = CheckCollision(other);
-        if (penetration.x == 0 && penetration.y == 0) continue;
+        if (penetration.x == 0 && penetration.y == 0)
+            continue;
         OnCollision(other);
-        if (other->m_objectType_enum == wall) {
+        if (other->m_objectType_enum == wall)
+        {
             m_transformer->m_position += penetration;
             // if (other->m_parent->GetComponents<BehaviorComponent>().size() >
             //     0) {
@@ -96,7 +105,8 @@ void CollisionComponent::Update() {
  * Return the penetration vector
  */
 Vec2 CollisionComponent::CheckCollision(
-    std::shared_ptr<CollisionComponent> other) {
+    std::shared_ptr<CollisionComponent> other)
+{
     Vec2 penetration;
 
     // projected position of the other object
@@ -115,19 +125,41 @@ Vec2 CollisionComponent::CheckCollision(
     if (this_right <= other_left || this_left >= other_right ||
         this_bottom <= other_top || this_top >= other_bottom)
         return penetration;
-    else {
+    else
+    {
         if (m_controller && m_controller->GetDirectionX() > 0 ||
             m_behavior && m_behavior->GetDirectionX() > 0)
+
+        {
             penetration.x = other_left - this_right;
+            // std::cout << "penetration.x: " << penetration.x << std::endl;
+            if (m_behavior != nullptr)
+                m_behavior->m_direction_x = -m_behavior->m_direction_x;
+        }
         else if (m_controller && m_controller->GetDirectionX() < 0 ||
                  m_behavior && m_behavior->GetDirectionX() < 0)
+        {
             penetration.x = other_right - this_left;
+            // std::cout << "penetration.x: " << penetration.x << std::endl;
+            if (m_behavior != nullptr)
+                m_behavior->m_direction_x = -m_behavior->m_direction_x;
+        }
         else if (m_controller && m_controller->GetDirectionY() > 0 ||
                  m_behavior && m_behavior->GetDirectionY() > 0)
+        {
             penetration.y = other_top - this_bottom;
+            // std::cout << "penetration.y: " << penetration.y << std::endl;
+            if (m_behavior != nullptr)
+                m_behavior->m_direction_y = -m_behavior->m_direction_y;
+        }
         else if (m_controller && m_controller->GetDirectionY() < 0 ||
                  m_behavior && m_behavior->GetDirectionY() < 0)
+        {
             penetration.y = other_bottom - this_top;
+            // std::cout << "penetration.y: " << penetration.y << std::endl;
+            if (m_behavior != nullptr)
+                m_behavior->m_direction_y = -m_behavior->m_direction_y;
+        }
     }
 
     return penetration;
@@ -139,7 +171,8 @@ Vec2 CollisionComponent::CheckCollision(
 int CollisionComponent::GetType() { return m_type; }
 
 void CollisionComponent::OnCollision(
-    std::shared_ptr<CollisionComponent> other) {
+    std::shared_ptr<CollisionComponent> other)
+{
     ServiceLocator::GetService<VariableManager>().SetBool(
         m_name + "_collided_this_frame", true);
 
@@ -149,7 +182,8 @@ void CollisionComponent::OnCollision(
     ServiceLocator::GetService<VariableManager>().SetDict(
         m_name + "_other_type", other->m_objectType);
 
-    if (m_python && py::hasattr(m_python, "collision_component_on_collision")) {
+    if (m_python && py::hasattr(m_python, "collision_component_on_collision"))
+    {
         m_python.attr("collision_component_on_collision")();
     }
 }

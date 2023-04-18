@@ -21,7 +21,7 @@
     },
     {
       "name": "enemy1",
-      "definition_file": "./definitions/game_objects/enemy2.json",
+      "definition_file": "./definitions/game_objects/enemy1.json",
       "transform_override": [
         {
           "param": "direction",
@@ -73,7 +73,8 @@
       "definition_file": "./definitions/game_objects/pacman_gameover_screen.json"
     }
   ],
-  "wall_definition": "./definitions/tilemaps/pacman-wall.json",
-  "ground_definition": "./definitions/tilemaps/pacman-ground.json"
+
+  "wall_definition": "./definitions/tilemaps/wall4.json"
+  
 
 }
