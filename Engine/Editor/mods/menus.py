@@ -17,7 +17,7 @@ class FileMenu(tk.Menu):
         self.add_command(label="Save Map", command=self.SaveProgress, accelerator="Ctrl+S")
         self.bind_all("<Control-s>", self.SaveProgress)
 
-        self.add_command(label="Open Image(s)", command = parent.parent.ibox.imgcanv.OpenImage)
+        # self.add_command(label="Open Image(s)", command = parent.parent.ibox.imgcanv.OpenImage)
         self.add_command(label="Quit", command=self.parent.parent.Quit) #calls for the parent's parent (main window)
                                                                         #to run the Quit function
         self.parent.add_cascade(label = "File", menu=self) #add file menu cascade to the file menu option

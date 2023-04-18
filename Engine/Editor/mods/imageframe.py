@@ -49,7 +49,7 @@ class LoaderFrame(tk.Frame):
 
         # Create and place the "Load File" button next to the frame
         self.load_button = tk.Button(
-            self, text="Load File", command=self.load_file)
+            self, text="Load Tiles", command=self.load_file)
         self.load_button.grid(column=2, row=0, padx=20, pady=10, )
 
         # self.load_button = tk.Button(
@@ -107,36 +107,42 @@ class LoaderFrame(tk.Frame):
 
     def load_file(self):
         # Code to load JSON file and fill the dropdown list
-        path = tk.filedialog.askopenfilename(title="Open Def File", filetypes=[
-                                             ("Json File(.json)", ".json")])
+        dir_path = tk.filedialog.askdirectory(title="Open Tile Definition Directory")
+        # path = tk.filedialog.askopenfilename(title="Open Def File", filetypes=[
+        #                                      ("Json File(.json)", ".json")])
         # print(str(path))
-        if (path):
-            self.app.tmap.jsons.append(path)
-            with open(path, "r") as file:
-                data = json.load(file)
-                components = data.get("components", [])
-                for component in components:
-                    if len(component['args']):
-                        for arg in component['args']:
-                            if arg["arg_type"] == "string" and ".bmp" in arg["value"]:
-                                self.comps.append(
-                                    {"name": component["component_type"], "value": arg["value"], "restArgs": component['args']})
-                                if component["component_type"] not in self.compNames:
-                                    self.compNames.append(
-                                        component["component_type"])
-                                # print(os.path.abspath(  arg["value"]))
-                                # self.parent.imgcanv.MakeButton((os.path.abspath( "../"+  arg["value"]),))
-                # Update the component type dropdown menu
-                # self.component_var.set("Select Component Type")
-                # component_menu = self.nametowidget(self.dropdown.menuname)
-                # component_menu.delete(0, tk.END)
-                # for option in self.compNames:
-                #     # print(option['name'])
-                #     component_menu.add_command(label=option, command=tk._setit(
-                #         self.component_var, option))
-                # component_menu.update()
-                # self.component_var.trace("w", self.on_component_change)
-                self.on_component_change()
+        if not dir_path:
+            return
+        for root, dirs, files in os.walk(dir_path):
+            json_files = [file_name for file_name in files if file_name.endswith(".json")]
+            for relative_path in json_files:
+                path = os.path.abspath(os.path.join(root, relative_path))
+                self.app.tmap.jsons.append(path)
+                with open(path, "r") as file:
+                    data = json.load(file)
+                    components = data.get("components", [])
+                    for component in components:
+                        if len(component['args']):
+                            for arg in component['args']:
+                                if arg["arg_type"] == "string" and ".bmp" in arg["value"]:
+                                    self.comps.append(
+                                        {"name": component["component_type"], "value": arg["value"], "restArgs": component['args']})
+                                    if component["component_type"] not in self.compNames:
+                                        self.compNames.append(
+                                            component["component_type"])
+                                    # print(os.path.abspath(  arg["value"]))
+                                    # self.parent.imgcanv.MakeButton((os.path.abspath( "../"+  arg["value"]),))
+                    # Update the component type dropdown menu
+                    # self.component_var.set("Select Component Type")
+                    # component_menu = self.nametowidget(self.dropdown.menuname)
+                    # component_menu.delete(0, tk.END)
+                    # for option in self.compNames:
+                    #     # print(option['name'])
+                    #     component_menu.add_command(label=option, command=tk._setit(
+                    #         self.component_var, option))
+                    # component_menu.update()
+                    # self.component_var.trace("w", self.on_component_change)
+                    self.on_component_change()
 
     def createGameObject(self):
         pass
