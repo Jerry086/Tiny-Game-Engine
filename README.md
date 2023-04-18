@@ -23,7 +23,7 @@ Update your Team member Names here (Up to 4).
 1. Zhongyu Wei	
 2. Sze Ka Tse
 3. Arghavan Ayoughi
-4. Yuhan
+4. Yuhan Yue
 
 ## Assignment Milestones
 
