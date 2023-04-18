@@ -64,6 +64,7 @@ class LoaderFrame(tk.Frame):
         # self.component_var["menuname"] = "MyMenu"
         self.comps = []
         self.compNames = []
+        self.jsons = []
         # self.component_var.set("Select Component Type")
         # self.dropdown = tk.OptionMenu(self, self.component_var, [])
         # self.dropdown.grid(column=1, row=0, padx=10, pady=10)
@@ -81,8 +82,11 @@ class LoaderFrame(tk.Frame):
         #     print (item)
 
             self.parent.imgcanv.newbtnpos = (0, 0)
+        i = 0
         for sc in self.comps:
             if (sc['name'] == "SpriteComponent"):
+                jsonPath = self.app.tmap.jsons[i]
+                i += 1
                 x, y, w, h, rowOffset, colOffset = None, None, None, None, None, None
                 for arg in sc['restArgs']:
                     if arg["arg_name"] == 'w':
@@ -99,14 +103,13 @@ class LoaderFrame(tk.Frame):
                 abs_path = os.path.abspath("../" + sc["value"])
                 print('abs path', abs_path)
                 print('x', x, 'y', y, 'w', w, 'h', h, 'rowOffset', rowOffset, 'colOffset', colOffset)
-                self.parent.imgcanv.MakeButton((os.path.abspath("../" + sc["value"]),), x=x, y=y, w=w, h=h, jsonPath=self.jsonPath)
+                self.parent.imgcanv.MakeButton((os.path.abspath("../" + sc["value"]),), x=x, y=y, w=w, h=h, jsonPath=jsonPath)
 
     def load_file(self):
         # Code to load JSON file and fill the dropdown list
         path = tk.filedialog.askopenfilename(title="Open Def File", filetypes=[
                                              ("Json File(.json)", ".json")])
         # print(str(path))
-        self.jsonPath = path
         if (path):
             self.app.tmap.jsons.append(path)
             with open(path, "r") as file:
@@ -191,7 +194,7 @@ class ImageCanvas(tk.Canvas):
         self.parent.currentImage = self.buttons[i].tile.image
         for cmp in self.parent.loader.comps:
             # print(cmp['value'])
-            if (os.path.abspath("../" + cmp['value']) == str(self.buttons[i].path)):
+            if (os.path.abspath("../" + cmp['value']) == str(self.buttons[i].jsonPath)):
                 self.parent.currentComponent = cmp['name']
 
 
@@ -215,3 +218,4 @@ class TileButton(tk.Button):
         self["image"] = self.tile.image
         self["command"] = lambda i = len(parent.buttons): parent.selectTile(
             i)  # make button's tile the selected one
+        print('create tile button with json', self.jsonPath)
