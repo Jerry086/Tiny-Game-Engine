@@ -8,6 +8,7 @@
 #endif
 
 #include <cstdint>
+
 #include "Component.hpp"
 
 // Directions of movement
@@ -17,9 +18,8 @@ const int8_t DIR_UP = -1;
 const int8_t DIR_DOWN = 1;
 const int8_t DIR_STAND = 0;
 
-class ControllerComponent : public Component
-{
-public:
+class ControllerComponent : public Component {
+   public:
     /**
      * Constructor
      */
@@ -45,16 +45,11 @@ public:
      * @return The type of the component
      */
     int GetType() override;
-    /**
-     * Getter of quit flag
-     */
-    bool QuitProgram();
 
-private:
+   private:
     int8_t m_direction_x = DIR_RIGHT;
     int8_t m_direction_y = DIR_STAND;
     const int m_type = ControllerComponent_TYPE;
-    bool m_quit = false;
 };
 
 #endif

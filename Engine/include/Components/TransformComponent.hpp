@@ -3,17 +3,16 @@
 
 #include <memory>
 
+#include "BehaviorComponent.hpp"
 #include "Component.hpp"
 #include "ControllerComponent.hpp"
-#include "BehaviorComponent.hpp"
 #include "Vec.hpp"
 
 /**
  * The TransformComponent class that defines the position of a game object.
  */
-class TransformComponent : public Component
-{
-public:
+class TransformComponent : public Component {
+   public:
     /**
      * Constructor
      * @param position The initial position of a game object
@@ -21,7 +20,7 @@ public:
     TransformComponent(Vec2 position);
     /**
      * Constructor
-     * @param speed The speed of a game object
+     * @param direction The velocity of a game object
      * @param position The initial position of a game object
      * @param controller The controller of a game object
      */
@@ -29,7 +28,7 @@ public:
                        std::shared_ptr<ControllerComponent> controller);
     /**
      * Constructor
-     * @param speed The speed of a game object
+     * @param direction The velocity of a game object
      * @param position The initial position of a game object
      * @param behavior The behavior of a game object
      */
@@ -49,12 +48,31 @@ public:
      */
     int GetType() override;
 
+    /**
+     * @brief Position
+     *
+     */
     Vec2 m_position;
+
+    /**
+     * @brief Velocity
+     *
+     */
     Vec2 m_speed;
+
+    /**
+     * @brief Controller component
+     *
+     */
     std::shared_ptr<ControllerComponent> m_controller = nullptr;
+
+    /**
+     * @brief Behavior component
+     *
+     */
     std::shared_ptr<BehaviorComponent> m_behavior = nullptr;
 
-private:
+   private:
     const int m_type = TransformComponent_TYPE;
 };
 

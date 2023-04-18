@@ -45,6 +45,24 @@ class SpriteComponent : public Component {
                     int x, int y, int w, int h, int frames, int numRows,
                     int numCols);
 
+    /**
+     * @brief Constructor
+     *
+     * @param filename The filename of the sprite
+     * @param transformComponent The transform component that defines the
+     * position
+     * @param x The x position of the sprite
+     * @param y The y position of the sprite
+     * @param w The width of the sprite
+     * @param h The height of the sprite
+     * @param frames The number of frames in the sprite
+     * @param numRows The number of rows in the sprite
+     * @param numCols The number of columns in the sprite
+     * @param forceScreenWidth Force the width of the sprite to be this on
+     * screen
+     * @param forceScreenHeight Force the height of the sprite to be this on
+     * screen
+     */
     SpriteComponent(std::string filename,
                     std::shared_ptr<TransformComponent> transformComponent,
                     int x, int y, int w, int h, int frames, int numRows,

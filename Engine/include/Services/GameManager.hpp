@@ -23,20 +23,21 @@ class GameManager : public IService {
      */
     void Update() override;
 
+    /**
+     * @brief Know if the game has quit or not
+     *
+     * @return true
+     * @return false
+     */
     static bool IsQuit();
-    static bool IsGameOver();
 
-    static void ShowGameOverPopup();
-
+    /**
+     * @brief Set the Quit game boolean
+     *
+     */
     bool m_isQuit = false;
-    bool m_isGameOver = false;
 
    private:
-    /**
-     * @brief Obtain the instance of the GameManager
-     *
-     * @return GameManager& instance
-     */
     static GameManager &instance();
     GameManager() = default;
     // ~GameManager() = default;

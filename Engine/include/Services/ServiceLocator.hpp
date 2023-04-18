@@ -9,14 +9,16 @@
 
 #include "IService.hpp"
 
-// TODO doc
+/**
+ * @brief A service locator for all services
+ *
+ */
 class ServiceLocator {
    public:
-    // Disable copy constructor and assignment operator
-    ServiceLocator(const ServiceLocator &) = delete;
-    ServiceLocator &operator=(const ServiceLocator &) = delete;
-
     // For Pybind reasons, need to be implemented in the header file
+    /**
+     * @brief Register a service
+     */
     template <typename T>
     static void RegisterService() {
         std::type_index type = typeid(T);
@@ -25,6 +27,12 @@ class ServiceLocator {
     }
 
     // For Pybind reasons, need to be implemented in the header file
+    /**
+     * @brief Get the Service object
+     *
+     * @tparam T Service type
+     * @return T& Service
+     */
     template <typename T>
     static T &GetService() {
         std::type_index type = typeid(T);
@@ -39,6 +47,10 @@ class ServiceLocator {
         return *static_cast<T *>(it2->second);
     }
 
+    /**
+     * @brief Shutdown all services
+     *
+     */
     static void ShutDown() {
         for (auto it = ServiceLocator::instance().m_services.begin();
              it != ServiceLocator::instance().m_services.end(); ++it) {
@@ -46,6 +58,10 @@ class ServiceLocator {
         }
     }
 
+    /**
+     * @brief Update all services
+     *
+     */
     static void Update() {
         for (auto it = ServiceLocator::instance().m_orderedKeys.begin();
              it != ServiceLocator::instance().m_orderedKeys.end(); ++it) {
@@ -54,6 +70,10 @@ class ServiceLocator {
         }
     }
 
+    /**
+     * @brief Render all services
+     *
+     */
     static void Render() {
         for (auto it = ServiceLocator::instance().m_orderedKeys.begin();
              it != ServiceLocator::instance().m_orderedKeys.end(); ++it) {
@@ -62,6 +82,11 @@ class ServiceLocator {
         }
     }
 
+    /**
+     * @brief Reset a service
+     *
+     * @tparam T service type
+     */
     template <typename T>
     static void ResetService() {
         std::type_index type = typeid(T);
@@ -79,6 +104,10 @@ class ServiceLocator {
         }
     }
 
+    /**
+     * @brief Reset all services
+     *
+     */
     static void ResetAllServices() {
         for (auto it = ServiceLocator::instance().m_services.begin();
              it != ServiceLocator::instance().m_services.end(); ++it) {
@@ -93,6 +122,8 @@ class ServiceLocator {
         static ServiceLocator instance;
         return instance;
     }
+    ServiceLocator(const ServiceLocator &) = delete;
+    ServiceLocator &operator=(const ServiceLocator &) = delete;
     ServiceLocator() = default;
     std::unordered_map<std::type_index, IService *> m_services;
     std::vector<std::type_index> m_orderedKeys;

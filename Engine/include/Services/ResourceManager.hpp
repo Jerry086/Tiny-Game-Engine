@@ -61,7 +61,12 @@ class ResourceManager : public IService {
      */
     int StartUp(SDL_Renderer *renderer);
 
+    /**
+     * @brief Initialize the resource manager. Only use when the service is
+     * reset.
+     */
     void StartUp() override;
+
     /**
      * @brief Destroy all resources
      */

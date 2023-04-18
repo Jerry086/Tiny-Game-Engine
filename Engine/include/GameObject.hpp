@@ -66,6 +66,11 @@ class __attribute__((visibility("default"))) GameObject {
      */
     std::shared_ptr<Component> GetComponent(std::string componentName);
 
+    /**
+     * @brief Set the name of the Python script module
+     * @details Runtime loaded Python script should be named as such
+     * @param name name of the Python script module
+     */
     void SetPythonScriptModuleName(std::string name);
 
     /**
@@ -105,8 +110,16 @@ class __attribute__((visibility("default"))) GameObject {
         return result;
     }
 
+    /**
+     * @brief Name of the game object
+     *
+     */
     std::string m_name;
 
+    /**
+     * @brief If the game object is enabled.
+     *
+     */
     bool m_enabled{true};
 
    private:
