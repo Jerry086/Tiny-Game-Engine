@@ -1,6 +1,6 @@
 ## Add any additional notes here
 
-*your additional notes, or things TA's and instructors should know*
+Please install pyinstaller first using `pip install pyinstaller `
 
 ## Game/Engine Publicity
 
