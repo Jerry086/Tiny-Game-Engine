@@ -15,10 +15,7 @@ You will have some flexibility and creativity in how the overall game making eng
 
 ## Team
 
-Team Name: *Edit this to something cool here*
-
-*TODO*:
-Update your Team member Names here (Up to 4).
+Team Name: Vancouver Tiny Engine
 
 1. Zhongyu Wei	
 2. Sze Ka Tse
