@@ -115,9 +115,19 @@ class LoaderFrame(tk.Frame):
             return
         for root, dirs, files in os.walk(dir_path):
             json_files = [file_name for file_name in files if file_name.endswith(".json")]
-            for relative_path in json_files:
-                path = os.path.abspath(os.path.join(root, relative_path))
+            for filename in json_files:
+                path = os.path.abspath(os.path.join(root, filename))
                 self.app.tmap.jsons.append(path)
+                cwd = os.getcwd()
+                engine_folder = os.path.join(cwd, "../")
+
+                abs_path1 = "/home/user1/Documents/file1.txt"
+                abs_path2 = "/home/user1/Pictures/image.jpg"
+
+                common_root = os.path.commonpath([engine_folder, path])
+                rel_path2 = os.path.relpath(path, common_root)
+
+                self.app.tmap.relative_jsons.append(rel_path2)
                 with open(path, "r") as file:
                     data = json.load(file)
                     components = data.get("components", [])

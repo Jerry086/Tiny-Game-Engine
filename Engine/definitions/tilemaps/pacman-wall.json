@@ -1,57 +1,57 @@
 {
     "tile_jsons": [
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_11.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_7.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_3.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_9.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_4.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_2.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_8.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_6.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_1.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_2.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_0.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_5.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_12.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_11.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_8.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_6.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_10.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_7.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_1.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_12.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_9.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_3.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_10.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_5.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_4.json",
-        "/root/finalproject-vancouver-tinyengine/Engine/definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_0.json"
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_11.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_7.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_3.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_9.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_4.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_2.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_8.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_6.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_1.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_2.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_0.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_5.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_12.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_11.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_8.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_6.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_10.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_7.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_1.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_1_12.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_9.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_3.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_10.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_5.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_4.json",
+        "./definitions/tiles/owlishmedia_trimmed/owlishmedia_trimmed_0_0.json"
     ],
     "tile_array": [
         [
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7
         ],
         [
-            1,
+            7,
             0,
             0,
             0,
@@ -70,10 +70,10 @@
             0,
             0,
             0,
-            1
+            7
         ],
         [
-            1,
+            7,
             0,
             0,
             0,
@@ -92,10 +92,10 @@
             0,
             0,
             0,
-            1
+            7
         ],
         [
-            1,
+            7,
             0,
             0,
             0,
@@ -114,10 +114,10 @@
             0,
             0,
             0,
-            1
+            7
         ],
         [
-            1,
+            7,
             0,
             0,
             0,
@@ -136,10 +136,10 @@
             0,
             0,
             0,
-            1
+            7
         ],
         [
-            1,
+            7,
             0,
             0,
             0,
@@ -158,10 +158,10 @@
             0,
             0,
             0,
-            1
+            7
         ],
         [
-            1,
+            7,
             0,
             0,
             0,
@@ -180,10 +180,10 @@
             0,
             0,
             0,
-            1
+            7
         ],
         [
-            1,
+            7,
             0,
             0,
             0,
@@ -202,10 +202,10 @@
             0,
             0,
             0,
-            1
+            7
         ],
         [
-            1,
+            7,
             0,
             0,
             0,
@@ -224,10 +224,10 @@
             0,
             0,
             0,
-            1
+            7
         ],
         [
-            1,
+            7,
             0,
             0,
             0,
@@ -246,10 +246,10 @@
             0,
             0,
             0,
-            1
+            7
         ],
         [
-            1,
+            7,
             0,
             0,
             0,
@@ -268,29 +268,29 @@
             0,
             0,
             0,
-            1
+            7
         ],
         [
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7
         ]
     ]
 }

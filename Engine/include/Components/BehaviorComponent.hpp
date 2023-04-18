@@ -38,9 +38,10 @@ public:
      */
     int GetType() override;
 
-private:
     int m_direction_x = -1;
     int m_direction_y = 1;
+
+private:
     int counter_x = 0;
     int counter_y = 0;
     const int m_type = BehaviourComponent_TYPE;
