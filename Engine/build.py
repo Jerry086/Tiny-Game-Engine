@@ -49,7 +49,7 @@ if __name__ == '__main__':
             os.rename("tmp/dist/TinyEngineGame", "bin/TinyEngineGame")
             os.rename("mygameengine.so", "bin/mygameengine.so")
             shutil.rmtree("tmp")
-        shutil.copytree("definitions", "bin/definitions", dirs_exist_ok=True)
+        shutil.copytree("Assets/definitions", "bin/Assets/definitions", dirs_exist_ok=True)
         shutil.copytree("Assets/scripts", "bin/Assets/scripts", dirs_exist_ok=True)
         shutil.copytree("Assets/sprites", "bin/Assets/sprites", dirs_exist_ok=True)
         print("Build finished. Run the game with the following command:")
