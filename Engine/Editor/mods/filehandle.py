@@ -23,28 +23,30 @@ class Tile():  # class structure to hold images
 
 
 class TileMap():
-    def __init__(self, parent, mapsize):
-        self.mapsize = mapsize  # sets the size of the map arrays
+    def __init__(self, parent, mapsizeX, mapsizeY):
+        # sets the size of the map arrays
+        self.mapsizeX = mapsizeX
+        self.mapsizeY = mapsizeY
         self.parent = parent
         # create a tilemap matrix and a canvas object matrix of specified mapsize
         self.tilearray = []
-        for i in range(self.mapsize):
+        for i in range(self.mapsizeY):
             row = []
-            for j in range(self.mapsize):
+            for j in range(self.mapsizeX):
                 row.append(" ")  # fill them with spaces...
             self.tilearray.append(row)
 
         self.canvasarray = []
-        for i in range(self.mapsize):
+        for i in range(self.mapsizeY):
             row = []
-            for j in range(self.mapsize):
+            for j in range(self.mapsizeX):
                 row.append(" ")
             self.canvasarray.append(row)
 
         self.componentNameArray = []
-        for i in range(self.mapsize):
+        for i in range(self.mapsizeY):
             row = []
-            for j in range(self.mapsize):
+            for j in range(self.mapsizeX):
                 row.append(" ")
             self.componentNameArray.append(row)
 

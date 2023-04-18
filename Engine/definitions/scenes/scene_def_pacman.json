@@ -2,7 +2,7 @@
   "game_objects": [
     {
       "name": "player",
-      "definition_file": "./definitions/game_objects/game_objects/pacman_player.json",
+      "definition_file": "./definitions/game_objects/pacman_player.json",
       "transform_override": [
         {
           "param": "direction",
@@ -16,17 +16,6 @@
         },
         {
           "param": "controller"
-        }
-      ]
-    },
-    {
-      "name": "tile1",
-      "definition_file": "./definitions/game_objects/tile1.json",
-      "transform_override": [
-        {
-          "param": "position",
-          "x": 200,
-          "y": 200
         }
       ]
     },
@@ -84,5 +73,5 @@
       "definition_file": "./definitions/game_objects/pacman_gameover_screen.json"
     }
   ],
-  "tilemap_definition": "./definitions/tilemaps/tilemap_def_1.json"
+  "tilemap_definition": "./definitions/tilemaps/full_1.json"
 }
