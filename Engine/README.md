@@ -4,11 +4,14 @@
 
 ## Game/Engine Publicity
 
-**Project Website**: *please edit the project website with a link here* (See part 3)
+**Project Website**: https://overainy.notion.site/66c87ddd2bf046b28e13c338e87ba776?v=7da32e3a48734b65bf7ae694c18acb38
 
 ## Compilation Instructions
 
-*Please edit if there are any special build instructions beyond running `python3 build.py`*
+For compiling binary files for MAC users, please run `python build.py --platform=MAC --all` under `Engine` directory. Then please run `./TinyEngineGame` inside `bin` folder.
+
+For other platform users, please run corresbonding building files (`python linuxbuild.py` for linux user etc.) and the run `python MyScript.py` to start the game.
+
 
 ## Project Hieararchy
 
