@@ -20,9 +20,9 @@ class CanvasFrame(tk.Frame):
         # print(self.h)
         self["borderwidth"] = 5
         # # make a vertical scrollbar
-        # self.ybar = tk.Scrollbar(self, orient="vertical")
+        self.ybar = tk.Scrollbar(self, orient="vertical")
         # # make a horizontal scrollbar
-        # self.xbar = tk.Scrollbar(self, orient="horizontal")
+        self.xbar = tk.Scrollbar(self, orient="horizontal")
 
         # create the grid-map that will hold the tiles and pass the title argument to it
         self.cmap = CanvasMap(self, title)
@@ -32,9 +32,9 @@ class CanvasFrame(tk.Frame):
         # # set the scrollbar to change the "x" area seen on canvas
         # self.xbar["command"] = self.cmap.xview
         # # make scrollbar span the distance of the canvas frame
-        # self.ybar.grid(column=1, row=0, sticky="ns")
+        self.ybar.grid(column=1, row=0, sticky="ns")
         # # make scrollbar span the distance of the canvas frame
-        # self.xbar.grid(column=0, row=1, sticky="ew")
+        self.xbar.grid(column=0, row=1, sticky="ew")
 
         # sets the padding region to 10% of the available space left.
         self.grid(row=0, column=1, padx=(self.parent.winfo_screenwidth() - 170) * 0.1,
@@ -63,7 +63,7 @@ class CanvasMap(tk.Canvas):
         # gives x scrolling autority to the x scrollbar
         # self["xscrollcommand"] = self.parent.xbar.set
         # makes a large scrolling area of canvas
-        # self["scrollregion"] = (0, 0, 1500, 1500)
+        self["scrollregion"] = (0, 0, 1500, 1500)
         self.xview_moveto("0.0")  # set x scroll to left of canvas
         self.yview_moveto("0.0")  # set y scroll to top of canvas
         self.tsize = 32
