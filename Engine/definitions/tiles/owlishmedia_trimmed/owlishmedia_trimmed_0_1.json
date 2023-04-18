@@ -7,7 +7,7 @@
                 {
                     "arg_name": "filename",
                     "arg_type": "string",
-                    "value": "./sprites/owlishmedia_trimmed.bmp"
+                    "value": "./Assets/sprites/owlishmedia_trimmed.bmp"
                 },
                 {
                     "arg_name": "transformComponent",

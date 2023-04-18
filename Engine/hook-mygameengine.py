@@ -7,6 +7,6 @@ from PyInstaller.utils.hooks import collect_data_files
 datas = collect_data_files('./definitions', include_py_files=False, subdir='./definitions')
 
 # Collect files from the sprites directory
-datas += collect_data_files('./sprites', include_py_files=False, subdir='./sprites')
+datas += collect_data_files('./Assets/sprites', include_py_files=False, subdir='./Assets/sprites')
 
 # Add more directories as needed

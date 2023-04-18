@@ -51,7 +51,7 @@ if __name__ == '__main__':
             shutil.rmtree("tmp")
         shutil.copytree("definitions", "bin/definitions", dirs_exist_ok=True)
         shutil.copytree("Assets/scripts", "bin/Assets/scripts", dirs_exist_ok=True)
-        shutil.copytree("sprites", "bin/sprites", dirs_exist_ok=True)
+        shutil.copytree("Assets/sprites", "bin/Assets/sprites", dirs_exist_ok=True)
         print("Build finished. Run the game with the following command:")
         print("    ./bin/TinyEngineGame <optional:override scene definition file>")
 

@@ -7,7 +7,7 @@ template = {
         {
             "component_type":"SpriteComponent",
             "args":[
-                {"arg_name":"filename","arg_type":"string", "value":"./sprites/Tiles1.bmp"},
+                {"arg_name":"filename","arg_type":"string", "value":"./Assets/sprites/Tiles1.bmp"},
                 {"arg_name":"transformComponent","arg_type":"TransformComponent"},
                 {"arg_name":"x","arg_type":"int", "value":0},
                 {"arg_name":"y","arg_type":"int", "value":0},
@@ -45,4 +45,4 @@ def generate(spritesheet_path, sheet_w, sheet_h, sprite_grid_size, out_dir):
             json.dump(tile, open(os.path.join(out_dir, tile["type_name"] + ".json"), "w"), indent=4)
 
 if __name__ == "__main__":
-    generate("./sprites/owlishmedia_trimmed.bmp", 416, 64, 32, './definitions/tiles/owlishmedia_trimmed/')
+    generate("./Assets/sprites/owlishmedia_trimmed.bmp", 416, 64, 32, './definitions/tiles/owlishmedia_trimmed/')

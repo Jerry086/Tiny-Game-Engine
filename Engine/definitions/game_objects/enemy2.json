@@ -16,7 +16,7 @@
     {
       "component_type": "SpriteComponent",
       "args": [
-        { "arg_name":"filename", "arg_type": "string", "value": "./sprites/enemy2.bmp" },
+        { "arg_name":"filename", "arg_type": "string", "value": "./Assets/sprites/enemy2.bmp" },
         { "arg_name": "transformComponent", "arg_type": "TransformComponent" },
         { "arg_name": "x", "arg_type": "int", "value": 0 },
         { "arg_name": "y", "arg_type": "int", "value": 0 },

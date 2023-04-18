@@ -14,7 +14,7 @@
         {
           "arg_name": "filename",
           "arg_type": "string",
-          "value": "./sprites/gameOver.bmp"
+          "value": "./Assets/sprites/gameOver.bmp"
         },
         { "arg_name": "transformComponent", "arg_type": "TransformComponent" },
         { "arg_name": "x", "arg_type": "int", "value": 0 },
