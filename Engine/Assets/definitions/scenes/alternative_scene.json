@@ -1,0 +1,80 @@
+{
+  "game_objects": [
+    {
+      "name": "player",
+      "definition_file": "./Assets/definitions/game_objects/pacman_player.json",
+      "transform_override": [
+        {
+          "param": "direction",
+          "x": 10,
+          "y": 10
+        },
+        {
+          "param": "position",
+          "x": 640,
+          "y": 200
+        },
+        {
+          "param": "controller"
+        }
+      ]
+    },
+    {
+      "name": "enemy1",
+      "definition_file": "./Assets/definitions/game_objects/enemy1.json",
+      "transform_override": [
+        {
+          "param": "direction",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "param": "position",
+          "x": 1000,
+          "y": 100
+        },
+        {
+          "param": "behavior"
+        }
+      ]
+    },
+    {
+      "name": "enemy2",
+      "definition_file": "./Assets/definitions/game_objects/enemy2.json",
+      "transform_override": [
+        {
+          "param": "direction",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "param": "position",
+          "x": 200,
+          "y": 128
+        },
+        {
+          "param": "behavior"
+        }
+      ]
+    },
+    {
+      "name": "pac",
+      "definition_file": "./Assets/definitions/game_objects/pac.json",
+      "transform_override": [
+        {
+          "param": "position",
+          "x": 250,
+          "y": 500
+        }
+      ]
+    },
+    {
+      "name": "pacman_gameover_screen",
+      "definition_file": "./Assets/definitions/game_objects/pacman_gameover_screen.json"
+    }
+  ],
+
+  "wall_definition": "./Assets/definitions/tilemaps/pacman-wall.json"
+  
+
+}

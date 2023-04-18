@@ -1,0 +1,47 @@
+{
+  "type_name": "pac",
+  "components": [
+    {
+      "component_type": "TransformComponent",
+      "args": [{ "arg_name": "position", "arg_type": "Vec2", "x": 300, "y": 500 }]
+    },
+    {
+      "component_type": "SpriteComponent",
+      "args": [
+        { "arg_name": "filename", "arg_type": "string", "value": "./Assets/sprites/pac.bmp" },
+        { "arg_name": "transformComponent", "arg_type": "TransformComponent" },
+        { "arg_name": "x", "arg_type": "int", "value": 0 },
+        { "arg_name": "y", "arg_type": "int", "value": 0 },
+        { "arg_name": "w", "arg_type": "int", "value": 174 },
+        { "arg_name": "h", "arg_type": "int", "value": 168 },
+        { "arg_name": "frames", "arg_type": "int", "value": 1 },
+        { "arg_name": "numRows", "arg_type": "int", "value": 1 },
+        { "arg_name": "numCols", "arg_type": "int", "value": 1 }
+      ]
+    },
+    {
+      "component_type": "CollisionComponent",
+      "args": [
+        {
+          "arg_name": "objectType",
+          "arg_type": "string",
+          "value": "interactable"
+        },
+        {
+          "arg_name": "transformComponent",
+          "arg_type": "TransformComponent"
+        },
+        {
+          "arg_name": "w",
+          "arg_type": "int",
+          "value": 64
+        },
+        {
+          "arg_name": "h",
+          "arg_type": "int",
+          "value": 64
+        }
+      ]
+    }
+  ]
+}
