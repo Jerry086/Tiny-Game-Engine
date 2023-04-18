@@ -51,7 +51,7 @@ while not mygameengine.GameManager.IsQuit():
     # game_object_manager.Render()
 
     SDL.flip()
-    SDL.delay(20)
+    SDL.delay(50)
 game_object_manager.ShutDown()
 # mygameengine.GameManager.ShowGameOverPopup()
 SDL.ShutDown()
