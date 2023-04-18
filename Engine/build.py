@@ -48,8 +48,8 @@ if __name__ == '__main__':
             os.rename("mygameengine.so", "bin/mygameengine.so")
             shutil.rmtree("tmp")
         shutil.copytree("definitions", "bin/definitions", dirs_exist_ok=True)
-        shutil.copytree("scripts", "bin/scripts", dirs_exist_ok=True)
+        shutil.copytree("Assets/scripts", "bin/Assets/scripts", dirs_exist_ok=True)
         shutil.copytree("sprites", "bin/sprites", dirs_exist_ok=True)
         print("Build finished. Run the game with the following command:")
-        print("    ./TinyEngineGame <optional:override scene definition file>")
+        print("    ./bin/TinyEngineGame <optional:override scene definition file>")
 
