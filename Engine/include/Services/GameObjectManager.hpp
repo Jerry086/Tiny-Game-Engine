@@ -8,7 +8,7 @@
 
 #include "./Services/IService.hpp"
 
-#define GameOver "./sprites/gameOver.bmp"
+#define GameOver "./Assets/sprites/gameOver.bmp"
 
 class ServiceLocator;
 class SpriteComponent;

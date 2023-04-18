@@ -203,7 +203,7 @@ def create_go(
 #             {
 #                 "arg_name": "filename",
 #                 "arg_type": "string",
-#                 "value": "./sprites/Tiles1.bmp",
+#                 "value": "./Assets/sprites/Tiles1.bmp",
 #             },
 #             {
 #                 "arg_name": "transformComponent",
@@ -460,7 +460,7 @@ if __name__ == "__main__":
     transform_comp = make_component_dict(**param_dict)
 
     sprite_dict = {
-        "filename": "./sprites/gameOver.png",
+        "filename": "./Assets/sprites/gameOver.png",
         "component_type": "SpriteComponent",
         "x": 0,
         "y": 0,

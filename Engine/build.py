@@ -8,6 +8,9 @@ ENGINE_BUILD_FILE = {
     "LINUX": "./Assets/buildscripts/linuxbuild.py",
 }
 
+def exclude_directories(src, names, excluded_dirs):
+    return set(names) - set(excluded_dirs)
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Build script options')
     parser.add_argument('--platform', required=True, choices=['LINUX', 'MAC'], help='The platform to build for')
@@ -47,9 +50,7 @@ if __name__ == '__main__':
             os.rename("tmp/dist/TinyEngineGame", "bin/TinyEngineGame")
             os.rename("mygameengine.so", "bin/mygameengine.so")
             shutil.rmtree("tmp")
-        shutil.copytree("definitions", "bin/definitions", dirs_exist_ok=True)
-        shutil.copytree("scripts", "bin/scripts", dirs_exist_ok=True)
-        shutil.copytree("sprites", "bin/sprites", dirs_exist_ok=True)
+        ignore=lambda src,names: exclude_directories(src, names, ["buildscripts", "utils"])
         print("Build finished. Run the game with the following command:")
         print("    ./bin/TinyEngineGame <optional:override scene definition file>")
 
