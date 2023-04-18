@@ -7,12 +7,12 @@ class MainApp(tk.Tk):
         self.saved = True #holds a value for whether or not  the tilemap has been saved
         self.title("Tile Basic")
         self.geometry("1280x720")
-        self.tmap = TileMap(self, 125) #creates an object that holds the images, canvas objects, and paths for our tilemap
+        self.tmap = TileMap(self, 20, 12) #creates an object that holds the images, canvas objects, and paths for our tilemap
         # self.loader = LoaderFrame(self)
         self.ibox = ImageFrame(self) #creates the box that holds our tiles
         self.tbox = ToolFrame(self) #creates a box that holds our tools
         self.tbar = TopBar(self) #creates the window's topbar
-        self.cframe = CanvasFrame(self, self.title)
+        self.cframe = CanvasFrame(self, self.title) # tilemap edit area
         self.protocol("WM_DELETE_WINDOW", self.Quit) #changes what the window does when we click to close it
         self.mainloop()
         # while True:

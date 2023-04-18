@@ -1,3 +1,4 @@
+# import def_parser
 import tkinter as tk
 import tkinter.filedialog
 from tkinter import RIDGE, FLAT, NSEW
@@ -5,8 +6,9 @@ import os
 from .filehandle import *
 import json
 import sys
-sys.path.insert(0,  os.path.abspath('../'))
-import def_parser
+# sys.path.insert(0,  os.path.abspath('../'))
+
+
 
 class ImageFrame(tk.Frame):
     def __init__(self, parent):
@@ -17,6 +19,7 @@ class ImageFrame(tk.Frame):
         self.currentImagePath = ""
         self.currentImage = ""
         self.currentComponent = ""
+        self.currentJsonPath = ""
         # make a scroll bar for the tilebox
         self.ybar = tk.Scrollbar(self, orient="vertical")
         # make a canvas for the scroll bar to scroll. this canvas holds the buttons
@@ -46,28 +49,31 @@ class LoaderFrame(tk.Frame):
 
         # Create and place the "Load File" button next to the frame
         self.load_button = tk.Button(
-            self, text="Load File", command=self.load_file)
-        self.load_button.grid(column=2, row=0, padx=20, pady=10, )     
-        
-        self.load_button = tk.Button(
-            self, text="Create GameObject", command=self.createGameObject)
-        self.load_button.grid(column=3, row=0, padx=20, pady=10, )
+            self, text="Load Tiles", command=self.load_file)
+        self.load_button.grid(column=2, row=0, padx=20, pady=10, )
+
+        # self.load_button = tk.Button(
+        #     self, text="Create GameObject", command=self.createGameObject)
+        # self.load_button.grid(column=3, row=0, padx=20, pady=10, )
 
         self.label = tk.Label(self, text="Select an option: ")
         self.label.grid(row=0, column=0)
 
         # Create the component type dropdown
-        self.component_var = tk.StringVar(self)
+        # self.component_var = tk.StringVar(self)
         # self.component_var["menuname"] = "MyMenu"
         self.comps = []
         self.compNames = []
-        self.component_var.set("Select Component Type")
-        self.dropdown = tk.OptionMenu(self, self.component_var, [])
-        self.dropdown.grid(column=1, row=0, padx=10, pady=10)
+        self.jsons = []
+        # self.component_var.set("Select Component Type")
+        # self.dropdown = tk.OptionMenu(self, self.component_var, [])
+        # self.dropdown.grid(column=1, row=0, padx=10, pady=10)
+
+        self.app = self.parent.parent
 
     def on_component_change(self, *args):
-        selected_component = self.component_var.get()
-        print("Selected component:", selected_component)
+        # selected_component = self.component_var.get()
+        # print("Selected component:", selected_component)
         print(self.comps)
         print(self.parent.imgcanv.buttons)
         # self.parent.imgcanv.buttons.clear()
@@ -76,49 +82,71 @@ class LoaderFrame(tk.Frame):
         #     print (item)
 
             self.parent.imgcanv.newbtnpos = (0, 0)
+        i = 0
         for sc in self.comps:
-            if (sc['name'] == selected_component):
-                self.parent.imgcanv.MakeButton(
-                    (os.path.abspath("../" + sc["value"]),))
+            if (sc['name'] == "SpriteComponent"):
+                jsonPath = self.app.tmap.jsons[i]
+                i += 1
+                x, y, w, h, rowOffset, colOffset = None, None, None, None, None, None
+                for arg in sc['restArgs']:
+                    if arg["arg_name"] == 'w':
+                        w = int(arg["value"])
+                    elif arg["arg_name"] == 'h':
+                        h = int(arg["value"])
+                    elif arg["arg_name"] == 'rowOffset':
+                        rowOffset = int(arg["value"])
+                    elif arg["arg_name"] == 'colOffset':
+                        colOffset = int(arg["value"])
+                if w and h and rowOffset != None and colOffset != None:
+                        x = int(w) * int(colOffset)
+                        y = int(h) * int(rowOffset)
+                abs_path = os.path.abspath("../" + sc["value"])
+                print('abs path', abs_path)
+                print('x', x, 'y', y, 'w', w, 'h', h, 'rowOffset', rowOffset, 'colOffset', colOffset)
+                self.parent.imgcanv.MakeButton((os.path.abspath("../" + sc["value"]),), x=x, y=y, w=w, h=h, jsonPath=jsonPath)
 
     def load_file(self):
         # Code to load JSON file and fill the dropdown list
-        path = tk.filedialog.askopenfilename(title="Open Def File", filetypes=[
-                                             ("Json File(.json)", ".json")])
-        print(str(path))
-        self.jsonPath = path
-        if (path):
-            with open(path, "r") as file:
-                data = json.load(file)
-                components = data.get("components", [])
-                for component in components:
-                    if len(component['args']):
-                        for arg in component['args']:
-                            if arg["arg_type"] == "string" and ".bmp" in arg["value"]:
-                                self.comps.append(
-                                    {"name": component["component_type"], "value": arg["value"]})
-                                if component["component_type"] not in self.compNames:
-                                    self.compNames.append(
-                                        component["component_type"])
-                                # print(os.path.abspath(  arg["value"]))
-                                # self.parent.imgcanv.MakeButton((os.path.abspath( "../"+  arg["value"]),))
-                # Update the component type dropdown menu
-                self.component_var.set("Select Component Type")
-                component_menu = self.nametowidget(self.dropdown.menuname)
-                component_menu.delete(0, tk.END)
-                for option in self.compNames:
-                    # print(option['name'])
-                    component_menu.add_command(label=option, command=tk._setit(
-                        self.component_var, option))
-                component_menu.update()
-                self.component_var.trace("w", self.on_component_change)
+        dir_path = tk.filedialog.askdirectory(title="Open Tile Definition Directory")
+        # path = tk.filedialog.askopenfilename(title="Open Def File", filetypes=[
+        #                                      ("Json File(.json)", ".json")])
+        # print(str(path))
+        if not dir_path:
+            return
+        for root, dirs, files in os.walk(dir_path):
+            json_files = [file_name for file_name in files if file_name.endswith(".json")]
+            for relative_path in json_files:
+                path = os.path.abspath(os.path.join(root, relative_path))
+                self.app.tmap.jsons.append(path)
+                with open(path, "r") as file:
+                    data = json.load(file)
+                    components = data.get("components", [])
+                    for component in components:
+                        if len(component['args']):
+                            for arg in component['args']:
+                                if arg["arg_type"] == "string" and ".bmp" in arg["value"]:
+                                    self.comps.append(
+                                        {"name": component["component_type"], "value": arg["value"], "restArgs": component['args']})
+                                    if component["component_type"] not in self.compNames:
+                                        self.compNames.append(
+                                            component["component_type"])
+                                    # print(os.path.abspath(  arg["value"]))
+                                    # self.parent.imgcanv.MakeButton((os.path.abspath( "../"+  arg["value"]),))
+                    # Update the component type dropdown menu
+                    # self.component_var.set("Select Component Type")
+                    # component_menu = self.nametowidget(self.dropdown.menuname)
+                    # component_menu.delete(0, tk.END)
+                    # for option in self.compNames:
+                    #     # print(option['name'])
+                    #     component_menu.add_command(label=option, command=tk._setit(
+                    #         self.component_var, option))
+                    # component_menu.update()
+                    # self.component_var.trace("w", self.on_component_change)
+        self.on_component_change()
+
     def createGameObject(self):
-        # pass
-        playerGO = def_parser.create_go('Player',self.jsonPath)
-        print(playerGO)
-        fts  = [("JSON File", ".json")]
-        path = tk.filedialog.asksaveasfilename(title="Save game object",
-                                           filetypes = fts, defaultextension = fts)
+        pass
+
 
 class ImageCanvas(tk.Canvas):
     def __init__(self, parent):
@@ -137,7 +165,9 @@ class ImageCanvas(tk.Canvas):
         self["yscrollcommand"] = self.parent.ybar.set
         self.grid()
 
-    def OpenImage(self):
+    def OpenImage(self, x=None, y=None, w=None, h=None, jsonPath=None):
+        if not jsonPath:
+            raise Exception("Json path not provided")
         if self.lastDir == '':
             # access user's home dir and go to the pictures folder
             self.lastDir = os.path.expanduser("~") + "/Pictures"
@@ -145,13 +175,15 @@ class ImageCanvas(tk.Canvas):
         paths = tk.filedialog.askopenfilenames(title="Open Image", initialdir=self.lastDir,
                                                filetypes=[("Images Files", ".png .jpg .jpeg .bmp")])
         self.lastDir = paths  # path to last opened file
-        self.MakeButton(paths)
+        self.MakeButton(paths, x=x, y=y, w=w, h=h, jsonPath=jsonPath)
 
-    def MakeButton(self, paths):
+    def MakeButton(self, paths, x=None, y=None, w=None, h=None, jsonPath=None):
         # print(paths)
+        if not jsonPath:
+            raise Exception("Json path not provided")
         for p in paths:  # for each file in the selected files
             # add a corresponding button
-            self.buttons.append(TileButton(self, p, self.newbtnpos))
+            self.buttons.append(TileButton(self, p, self.newbtnpos, x=x, y=y, w=w, h=h, jsonPath=jsonPath))
             # make the next button over from the last
             self.newbtnpos = (
                 self.newbtnpos[0] + self.tilesize+2, self.newbtnpos[1])
@@ -162,27 +194,34 @@ class ImageCanvas(tk.Canvas):
     def selectTile(self, i):
         # sets the path to the currently selected image
         self.parent.currentImagePath = str(self.buttons[i].path)
+        self.parent.currentJsonPath = str(self.buttons[i].jsonPath)
+        print('selected tile with json', self.parent.currentJsonPath)
         # sets the currently selected image
         self.parent.currentImage = self.buttons[i].tile.image
         for cmp in self.parent.loader.comps:
             # print(cmp['value'])
-            if (os.path.abspath("../" + cmp['value']) == str(self.buttons[i].path)):
+            if (os.path.abspath("../" + cmp['value']) == str(self.buttons[i].jsonPath)):
                 self.parent.currentComponent = cmp['name']
 
 
 class TileButton(tk.Button):
-    def __init__(self, parent, path, plc):
+    def __init__(self, parent, path, plc, x=None, y=None, w=None, h=None, jsonPath =None):
+        if not jsonPath:
+            raise Exception("Json path not provided")
         tk.Button.__init__(self, parent, relief=FLAT)
         self.parent = parent
         self.plc = plc
 
         self.path = path
+        self.jsonPath = jsonPath
         # create a button object on the imagecanvas scroll region.
         self.parent.create_window(
             self.plc[0], self.plc[1], window=self, anchor=tk.NW)
         # load the tile our button will represent
-        self.tile = Tile(self.path, self.parent.tilesize)
+        print('tile button init path', path)
+        self.tile = Tile(self.path, self.parent.tilesize, x=x, y=y, w=w, h=h)
         # make the button display the image of the tile it represents
         self["image"] = self.tile.image
         self["command"] = lambda i = len(parent.buttons): parent.selectTile(
             i)  # make button's tile the selected one
+        print('create tile button with json', self.jsonPath)

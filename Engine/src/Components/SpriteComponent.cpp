@@ -42,6 +42,16 @@ SpriteComponent::SpriteComponent(
     mDest.h = forceScreenHeight;
 }
 
+SpriteComponent::SpriteComponent(
+    std::string filename, std::shared_ptr<TransformComponent> transformer,
+    int x, int y, int w, int h, int frames, int numRows, int numCols,
+    int forceScreenWidth, int forceScreenHeight, int rowOffset, int colOffset)
+    : SpriteComponent(filename, transformer, x, y, w, h, frames, numRows,
+                      numCols, forceScreenWidth, forceScreenHeight) {
+    m_rowOffset = rowOffset;
+    m_colOffset = colOffset;
+}
+
 /**
  * Destructor
  */
@@ -104,6 +114,10 @@ void SpriteComponent::Update() {
     mDest.y = m_transformComponent->m_position.y;
     // mDest.w = RENDER_WIDTH;
     // mDest.h = RENDER_HEIGHT;
+
+    // Row and column offset
+    mSrc.x += m_colOffset * mSrc.w;
+    mSrc.y += m_rowOffset * mSrc.h;
 }
 
 /**

@@ -19,20 +19,23 @@ class CanvasFrame(tk.Frame):
         # print(self.w)
         # print(self.h)
         self["borderwidth"] = 5
-        # make a vertical scrollbar
+        # # make a vertical scrollbar
         self.ybar = tk.Scrollbar(self, orient="vertical")
-        # make a horizontal scrollbar
+        # # make a horizontal scrollbar
         self.xbar = tk.Scrollbar(self, orient="horizontal")
+
         # create the grid-map that will hold the tiles and pass the title argument to it
         self.cmap = CanvasMap(self, title)
-        # set the scrollbar to change the "y" area seen on canvas
-        self.ybar["command"] = self.cmap.yview
-        # set the scrollbar to change the "x" area seen on canvas
-        self.xbar["command"] = self.cmap.xview
-        # make scrollbar span the distance of the canvas frame
+
+        # # set the scrollbar to change the "y" area seen on canvas
+        # self.ybar["command"] = self.cmap.yview
+        # # set the scrollbar to change the "x" area seen on canvas
+        # self.xbar["command"] = self.cmap.xview
+        # # make scrollbar span the distance of the canvas frame
         self.ybar.grid(column=1, row=0, sticky="ns")
-        # make scrollbar span the distance of the canvas frame
+        # # make scrollbar span the distance of the canvas frame
         self.xbar.grid(column=0, row=1, sticky="ew")
+
         # sets the padding region to 10% of the available space left.
         self.grid(row=0, column=1, padx=(self.parent.winfo_screenwidth() - 170) * 0.1,
                   pady=20, rowspan=2)  # Adding rowspan=2 allows the canvas to take up two rows
@@ -48,14 +51,17 @@ class CanvasMap(tk.Canvas):
         self.title = title
         self["bg"] = "#2e2e2e"  # makes a dark grey color
         # sets size of percivable area of canvas to the parent frame's size
-        self["width"] = self.w
-        self["height"] = self.h
+        # self["width"] = self.w
+        # self["height"] = self.h
+
+        self["width"] = 640
+        self["height"] = 384
 
         self.maxTile = 1500
         # gives y scrolling autority to the y scrollbar
-        self["yscrollcommand"] = self.parent.ybar.set
+        # self["yscrollcommand"] = self.parent.ybar.set
         # gives x scrolling autority to the x scrollbar
-        self["xscrollcommand"] = self.parent.xbar.set
+        # self["xscrollcommand"] = self.parent.xbar.set
         # makes a large scrolling area of canvas
         self["scrollregion"] = (0, 0, 1500, 1500)
         self.xview_moveto("0.0")  # set x scroll to left of canvas
@@ -95,7 +101,8 @@ class CanvasMap(tk.Canvas):
         if self.parent.parent.tbox.tool == "click":
             # easy reference to the current selected image
             img = self.parent.parent.ibox.currentImage
-            path = self.parent.parent.ibox.currentImagePath
+            # path = self.parent.parent.ibox.currentImagePath
+            path = self.parent.parent.ibox.currentJsonPath
             cmpType = self.parent.parent.ibox.currentComponent
             # if len(img) == 0:
             #     return messagebox.showwarning(title="Error",message="Please select image first")
@@ -169,7 +176,8 @@ class CanvasMap(tk.Canvas):
         tm = self.parent.parent.tmap  # easy reference to the entire tilemap array
         # easy reference to the current selected image
         img = self.parent.parent.ibox.currentImage
-        path = self.parent.parent.ibox.currentImagePath  # find the image location
+        # path = self.parent.parent.ibox.currentImagePath  # find the image location
+        path = self.parent.parent.ibox.currentJsonPath  # find the image location
         # if a tile is already in the specified position
         if tm.canvasarray[j + pos2][i + pos1] != " ":
             self.delete(tm.canvasarray[j + pos2][i + pos1])  # erase tile

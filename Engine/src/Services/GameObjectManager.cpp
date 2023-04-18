@@ -4,6 +4,7 @@
 
 #include <iterator>
 
+#include "./Components/CollisionComponent.hpp"
 #include "./Components/SpriteComponent.hpp"
 #include "./Services/ResourceManager.hpp"
 #include "GameObject.hpp"
@@ -54,11 +55,49 @@ void GameObjectManager::Update() {
 }
 /**
  * Render all game objects of the game
- * The order of the render is not important.
  */
 void GameObjectManager::Render() {
-    for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++) {
+    // renders none first
+    for (auto it = m_gameobjects.rbegin(); it != m_gameobjects.rend(); it++) {
         if (!it->second->m_enabled) {
+            continue;
+        }
+
+        if (it->second->GetComponents<CollisionComponent>().empty() ||
+            !it->second->GetComponents<CollisionComponent>()[0]
+                    ->GetObjectType() == ObjectType::none) {
+            continue;
+        }
+        it->second->Render();
+    }
+
+    // then wall
+    for (auto it = m_gameobjects.rbegin(); it != m_gameobjects.rend(); it++) {
+        if (!it->second->m_enabled) {
+            continue;
+        }
+
+        // renders none first
+        if (it->second->GetComponents<CollisionComponent>().empty() ||
+            !it->second->GetComponents<CollisionComponent>()[0]
+                    ->GetObjectType() == ObjectType::wall) {
+            continue;
+        }
+        it->second->Render();
+    }
+
+    // then active objects
+    for (auto it = m_gameobjects.rbegin(); it != m_gameobjects.rend(); it++) {
+        if (!it->second->m_enabled) {
+            continue;
+        }
+
+        // renders none first
+        if (it->second->GetComponents<CollisionComponent>().empty() ||
+            it->second->GetComponents<CollisionComponent>()[0]
+                    ->GetObjectType() == ObjectType::wall ||
+            it->second->GetComponents<CollisionComponent>()[0]
+                    ->GetObjectType() == ObjectType::none) {
             continue;
         }
         it->second->Render();

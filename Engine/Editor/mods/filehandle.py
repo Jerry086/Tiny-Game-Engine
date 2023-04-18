@@ -6,11 +6,16 @@ import json
 
 
 class Tile():  # class structure to hold images
-    def __init__(self, path, size):
+    def __init__(self, path, size, x=None, y=None, w=None, h=None):
         self.size = size
         self.path = path
         # open a regular PIL image
+        print('Tile init path', path)
         self.image = PIL.Image.open(open(path, 'rb'))
+        # Crop the image based on x, y, w, h
+        print('Tile init', 'x', x, 'y', y, 'w', w, 'h', h, 'path', path)
+        if x != None and y != None and w != None and h != None:
+            self.image = self.image.crop((x, y, x + w, y + h))
         # resize the image to size we want tiles
         self.image = self.image.resize((self.size, self.size))
         # convert image to a tk displayable image
@@ -18,28 +23,31 @@ class Tile():  # class structure to hold images
 
 
 class TileMap():
-    def __init__(self, parent, mapsize):
-        self.mapsize = mapsize  # sets the size of the map arrays
+    def __init__(self, parent, mapsizeX, mapsizeY):
+        # sets the size of the map arrays
+        self.mapsizeX = mapsizeX
+        self.mapsizeY = mapsizeY
         self.parent = parent
         # create a tilemap matrix and a canvas object matrix of specified mapsize
         self.tilearray = []
-        for i in range(self.mapsize):
+        self.jsons = []
+        for i in range(self.mapsizeY):
             row = []
-            for j in range(self.mapsize):
+            for j in range(self.mapsizeX):
                 row.append(" ")  # fill them with spaces...
             self.tilearray.append(row)
 
         self.canvasarray = []
-        for i in range(self.mapsize):
+        for i in range(self.mapsizeY):
             row = []
-            for j in range(self.mapsize):
+            for j in range(self.mapsizeX):
                 row.append(" ")
             self.canvasarray.append(row)
 
         self.componentNameArray = []
-        for i in range(self.mapsize):
+        for i in range(self.mapsizeY):
             row = []
-            for j in range(self.mapsize):
+            for j in range(self.mapsizeX):
                 row.append(" ")
             self.componentNameArray.append(row)
 
@@ -124,7 +132,8 @@ class TileMap():
             path = p2 + filetype
 
         arraydata = []
-        if grabtype == "part":  # if this save want to compress the map for a final export...
+        if False: # force full
+        # if grabtype == "part":  # if this save want to compress the map for a final export...
             truncate_row = True  # this snippet will cut out all empty columns
             drop_rows_top = 0
             for row in self.tilearray:  # finds the number of empty rows above map's contents
@@ -183,7 +192,7 @@ class TileMap():
         else:
             # if the user does not want to compress output, use the entire map.
             arraydata = self.tilearray
-        # print(arraydata)
+        print(arraydata)
         for row in arraydata:
             for tile in row:
                 # print(tile)
@@ -205,33 +214,42 @@ class TileMap():
             data = output.split("\n")
             # print(filetype)
             if filetype == ".json":
-                paths = []
-                                # Convert the data array to an array of arrays of integers
+                # paths = []
+                paths = {}
+                # Convert the data array to an array of arrays of integers
                 data_array = []
                 for row in data:
                     if row:
                         data_array.append([int(num)
                                           for num in row.split(",") if num])
 
-                for i, pathImg in enumerate(pathtypes):
-                    if i > 0:
-                        for cmps in self.parent.ibox.loader.comps:
-                            if (os.path.abspath("../" + cmps['value']) == pathImg):
-                                paths.append(
-                                    {"component_type": cmps['name'], "args": [
-                                        {"arg_type": "int", "vlaue": i}, {
-                                            "arg_type": "string", "value": pathImg}
-                                    ]})
-                paths.append({"component_type": "TileMapComponent", "args": [
-                    {"arg_type": "array", "value": data_array}
-                ]})
+                # for i, pathImg in enumerate(pathtypes):
+                #     if i > 0:
+                #         for cmps in self.parent.ibox.loader.comps:
+                #             keys_to_remove = ['filename',
+                #                               'transformComponent', 'frames']
+                #             if (os.path.abspath("../" + cmps['value']) == pathImg):
+                #                 args = [
+                #                     {"arg_name": "id", "arg_type": "int", "value": i}, {
+                #                         "arg_name": "path", "arg_type": "string", "value": pathImg}
+                #                 ]
+                #                 for rarg in cmps['restArgs']:
+                #                     if rarg['arg_name'] not in keys_to_remove:
+                #                         args.append(rarg)
+                #                 print(cmps['restArgs'])
+                #                 paths.append(
+                #                     {"component_type": cmps['name'], "args": args})
+            
+
+                paths["tile_jsons"] = self.parent.tmap.jsons[::-1]
+                paths["tile_array"] = data_array
 
                 # Create a dictionary with paths and data keys
-                output_dict = {"type_name": "test_tilemap",
-                               "components": paths,  }
+                # output_dict = {"type_name": "test_tilemap",
+                #                "components": paths, }
 
                 # Convert the dictionary to a JSON string
-                output_json = json.dumps(output_dict, indent=4)
+                output_json = json.dumps(paths, indent=4)
                 print(path)
                 with open(path, "w") as file:
                     file.write(output_json)
@@ -285,6 +303,7 @@ class TileMap():
                 path) + " cannot be written to. Make sure it is not open in another program and then try again.")
 
     def NewFile(self):  # a function that clears the screen and array data.
+        self.parent.tmap.jsons.clear()
         for i, row in enumerate(self.canvasarray):
             for j, tile in enumerate(row):
                 # delete all tiles on the screen.
