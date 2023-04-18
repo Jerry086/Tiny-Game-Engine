@@ -9,7 +9,7 @@ ENGINE_BUILD_FILE = {
 }
 
 def exclude_directories(src, names, excluded_dirs):
-    return set(names) - set(excluded_dirs)
+    return set(excluded_dirs)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Build script options')
@@ -51,7 +51,7 @@ if __name__ == '__main__':
             os.remove("mygameengine.so")
             shutil.rmtree("tmp")
         shutil.rmtree("bin/Assets")
-        shutil.copytree("Assets", "bin/Assets", ignore=lambda src,names: exclude_directories(src, names, ["buildscripts"]))
+        shutil.copytree("Assets", "bin/Assets", ignore=lambda src,names: exclude_directories(src, names, ["buildscripts", "utils", "__pycache__", "*/__pycache__"]))
         print("Build finished. Run the game with the following command:")
         print("    ./bin/TinyEnginePacman <optional:override scene definition file>")
 
