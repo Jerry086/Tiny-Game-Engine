@@ -31,10 +31,10 @@ if __name__ == '__main__':
             os.system("pyinstaller --onefile --additional-hooks-dir=. --distpath=tmp/dist --workpath=tmp/build -n TinyEngineGame MyScript.py")
         elif args.engine_only:
             print(f"Building engine only for platform {args.platform}")
-            os.system(f"python {ENGINE_BUILD_FILE[args.platform]}")
+            os.system(f"python3 {ENGINE_BUILD_FILE[args.platform]}")
         else:
             print(f"Building everything for platform {args.platform}")
-            os.system(f"python {ENGINE_BUILD_FILE[args.platform]}")
+            os.system(f"python3 {ENGINE_BUILD_FILE[args.platform]}")
             os.system("pyinstaller --onefile --additional-hooks-dir=. --distpath=tmp/dist --workpath=tmp/build -n TinyEngineGame MyScript.py")
         
 
