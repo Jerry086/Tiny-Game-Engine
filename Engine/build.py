@@ -19,6 +19,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     try:
+        shutil.rmtree("bin", ignore_errors=True)
+        shutil.rmtree("tmp", ignore_errors=True)
         os.makedirs("tmp", exist_ok=True)
         os.makedirs("bin", exist_ok=True)
         if args.game_only:

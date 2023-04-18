@@ -25,7 +25,7 @@ void GameObjectManager::StartUp() {
     // import script directory
     auto sys = py::module_::import("sys");
     auto path = sys.attr("path");
-    path.attr("insert")(0, "./scripts");
+    path.attr("insert")(0, "./Assets/scripts");
 
     for (auto it = m_gameobjects.begin(); it != m_gameobjects.end(); it++) {
         it->second->StartUp();

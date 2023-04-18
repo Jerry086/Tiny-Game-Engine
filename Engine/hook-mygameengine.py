@@ -1,7 +1,7 @@
 from PyInstaller.utils.hooks import collect_data_files
 
-# Collect files from the embedded scripts directory
-datas = collect_data_files('./scripts', include_py_files=True, subdir='./scripts')
+# # Collect files from the embedded scripts directory
+datas = collect_data_files('./Assets/Assets/scripts', include_py_files=True, subdir='./Assets/Assets/scripts')
 
 # Collect files from the definitions directory
 datas += collect_data_files('./definitions', include_py_files=False, subdir='./definitions')
